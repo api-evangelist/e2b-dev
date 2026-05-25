@@ -1,0 +1,81 @@
+apiCommons: rate-limits-0.1
+info:
+  title: E2B Rate Limits and Concurrency
+  provider: E2B (e2b-dev)
+  description: Sandbox concurrency, session length, and storage limits derived from the published E2B pricing
+    page and the Sandbox API.
+  sources:
+  - https://e2b.dev/pricing
+  - https://e2b.dev/docs
+  - https://e2b.dev/docs/sandbox
+  created: '2026-05-25'
+  updated: '2026-05-25'
+policies:
+- id: sandbox-concurrency-hobby
+  scope: account
+  plan: hobby
+  metric: concurrent_sandboxes
+  limit: 20
+  description: Maximum running sandboxes at once on the Hobby tier.
+- id: sandbox-concurrency-pro
+  scope: account
+  plan: pro
+  metric: concurrent_sandboxes
+  limit: 100
+  expandableTo: 1100
+  description: Maximum running sandboxes at once on Pro; expandable up to 1,100 with purchase.
+- id: sandbox-session-hobby
+  scope: sandbox
+  plan: hobby
+  metric: session_length
+  limit: 1
+  unit: hour
+  description: Maximum lifetime per sandbox on Hobby.
+- id: sandbox-session-pro
+  scope: sandbox
+  plan: pro
+  metric: session_length
+  limit: 24
+  unit: hour
+  description: Maximum lifetime per sandbox on Pro.
+- id: storage-included-hobby
+  scope: account
+  plan: hobby
+  metric: storage_included
+  limit: 10
+  unit: GiB
+  description: Free included storage on Hobby.
+- id: storage-included-pro
+  scope: account
+  plan: pro
+  metric: storage_included
+  limit: 20
+  unit: GiB
+  description: Free included storage on Pro.
+- id: cpu-minimum
+  scope: sandbox
+  metric: cpu_count_min
+  limit: 1
+  description: Minimum vCPU count per sandbox (CPUCount schema minimum in OpenAPI).
+- id: memory-minimum
+  scope: sandbox
+  metric: memory_min
+  limit: 128
+  unit: MiB
+  description: Minimum memory per sandbox (MemoryMB schema minimum in OpenAPI).
+- id: pagination-default
+  scope: api
+  metric: pagination_limit
+  default: 100
+  maximum: 100
+  description: Default and maximum pagination size for E2B list endpoints.
+authenticationHeaders:
+- name: X-API-Key
+  description: SDK and REST API key authentication.
+- name: Authorization
+  scheme: bearer
+  description: CLI/CI access token authentication.
+notes:
+- Per-operation request-rate limits are not published; enterprise customers can negotiate higher concurrency
+  and storage.
+- Concurrency is enforced server-side; create-sandbox returns 409 when the team is at its concurrency limit.

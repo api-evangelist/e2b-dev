@@ -1,0 +1,170 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Sandbox API — Sandboxes
+  description: 'E2B Sandbox API — Sandboxes. Lead operation: E2B Create A Sandbox. Self-contained Naftiko capability
+    covering the sandbox CRUD business surface.'
+  tags:
+  - E2B
+  - Sandboxes
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sandboxes-sandboxes
+    baseUri: https://api.e2b.app
+    description: E2B Sandbox API — sandbox lifecycle business capability. Self-contained, no shared references.
+    resources:
+    - name: sandboxes
+      path: /sandboxes
+      operations:
+      - name: listsandboxes
+        method: GET
+        description: E2B List Running Sandboxes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: array
+          value: $.
+      - name: createsandbox
+        method: POST
+        description: E2B Create A Sandbox
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Sandbox create request (templateID, metadata, envVars, timeout, autoPause).
+          required: true
+    - name: sandbox
+      path: /sandboxes/{sandboxID}
+      operations:
+      - name: getsandbox
+        method: GET
+        description: E2B Get A Sandbox
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+      - name: killsandbox
+        method: DELETE
+        description: E2B Kill A Sandbox
+        outputRawFormat: json
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: sandboxes-sandboxes-rest
+    port: 8080
+    description: REST adapter for E2B Sandbox API — Sandboxes.
+    resources:
+    - path: /v1/sandboxes
+      name: sandboxes
+      description: REST surface for sandbox collection.
+      operations:
+      - method: GET
+        name: listsandboxes
+        description: E2B List Running Sandboxes
+        call: sandboxes-sandboxes.listsandboxes
+        outputParameters:
+        - type: array
+          mapping: $.
+      - method: POST
+        name: createsandbox
+        description: E2B Create A Sandbox
+        call: sandboxes-sandboxes.createsandbox
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sandboxes/{sandboxID}
+      name: sandbox
+      description: REST surface for an individual sandbox.
+      operations:
+      - method: GET
+        name: getsandbox
+        description: E2B Get A Sandbox
+        call: sandboxes-sandboxes.getsandbox
+        with:
+          sandboxID: rest.path.sandboxID
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: killsandbox
+        description: E2B Kill A Sandbox
+        call: sandboxes-sandboxes.killsandbox
+        with:
+          sandboxID: rest.path.sandboxID
+  - type: mcp
+    namespace: sandboxes-sandboxes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for E2B Sandbox API — Sandboxes.
+    tools:
+    - name: e2b-list-sandboxes
+      description: E2B List Running Sandboxes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sandboxes-sandboxes.listsandboxes
+      outputParameters:
+      - type: array
+        mapping: $.
+    - name: e2b-create-sandbox
+      description: E2B Create A Sandbox
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sandboxes-sandboxes.createsandbox
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: e2b-get-sandbox
+      description: E2B Get A Sandbox
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sandboxes-sandboxes.getsandbox
+      with:
+        sandboxID: tools.sandboxID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: e2b-kill-sandbox
+      description: E2B Kill A Sandbox
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sandboxes-sandboxes.killsandbox
+      with:
+        sandboxID: tools.sandboxID

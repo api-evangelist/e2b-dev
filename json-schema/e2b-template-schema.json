@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/e2b-dev/refs/heads/main/json-schema/e2b-template-schema.json",
+  "title": "E2B Sandbox Template",
+  "description": "A reusable sandbox base image definition derived from the E2B Template API.",
+  "type": "object",
+  "required": ["templateID"],
+  "properties": {
+    "templateID": {
+      "type": "string",
+      "description": "Identifier of the sandbox template."
+    },
+    "names": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Full names including team namespace and tag, e.g. team-slug/my-template:default."
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Whether the template is public or restricted to the owning team."
+    },
+    "cpuCount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Default vCPU count for sandboxes created from this template."
+    },
+    "memoryMB": {
+      "type": "integer",
+      "minimum": 128,
+      "description": "Default memory in MiB for sandboxes created from this template."
+    },
+    "buildID": {
+      "type": "string",
+      "description": "Identifier of the most recent successful build of the template."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "User-defined tags applied to the template."
+    }
+  }
+}

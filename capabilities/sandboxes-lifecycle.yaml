@@ -1,0 +1,158 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Sandbox API — Lifecycle
+  description: 'E2B Sandbox API — Lifecycle. Pause, resume, snapshot, connect, refresh, and timeout for a running
+    sandbox.'
+  tags:
+  - E2B
+  - Sandboxes
+  - Lifecycle
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sandboxes-lifecycle
+    baseUri: https://api.e2b.app
+    description: E2B Sandbox API — lifecycle operations on a single sandbox.
+    resources:
+    - name: pause
+      path: /sandboxes/{sandboxID}/pause
+      operations:
+      - name: pausesandbox
+        method: POST
+        description: E2B Pause A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    - name: resume
+      path: /sandboxes/{sandboxID}/resume
+      operations:
+      - name: resumesandbox
+        method: POST
+        description: E2B Resume A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Resume options including timeout and autoPause.
+    - name: snapshot
+      path: /sandboxes/{sandboxID}/snapshots
+      operations:
+      - name: snapshotsandbox
+        method: POST
+        description: E2B Snapshot A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+    - name: timeout
+      path: /sandboxes/{sandboxID}/timeout
+      operations:
+      - name: setsandboxtimeout
+        method: POST
+        description: E2B Set Sandbox Timeout
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+    - name: refresh
+      path: /sandboxes/{sandboxID}/refreshes
+      operations:
+      - name: refreshsandbox
+        method: POST
+        description: E2B Refresh A Sandbox Timeout
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    - name: connect
+      path: /sandboxes/{sandboxID}/connect
+      operations:
+      - name: connectsandbox
+        method: GET
+        description: E2B Connect To A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: sandboxes-lifecycle-mcp
+    port: 9090
+    transport: http
+    description: MCP tools for managing a running E2B sandbox's lifecycle.
+    tools:
+    - name: e2b-pause-sandbox
+      description: E2B Pause A Sandbox
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sandboxes-lifecycle.pausesandbox
+      with:
+        sandboxID: tools.sandboxID
+    - name: e2b-resume-sandbox
+      description: E2B Resume A Sandbox
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sandboxes-lifecycle.resumesandbox
+      with:
+        sandboxID: tools.sandboxID
+        body: tools.body
+    - name: e2b-snapshot-sandbox
+      description: E2B Snapshot A Sandbox
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sandboxes-lifecycle.snapshotsandbox
+      with:
+        sandboxID: tools.sandboxID
+        body: tools.body
+    - name: e2b-set-sandbox-timeout
+      description: E2B Set Sandbox Timeout
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sandboxes-lifecycle.setsandboxtimeout
+      with:
+        sandboxID: tools.sandboxID
+        body: tools.body
+    - name: e2b-refresh-sandbox
+      description: E2B Refresh A Sandbox Timeout
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sandboxes-lifecycle.refreshsandbox
+      with:
+        sandboxID: tools.sandboxID

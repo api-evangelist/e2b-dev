@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Team API — API Keys
+  description: 'E2B Team API — API Keys. List, create, and revoke API keys for a team.'
+  tags:
+  - E2B
+  - Teams
+  - API Keys
+  - Identity
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: teams-api-keys
+    baseUri: https://api.e2b.app
+    description: Manage API keys used by SDKs and REST clients.
+    resources:
+    - name: api-keys
+      path: /api-keys
+      operations:
+      - name: listapikeys
+        method: GET
+        description: E2B List Team API Keys
+      - name: createapikey
+        method: POST
+        description: E2B Create A Team API Key
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: api-key
+      path: /api-keys/{apiKeyID}
+      operations:
+      - name: deleteapikey
+        method: DELETE
+        description: E2B Revoke A Team API Key
+        inputParameters:
+        - name: apiKeyID
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: teams-api-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP tools for managing E2B API keys.
+    tools:
+    - name: e2b-list-api-keys
+      description: E2B List Team API Keys
+      hints:
+        readOnly: true
+      call: teams-api-keys.listapikeys
+    - name: e2b-create-api-key
+      description: E2B Create A Team API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: teams-api-keys.createapikey
+      with:
+        body: tools.body
+    - name: e2b-delete-api-key
+      description: E2B Revoke A Team API Key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: teams-api-keys.deleteapikey
+      with:
+        apiKeyID: tools.apiKeyID

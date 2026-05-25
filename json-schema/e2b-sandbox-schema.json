@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/e2b-dev/refs/heads/main/json-schema/e2b-sandbox-schema.json",
+  "title": "E2B Sandbox",
+  "description": "A single running or paused E2B sandbox instance derived from the E2B Sandbox API.",
+  "type": "object",
+  "required": ["sandboxID", "templateID", "state"],
+  "properties": {
+    "sandboxID": {
+      "type": "string",
+      "description": "Identifier of the running sandbox."
+    },
+    "clientID": {
+      "type": "string",
+      "description": "Identifier of the client the sandbox is associated with."
+    },
+    "templateID": {
+      "type": "string",
+      "description": "Identifier of the template used to create the sandbox."
+    },
+    "alias": {
+      "type": "string",
+      "description": "Resolved namespace/alias for the template."
+    },
+    "state": {
+      "type": "string",
+      "enum": ["running", "paused"],
+      "description": "Current state of the sandbox."
+    },
+    "cpuCount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of vCPUs allocated to the sandbox."
+    },
+    "memoryMB": {
+      "type": "integer",
+      "minimum": 128,
+      "description": "Memory allocated to the sandbox in MiB."
+    },
+    "diskSizeMB": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Disk size allocated to the sandbox in MiB."
+    },
+    "envdVersion": {
+      "type": "string",
+      "description": "Version of the envd daemon running in the sandbox."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {"type": "string"},
+      "description": "Free-form string metadata attached at sandbox creation."
+    },
+    "envVars": {
+      "type": "object",
+      "additionalProperties": {"type": "string"},
+      "description": "Environment variables exposed inside the sandbox."
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the sandbox started."
+    },
+    "endAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled end-of-life timestamp."
+    },
+    "autoPause": {
+      "type": "boolean",
+      "description": "Whether the sandbox auto-pauses on timeout instead of being killed."
+    }
+  }
+}

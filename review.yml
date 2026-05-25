@@ -1,0 +1,99 @@
+aid: e2b-dev
+name: E2B
+reviewer: Kin Lane
+date: '2026-05-25'
+type: company
+tier: 1
+overall:
+  score: 9.4
+  summary: E2B is one of the most coherent agent-infrastructure plays on the market — open-source Firecracker-based
+    sandbox runtime, well-versioned REST + SDK surface, and a credible self-host story alongside the managed
+    cloud. The OpenAPI specs are checked into the public repo, the platform infra repo is also open, and the
+    product surface (Sandbox, Templates, Volumes, Code Interpreter, Desktop) is unusually clean for an AI
+    infra startup.
+scores:
+  documentation:
+    score: 9
+    notes: e2b.dev/docs is well organized with quickstarts for Python and JS, an SDK reference, and explicit
+      sections for sandbox lifecycle, persistence, templates, and the CLI. Slightly weaker on REST-only usage.
+  openapi:
+    score: 10
+    notes: Full OpenAPI 3.0 spec checked into github.com/e2b-dev/E2B at spec/openapi.yml covering /sandboxes,
+      /templates, /volumes, /api-keys, /access-tokens, /teams, plus a separate spec/openapi-volumecontent.yml
+      for the JWT-authenticated Volume Content API.
+  sdks:
+    score: 9
+    notes: Python and TypeScript SDKs for Sandbox, Code Interpreter, and Desktop, all open-source under Apache-2.0.
+      No Go/Java/Ruby/.NET first-party SDK.
+  cli:
+    score: 9
+    notes: '@e2b/cli is a first-class citizen — used for template init, build, list, deploy, sandbox connect,
+      and logs. Authenticates with an access token via E2B_ACCESS_TOKEN for CI use.'
+  open_source:
+    score: 10
+    notes: Apache-2.0 on the main E2B repo and on infra. Forked Firecracker (Rust). Self-host story for AWS,
+      GCP, Azure, and bare Linux. 12k+ stars on the main repo; 6k+ on fragments.
+  pricing:
+    score: 8
+    notes: Two tiers (Hobby free + $100 credit, Pro at $150/mo + per-second usage) plus a custom Enterprise
+      tier. Per-second pricing for vCPU and memory is published transparently. Could expose a usage/cost API.
+  rate_limits:
+    score: 7
+    notes: Concurrency, session length, storage, and minimum CPU/memory are documented per tier. Per-route
+      request rate limits are not published.
+  observability:
+    score: 8
+    notes: Sandbox-level metrics, fleet metrics, sandbox logs, and team metrics endpoints exist in the public
+      OpenAPI. No first-party billing or usage-export API.
+  developer_experience:
+    score: 9
+    notes: Three lines of code to start a sandbox; rich cookbook; e2b-cookbook repo and fragments demonstrate
+      integrations with OpenAI, Anthropic, Mistral, Llama, LangChain, LlamaIndex, Vercel AI SDK, CrewAI, AutoGen,
+      Hugging Face.
+  security_and_trust:
+    score: 9
+    notes: Microsoft Firecracker isolation by design. BYOC and on-prem options for enterprise. Public security
+      page at e2b.dev/security. SOC2/ISO certifications not surfaced in the public docs we saw.
+strengths:
+- Real, public OpenAPI specs for the platform — not just docs pages.
+- Cleanly factored product surface — Sandboxes, Templates, Volumes, Teams, API Keys, plus Code Interpreter
+  and Desktop SDKs on top.
+- Apache-2.0 core with a credible self-host story (E2B + infra + firecracker fork).
+- Excellent open-source examples (fragments, e2b-cookbook, surf, ai-analyst, open-computer-use).
+- Per-second usage-based billing with adjustable CPU/RAM and metadata-tagged cost allocation built in.
+- Strong fit for governed AI capability work: sandbox metadata + the Sandbox API give you natural per-agent,
+  per-customer chargeback dimensions.
+weaknesses:
+- First-party SDKs only in Python and TypeScript — Go, Java, Ruby, and .NET users have to drive REST directly.
+- No published usage/billing export API for FinOps automation; FinOps mapping has to be inferred from sandbox
+  metrics and the dashboard.
+- Per-route request-rate limits are not documented; only concurrency and session-length limits are.
+- Public security/compliance posture page is light relative to a Tier-1 enterprise expectation.
+recommendations:
+- Publish a first-party usage/cost API mirroring Anthropic's Usage and Cost Admin API to close the FinOps
+  gap.
+- Document per-route request-rate limits explicitly (or at least the 429 contract).
+- Ship Go and Java SDKs to broaden enterprise reach now that Tier-1 customers are deploying.
+- Continue investing in MCP gateway integrations — that surface lines up well with where governed agents
+  are heading.
+- Surface a public trust center with SOC2/ISO posture, subprocessors, and DPA links.
+sources:
+- https://e2b.dev
+- https://e2b.dev/docs
+- https://e2b.dev/docs/sandbox
+- https://e2b.dev/docs/sandbox-template
+- https://e2b.dev/docs/sandbox/persistence
+- https://e2b.dev/docs/api-key
+- https://e2b.dev/docs/cli
+- https://e2b.dev/pricing
+- https://github.com/e2b-dev
+- https://github.com/e2b-dev/E2B
+- https://github.com/e2b-dev/E2B/blob/main/spec/openapi.yml
+- https://github.com/e2b-dev/E2B/blob/main/spec/openapi-volumecontent.yml
+- https://github.com/e2b-dev/infra
+- https://github.com/e2b-dev/code-interpreter
+- https://github.com/e2b-dev/desktop
+- https://github.com/e2b-dev/firecracker
+- https://github.com/e2b-dev/fragments
+- https://github.com/e2b-dev/surf
+- https://github.com/e2b-dev/e2b-cookbook

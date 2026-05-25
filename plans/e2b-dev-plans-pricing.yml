@@ -1,0 +1,119 @@
+apiCommons: plans-0.1
+info:
+  title: E2B Plans and Pricing
+  provider: E2B (e2b-dev)
+  description: Commercial plan structure for E2B Sandbox, Code Interpreter, and Desktop products. Built from
+    e2b.dev/pricing.
+  sources:
+  - https://e2b.dev/pricing
+  - https://e2b.dev/auth/sign-up
+  - https://e2b.dev/contact
+  created: '2026-05-25'
+  updated: '2026-05-25'
+plans:
+- id: hobby
+  name: Hobby
+  description: Free entry tier with a one-time $100 usage credit. Suitable for personal projects and prototyping.
+  price:
+    amount: 0
+    currency: USD
+    interval: month
+  signupURL: https://e2b.dev/auth/sign-up
+  credits:
+  - amount: 100
+    currency: USD
+    grant: one-time
+    description: $100 of usage credits granted at signup.
+  limits:
+  - metric: sandbox_session_length
+    value: 1
+    unit: hour
+    description: Maximum lifetime per sandbox.
+  - metric: concurrent_sandboxes
+    value: 20
+    description: Maximum running sandboxes at once.
+  - metric: storage_included
+    value: 10
+    unit: GiB
+    description: Free included storage.
+  features:
+  - Firecracker microVM sandboxes
+  - Python and JavaScript SDKs
+  - Code Interpreter SDK
+  - Custom templates via e2b CLI
+  - Community Discord support
+- id: pro
+  name: Pro
+  description: Paid tier for teams shipping production agents. Adds longer sessions, more concurrency, custom
+    CPU/RAM, and 20 GiB included storage.
+  price:
+    amount: 150
+    currency: USD
+    interval: month
+  signupURL: https://e2b.dev/auth/sign-up
+  inherits: hobby
+  limits:
+  - metric: sandbox_session_length
+    value: 24
+    unit: hour
+    description: Maximum lifetime per sandbox.
+  - metric: concurrent_sandboxes
+    value: 100
+    description: Maximum running sandboxes at once; expandable to 1,100 with purchase.
+  - metric: storage_included
+    value: 20
+    unit: GiB
+    description: Free included storage.
+  features:
+  - Adjustable sandbox CPU and RAM
+  - Higher rate limits
+  - Priority email support
+  - Snapshot, pause, and resume
+- id: enterprise
+  name: Enterprise (Ultimate)
+  description: Custom pricing for Fortune 100 and high-scale deployments. Includes BYOC, on-prem, SLAs, and
+    enterprise support.
+  price:
+    amount: null
+    currency: USD
+    interval: custom
+    note: Contact sales for pricing.
+  signupURL: https://e2b.dev/contact
+  features:
+  - Bring-your-own-cloud (AWS, GCP, Azure)
+  - Self-hosted / on-prem deployment of the E2B platform
+  - SSO and SCIM
+  - Audit logs
+  - Dedicated VPC and private networking
+  - Custom concurrency and SLA
+  - Enterprise security review and DPA
+usageMeters:
+- metric: vcpu_seconds
+  unit: per-second
+  description: Per-second charge for vCPU allocation to a running sandbox.
+  tiers:
+  - vcpu: 1
+    price: 0.000014
+    currency: USD
+  - vcpu: 2
+    price: 0.000028
+    currency: USD
+  - vcpu: 4
+    price: 0.000056
+    currency: USD
+  - vcpu: 8
+    price: 0.000112
+    currency: USD
+- metric: memory_gib_seconds
+  unit: per-second
+  description: Per-second charge for memory allocation to a running sandbox.
+  price: 0.0000045
+  currency: USD
+- metric: storage_overage_gib_month
+  unit: per-month
+  description: Additional storage beyond the included plan allotment.
+notes:
+- Per-second usage costs apply on top of every paid plan.
+- The signup credit of $100 USD is one-time and applies to usage charges.
+- Concurrency expansion beyond the Pro default of 100 is available as a paid add-on up to 1,100 concurrent
+  sandboxes.

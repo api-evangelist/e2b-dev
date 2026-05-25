@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.e2b.app/sandboxes",
+    "headers": {
+      "X-API-Key": "e2b_***"
+    },
+    "body": {
+      "templateID": "base",
+      "metadata": {
+        "agent": "research-agent-v3",
+        "customer": "acme",
+        "purpose": "deep-research"
+      },
+      "envVars": {
+        "OPENAI_API_KEY": "sk-***"
+      },
+      "timeout": 3600,
+      "autoPause": true
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "sandboxID": "is4cz7e2sb4j1d0h2x9km",
+      "clientID": "e2b-client-7a2b",
+      "templateID": "base",
+      "alias": "e2b/base:default",
+      "state": "running",
+      "cpuCount": 2,
+      "memoryMB": 2048,
+      "diskSizeMB": 10240,
+      "envdVersion": "0.2.4",
+      "startedAt": "2026-05-25T14:01:23Z",
+      "endAt": "2026-05-25T15:01:23Z",
+      "metadata": {
+        "agent": "research-agent-v3",
+        "customer": "acme",
+        "purpose": "deep-research"
+      }
+    }
+  }
+}

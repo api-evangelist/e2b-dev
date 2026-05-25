@@ -1,0 +1,334 @@
+aid: e2b-dev
+url: https://raw.githubusercontent.com/api-evangelist/e2b-dev/refs/heads/main/apis.yml
+apis:
+- aid: e2b-dev:e2b-sandbox-api
+  name: E2B Sandbox API
+  tags:
+  - AI
+  - Agents
+  - Sandboxes
+  - Code Execution
+  - Firecracker
+  - microVMs
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  properties:
+  - url: https://e2b.dev/docs
+    type: Documentation
+  - url: https://e2b.dev/docs/sandbox
+    type: Documentation
+  - url: https://e2b.dev/docs/sandbox/api/lifecycle
+    type: Documentation
+  - url: https://e2b.dev/docs/sandbox/persistence
+    type: Documentation
+  - url: openapi/e2b-api-openapi.yml
+    type: OpenAPI
+  - url: json-schema/e2b-sandbox-schema.json
+    type: JSONSchema
+  - url: json-ld/e2b-dev-context.jsonld
+    type: JSONLD
+  - url: capabilities/sandboxes-sandboxes.yaml
+    type: NaftikoCapability
+  - url: capabilities/sandboxes-lifecycle.yaml
+    type: NaftikoCapability
+  - url: capabilities/sandboxes-metrics.yaml
+    type: NaftikoCapability
+  description: Create, control, and tear down isolated Firecracker microVMs on demand for AI agents. Sandboxes
+    cold-start in under 200ms and run for up to 24 hours, supporting pause/resume/snapshot, metadata, env vars,
+    metrics, log streaming, and connect upgrades. The same surface backs the JavaScript and Python SDKs as well
+    as the e2b CLI.
+- aid: e2b-dev:e2b-template-api
+  name: E2B Template API
+  tags:
+  - AI
+  - Agents
+  - Templates
+  - Sandboxes
+  - Build
+  humanURL: https://e2b.dev/docs/sandbox-template
+  baseURL: https://api.e2b.app
+  properties:
+  - url: https://e2b.dev/docs/sandbox-template
+    type: Documentation
+  - url: https://e2b.dev/docs/cli
+    type: Documentation
+  - url: openapi/e2b-api-openapi.yml
+    type: OpenAPI
+  - url: json-schema/e2b-template-schema.json
+    type: JSONSchema
+  - url: capabilities/templates-templates.yaml
+    type: NaftikoCapability
+  - url: capabilities/templates-builds.yaml
+    type: NaftikoCapability
+  - url: capabilities/templates-tags.yaml
+    type: NaftikoCapability
+  description: Define, build, version, and publish reusable sandbox base images. Templates are built from an
+    e2b.toml or programmatic SDK definition, cache layers across builds, support custom CPU and RAM, expose
+    namespace/alias aliasing, and can be marked public or team-private. Builds expose status and streaming logs
+    via the API and the e2b CLI.
+- aid: e2b-dev:e2b-volume-api
+  name: E2B Volume API
+  tags:
+  - AI
+  - Agents
+  - Storage
+  - Volumes
+  - Persistence
+  humanURL: https://e2b.dev/docs/sandbox/persistence
+  baseURL: https://api.e2b.app
+  properties:
+  - url: https://e2b.dev/docs/sandbox/persistence
+    type: Documentation
+  - url: openapi/e2b-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/e2b-volumes-openapi.yml
+    type: OpenAPI
+  - url: capabilities/volumes-volumes.yaml
+    type: NaftikoCapability
+  - url: capabilities/volumes-content.yaml
+    type: NaftikoCapability
+  description: Provision and manage persistent volumes that can be attached to sandboxes so agent state, datasets,
+    and workspaces survive across sandbox runs. The Volume Content API uses a short-lived JWT to read and write
+    files and directories inside a mounted volume from any sandbox or external client.
+- aid: e2b-dev:e2b-team-api
+  name: E2B Team and Identity API
+  tags:
+  - AI
+  - Agents
+  - Teams
+  - Administration
+  - API Keys
+  humanURL: https://e2b.dev/docs/api-key
+  baseURL: https://api.e2b.app
+  properties:
+  - url: https://e2b.dev/docs/api-key
+    type: Documentation
+  - url: openapi/e2b-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/teams-teams.yaml
+    type: NaftikoCapability
+  - url: capabilities/teams-api-keys.yaml
+    type: NaftikoCapability
+  - url: capabilities/teams-access-tokens.yaml
+    type: NaftikoCapability
+  description: Manage E2B team identity, API keys, and CLI access tokens. API keys authenticate SDK and REST
+    traffic via the X-API-Key header. Access tokens authenticate the e2b CLI and CI workflows. Team metrics
+    expose aggregated sandbox usage counts for the workspace.
+- aid: e2b-dev:e2b-code-interpreter-api
+  name: E2B Code Interpreter SDK
+  tags:
+  - AI
+  - Agents
+  - Code Interpreter
+  - Jupyter
+  - Data Analysis
+  humanURL: https://github.com/e2b-dev/code-interpreter
+  properties:
+  - url: https://github.com/e2b-dev/code-interpreter
+    type: Documentation
+  - url: https://e2b.dev/docs/code-interpreting/analyze-data-with-ai
+    type: Documentation
+  - url: https://github.com/e2b-dev/code-interpreter
+    type: SDK
+  - url: capabilities/code-interpreter-execute.yaml
+    type: NaftikoCapability
+  description: Higher-level SDK on top of the Sandbox API that exposes a Jupyter-style code interpreter for
+    LLM-driven Python and JavaScript execution. Returns structured execution results including stdout, stderr,
+    text, png, jpeg, svg, html, markdown, latex, json, javascript, pdf and chart outputs that map cleanly onto
+    tool-use schemas for Anthropic, OpenAI, Mistral, Llama and other model providers.
+- aid: e2b-dev:e2b-desktop-api
+  name: E2B Desktop Sandbox SDK
+  tags:
+  - AI
+  - Agents
+  - Desktop
+  - Computer Use
+  - GUI
+  humanURL: https://github.com/e2b-dev/desktop
+  properties:
+  - url: https://github.com/e2b-dev/desktop
+    type: Documentation
+  - url: https://github.com/e2b-dev/desktop
+    type: SDK
+  - url: capabilities/desktop-desktop.yaml
+    type: NaftikoCapability
+  description: Sandbox flavor that boots a Linux desktop environment with a noVNC stream and exposes mouse,
+    keyboard, screenshot, and window-management primitives. Built for computer-use agents pairing vision-capable
+    models like Claude and GPT with a real graphical desktop they can drive end to end.
+name: E2B
+tags:
+- AI
+- Agents
+- Code Execution
+- Code Interpreter
+- Sandboxes
+- Firecracker
+- microVMs
+- Computer Use
+- Desktop Sandbox
+- Templates
+- MCP
+- Open Source
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- url: https://e2b.dev
+  type: Portal
+- url: https://e2b.dev/docs
+  type: Documentation
+- url: https://e2b.dev/docs/quickstart
+  type: GettingStarted
+- url: https://e2b.dev/docs/sdk-reference
+  type: APIReference
+- url: https://e2b.dev/docs/api-key
+  type: Authentication
+- url: https://e2b.dev/docs/cli
+  name: E2B CLI
+  type: Documentation
+- url: https://e2b.dev/dashboard
+  type: Portal
+- url: https://e2b.dev/dashboard?tab=keys
+  name: API Keys
+  type: Authentication
+- url: https://e2b.dev/auth/sign-up
+  type: SignUp
+- url: https://e2b.dev/blog
+  type: Blog
+- url: https://e2b.dev/changelog
+  type: ChangeLog
+- url: https://e2b.dev/contact
+  type: Support
+- url: https://e2b.dev/terms
+  type: TermsOfService
+- url: https://e2b.dev/privacy
+  type: PrivacyPolicy
+- url: https://e2b.dev/security
+  type: TrustCenter
+- url: https://x.com/e2b_dev
+  type: Twitter
+- url: https://www.linkedin.com/company/e2b-dev
+  type: LinkedIn
+- url: https://discord.gg/U7KEcGErtQ
+  type: Forum
+- url: https://github.com/e2b-dev
+  type: GitHubOrganization
+- url: https://github.com/e2b-dev/E2B
+  name: E2B Core
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/infra
+  name: E2B Cloud Infrastructure
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/firecracker
+  name: E2B Firecracker Fork
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/code-interpreter
+  name: Code Interpreter SDK
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/desktop
+  name: Desktop Sandbox
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/surf
+  name: Surf Computer Use Agent
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/fragments
+  name: Fragments
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/ai-analyst
+  name: AI Analyst
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/open-computer-use
+  name: Open Computer Use
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/e2b-cookbook
+  name: E2B Cookbook
+  type: CodeExamples
+- url: https://github.com/e2b-dev/dashboard
+  name: E2B Dashboard
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/docs
+  name: E2B Documentation
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/awesome-ai-agents
+  name: Awesome AI Agents
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/awesome-ai-sdks
+  name: Awesome AI SDKs
+  type: GitHubRepository
+- url: https://github.com/e2b-dev/awesome-mcp-gateways
+  name: Awesome MCP Gateways
+  type: GitHubRepository
+- url: https://www.npmjs.com/package/e2b
+  name: e2b npm
+  type: SDK
+- url: https://www.npmjs.com/package/@e2b/code-interpreter
+  name: '@e2b/code-interpreter npm'
+  type: SDK
+- url: https://pypi.org/project/e2b/
+  name: e2b PyPI
+  type: SDK
+- url: https://pypi.org/project/e2b-code-interpreter/
+  name: e2b-code-interpreter PyPI
+  type: SDK
+- url: https://pypi.org/project/e2b-desktop/
+  name: e2b-desktop PyPI
+  type: SDK
+- url: https://www.npmjs.com/package/@e2b/desktop
+  name: '@e2b/desktop npm'
+  type: SDK
+- url: https://www.npmjs.com/package/@e2b/cli
+  name: '@e2b/cli'
+  type: CLI
+- url: plans/e2b-dev-plans-pricing.yml
+  type: Plans
+- url: rate-limits/e2b-dev-rate-limits.yml
+  type: RateLimits
+- url: finops/e2b-dev-finops.yml
+  type: FinOps
+- type: Features
+  data:
+  - Firecracker microVM sandboxes that cold-start in under 200ms in-region and run up to 24 hours on Pro
+  - Pause, resume, and snapshot sandboxes to persist agent state across invocations
+  - Custom sandbox templates built from e2b.toml or programmatic SDK definitions with cached build layers
+  - Persistent volumes attachable to any sandbox with a separate Volume Content API authenticated by short-lived
+    JWTs
+  - Up to 100 concurrent sandboxes on Pro (expandable to 1,100 with purchase) and up to 20 on Hobby
+  - Adjustable per-sandbox CPU and RAM, plus 10-20 GiB of free storage depending on tier
+  - JavaScript/TypeScript and Python SDKs for the Sandbox, Code Interpreter, and Desktop products
+  - Code Interpreter SDK returns Jupyter-style outputs (stdout, charts, images, html, markdown, latex)
+  - Desktop Sandbox boots a Linux desktop with noVNC stream and mouse/keyboard/screenshot primitives for
+    computer-use agents
+  - MCP Gateway and MCP server integrations that expose sandboxes as tools to Claude, ChatGPT, and other MCP
+    clients
+  - LLM-agnostic — works with Anthropic, OpenAI, Mistral, Llama, and any custom model
+  - Built-in integration patterns with LangChain, LlamaIndex, Vercel AI SDK, CrewAI, AutoGen, and Hugging Face
+  - Open-source CLI (`e2b`) for template init, build, list, deploy, sandbox connect, and logs
+  - Apache-2.0 licensed core; the platform is buildable from the e2b-dev/infra Go monorepo for self-hosting
+    on AWS, GCP, Azure, or bare Linux
+  - Enterprise BYOC and on-prem deployments with a forked Firecracker microVM runtime in Rust
+  - Per-second usage-based pricing on CPU, RAM, and storage with a $100 signup credit
+  - Used in production by AI labs, agent startups, and Fortune 100 enterprises; 1B+ sandboxes started and
+    3.5M+ monthly SDK downloads
+  sources:
+  - https://e2b.dev
+  - https://e2b.dev/docs
+  - https://e2b.dev/pricing
+  - https://github.com/e2b-dev
+  - https://github.com/e2b-dev/E2B/blob/main/spec/openapi.yml
+  updated: '2026-05-25'
+created: '2026-05-25'
+modified: '2026-05-25'
+position: Consuming
+description: E2B (e2b-dev) provides secure, isolated cloud sandboxes for AI agents and AI-generated code, built
+  on a forked Firecracker microVM runtime. The platform ships a REST Sandbox API, JavaScript and Python SDKs,
+  a Code Interpreter SDK, a Desktop Sandbox for computer-use agents, persistent volumes, a custom template
+  build system, and an e2b CLI. The Apache-2.0 licensed core repos — E2B, infra, firecracker, code-interpreter,
+  and desktop — also support self-hosted deployments on AWS, GCP, Azure, or bare Linux. E2B is LLM-agnostic
+  and used by labs and enterprises building code interpreters, deep-research agents, data analysis features,
+  reinforcement-learning environments, and computer-use agents.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

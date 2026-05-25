@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Template API — Templates
+  description: 'E2B Template API — Templates. List, create, update, and delete sandbox templates.'
+  tags:
+  - E2B
+  - Templates
+  - Sandboxes
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: templates-templates
+    baseUri: https://api.e2b.app
+    description: Manage sandbox templates that define base images for new sandboxes.
+    resources:
+    - name: templates
+      path: /templates
+      operations:
+      - name: listtemplates
+        method: GET
+        description: E2B List Templates
+      - name: createtemplate
+        method: POST
+        description: E2B Create A Template
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: template
+      path: /templates/{templateID}
+      operations:
+      - name: gettemplate
+        method: GET
+        description: E2B Get A Template
+        inputParameters:
+        - name: templateID
+          in: path
+          type: string
+          required: true
+      - name: updatetemplate
+        method: PATCH
+        description: E2B Update A Template
+        inputParameters:
+        - name: templateID
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletetemplate
+        method: DELETE
+        description: E2B Delete A Template
+        inputParameters:
+        - name: templateID
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: templates-templates-mcp
+    port: 9090
+    transport: http
+    description: MCP tools for managing E2B sandbox templates.
+    tools:
+    - name: e2b-list-templates
+      description: E2B List Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: templates-templates.listtemplates
+    - name: e2b-create-template
+      description: E2B Create A Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: templates-templates.createtemplate
+      with:
+        body: tools.body
+    - name: e2b-get-template
+      description: E2B Get A Template
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: templates-templates.gettemplate
+      with:
+        templateID: tools.templateID
+    - name: e2b-update-template
+      description: E2B Update A Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: templates-templates.updatetemplate
+      with:
+        templateID: tools.templateID
+        body: tools.body
+    - name: e2b-delete-template
+      description: E2B Delete A Template
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: templates-templates.deletetemplate
+      with:
+        templateID: tools.templateID

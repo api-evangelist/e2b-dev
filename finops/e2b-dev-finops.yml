@@ -1,0 +1,97 @@
+apiCommons: finops-0.1
+info:
+  title: E2B FinOps Surface
+  provider: E2B (e2b-dev)
+  description: Mapping of E2B's billing surface to the FinOps Framework and FOCUS data spec. Captures the metered
+    units, cost allocation dimensions, and tagging surface relevant to sandbox-based AI agent workloads.
+  sources:
+  - https://e2b.dev/pricing
+  - https://e2b.dev/docs/api-key
+  - https://e2b.dev/dashboard
+  created: '2026-05-25'
+  updated: '2026-05-25'
+billingModel: usage-based-with-subscription
+billingCurrency: USD
+serviceLines:
+- id: sandbox-compute
+  name: Sandbox Compute
+  description: Per-second vCPU and memory charges for running sandboxes.
+  meters:
+  - id: vcpu_seconds
+    unit: vCPU-second
+    description: Time a sandbox spends with N vCPUs allocated.
+    pricingTiers:
+    - vcpu: 1
+      price: 0.000014
+    - vcpu: 2
+      price: 0.000028
+    - vcpu: 4
+      price: 0.000056
+    - vcpu: 8
+      price: 0.000112
+  - id: memory_gib_seconds
+    unit: GiB-second
+    description: Memory-time integral for running sandboxes.
+    price: 0.0000045
+- id: storage
+  name: Sandbox and Volume Storage
+  description: Persistent template, snapshot, and volume storage beyond the plan's included allotment.
+  meters:
+  - id: storage_gib_month
+    unit: GiB-month
+    description: Storage above the 10 GiB (Hobby) / 20 GiB (Pro) plan allotment.
+- id: subscription
+  name: Plan Subscription
+  description: Recurring plan fee independent of usage.
+  meters:
+  - id: plan_fee
+    unit: month
+    pricing:
+    - plan: hobby
+      price: 0
+    - plan: pro
+      price: 150
+    - plan: enterprise
+      price: custom
+allocationDimensions:
+- name: sandbox_metadata
+  description: String map attached at sandbox creation; can be used to tag traffic by agent, customer, environment,
+    or job ID for cost allocation.
+- name: template
+  description: Template ID and namespace/alias the sandbox was created from.
+- name: team
+  description: E2B team that owns the sandbox.
+focusMapping:
+  ChargeCategory: Usage
+  ChargeClass: Consumption
+  ChargeFrequency: Recurring
+  PricingCategory: Usage-Based
+  PricingUnit:
+  - vCPU-second
+  - GiB-second
+  - GiB-month
+  ConsumedUnit:
+  - vCPU
+  - GiB
+  - storage
+  CommitmentDiscountCategory: null
+  RegionId: derived-from-sandbox-region
+  ResourceId: sandboxID
+  ResourceType: e2b.sandbox
+  ServiceCategory: AI Sandbox / Compute
+observability:
+- name: Sandbox metrics endpoint
+  endpoint: /sandboxes/{sandboxID}/metrics
+  description: Per-sandbox metric stream (CPU, memory, disk).
+- name: Fleet metrics endpoint
+  endpoint: /sandboxes/metrics
+  description: Aggregated metrics across all running sandboxes for the team.
+- name: Team metrics
+  endpoint: /teams/{teamID}/metrics
+  description: Aggregate sandbox usage at the team level.
+notes:
+- Apply E2B sandbox metadata at create time to enable chargeback and showback against your own dimensions
+  (customer, agent, project) without separate FOCUS enrichment.
+- Pause and snapshot a sandbox between agent turns to avoid paying vCPU-seconds during idle time.
+- Pro concurrency expansion (up to 1,100) is a paid add-on and should be tracked as a fixed-fee charge alongside
+  per-second usage.

@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Sandbox API — Metrics and Logs
+  description: 'E2B Sandbox API — Metrics and Logs. Stream metrics and logs for one sandbox or aggregate metrics
+    for the running fleet.'
+  tags:
+  - E2B
+  - Sandboxes
+  - Metrics
+  - Logs
+  - Observability
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sandboxes-metrics
+    baseUri: https://api.e2b.app
+    description: E2B Sandbox API — metrics and log observability.
+    resources:
+    - name: sandbox-metrics
+      path: /sandboxes/{sandboxID}/metrics
+      operations:
+      - name: getsandboxmetrics
+        method: GET
+        description: E2B Get Metrics For A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    - name: sandbox-logs
+      path: /sandboxes/{sandboxID}/logs
+      operations:
+      - name: getsandboxlogs
+        method: GET
+        description: E2B Get Logs For A Sandbox
+        inputParameters:
+        - name: sandboxID
+          in: path
+          type: string
+          required: true
+    - name: fleet-metrics
+      path: /sandboxes/metrics
+      operations:
+      - name: getfleetmetrics
+        method: GET
+        description: E2B Get Metrics For All Running Sandboxes
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: sandboxes-metrics-mcp
+    port: 9090
+    transport: http
+    description: MCP tools for inspecting sandbox metrics and logs.
+    tools:
+    - name: e2b-get-sandbox-metrics
+      description: E2B Get Metrics For A Sandbox
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sandboxes-metrics.getsandboxmetrics
+      with:
+        sandboxID: tools.sandboxID
+    - name: e2b-get-sandbox-logs
+      description: E2B Get Logs For A Sandbox
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sandboxes-metrics.getsandboxlogs
+      with:
+        sandboxID: tools.sandboxID
+    - name: e2b-get-fleet-metrics
+      description: E2B Get Metrics For All Running Sandboxes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sandboxes-metrics.getfleetmetrics

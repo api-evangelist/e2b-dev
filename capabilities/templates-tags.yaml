@@ -1,0 +1,88 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Template API — Tags and Aliases
+  description: 'E2B Template API — Tags and Aliases. Tag templates and resolve aliases to templateIDs.'
+  tags:
+  - E2B
+  - Templates
+  - Tags
+  - Aliases
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: templates-tags
+    baseUri: https://api.e2b.app
+    description: Manage template tags and resolve template aliases.
+    resources:
+    - name: tags
+      path: /templates/tags
+      operations:
+      - name: listtags
+        method: GET
+        description: E2B List Template Tags
+    - name: template-tag
+      path: /templates/{templateID}/tags
+      operations:
+      - name: tagtemplate
+        method: POST
+        description: E2B Tag A Template
+        inputParameters:
+        - name: templateID
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+    - name: alias
+      path: /templates/aliases/{alias}
+      operations:
+      - name: getalias
+        method: GET
+        description: E2B Resolve A Template Alias
+        inputParameters:
+        - name: alias
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: templates-tags-mcp
+    port: 9090
+    transport: http
+    description: MCP tools for template tags and aliases.
+    tools:
+    - name: e2b-list-tags
+      description: E2B List Template Tags
+      hints:
+        readOnly: true
+      call: templates-tags.listtags
+    - name: e2b-tag-template
+      description: E2B Tag A Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: templates-tags.tagtemplate
+      with:
+        templateID: tools.templateID
+        body: tools.body
+    - name: e2b-resolve-alias
+      description: E2B Resolve A Template Alias
+      hints:
+        readOnly: true
+        idempotent: true
+      call: templates-tags.getalias
+      with:
+        alias: tools.alias

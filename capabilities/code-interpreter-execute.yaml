@@ -1,0 +1,68 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Code Interpreter — Execute
+  description: 'E2B Code Interpreter SDK — Execute. Run a snippet of Python or JavaScript inside a sandbox
+    and stream Jupyter-style results back to the caller.'
+  tags:
+  - E2B
+  - Code Interpreter
+  - Sandboxes
+  - Execution
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: sdk
+    namespace: code-interpreter-execute
+    description: 'Code Interpreter SDK calls (Python: e2b_code_interpreter.Sandbox, JS: @e2b/code-interpreter).
+      The HTTP surface is the same Sandbox API plus an in-sandbox Jupyter kernel reached via the envd connect
+      stream.'
+    resources:
+    - name: code-interpreter
+      operations:
+      - name: runcode
+        description: E2B Run Code In A Sandbox
+        inputParameters:
+        - name: code
+          type: string
+          required: true
+        - name: language
+          type: string
+          description: 'Language kernel: python or javascript.'
+        - name: sandboxID
+          type: string
+          description: Existing sandbox to reuse, otherwise a new one is created.
+        outputParameters:
+        - name: results
+          type: array
+        - name: logs
+          type: object
+        - name: error
+          type: object
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: code-interpreter-execute-mcp
+    port: 9090
+    transport: http
+    description: MCP tool that runs LLM-generated code in an E2B sandbox.
+    tools:
+    - name: e2b-run-code
+      description: E2B Run Code In A Sandbox
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: false
+      call: code-interpreter-execute.runcode
+      with:
+        code: tools.code
+        language: tools.language
+        sandboxID: tools.sandboxID

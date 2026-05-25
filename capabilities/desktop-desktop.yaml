@@ -1,0 +1,123 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: E2B Desktop Sandbox
+  description: 'E2B Desktop Sandbox SDK. Drive a virtual Linux desktop (X11 + noVNC) from a computer-use agent
+    using screenshot, mouse, keyboard, and window primitives.'
+  tags:
+  - E2B
+  - Desktop
+  - Computer Use
+  - GUI
+  - Agents
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    E2B_API_KEY: E2B_API_KEY
+capability:
+  consumes:
+  - type: sdk
+    namespace: desktop-desktop
+    description: 'E2B Desktop SDK calls (Python: e2b_desktop.Sandbox, JS: @e2b/desktop). Each method maps onto
+      a sandbox-side envd RPC into the desktop process.'
+    resources:
+    - name: desktop
+      operations:
+      - name: screenshot
+        description: E2B Take A Desktop Screenshot
+      - name: leftclick
+        description: E2B Desktop Left Click
+        inputParameters:
+        - name: x
+          type: integer
+          required: true
+        - name: y
+          type: integer
+          required: true
+      - name: rightclick
+        description: E2B Desktop Right Click
+        inputParameters:
+        - name: x
+          type: integer
+          required: true
+        - name: y
+          type: integer
+          required: true
+      - name: doubleclick
+        description: E2B Desktop Double Click
+        inputParameters:
+        - name: x
+          type: integer
+          required: true
+        - name: y
+          type: integer
+          required: true
+      - name: type
+        description: E2B Desktop Type Text
+        inputParameters:
+        - name: text
+          type: string
+          required: true
+      - name: press
+        description: E2B Desktop Press Key
+        inputParameters:
+        - name: key
+          type: string
+          required: true
+      - name: scroll
+        description: E2B Desktop Scroll
+        inputParameters:
+        - name: direction
+          type: string
+        - name: amount
+          type: integer
+      - name: streamurl
+        description: E2B Get Desktop Stream URL (noVNC)
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.E2B_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: desktop-desktop-mcp
+    port: 9090
+    transport: http
+    description: MCP tools that let a computer-use agent drive an E2B desktop sandbox.
+    tools:
+    - name: e2b-desktop-screenshot
+      description: E2B Take A Desktop Screenshot
+      hints:
+        readOnly: true
+      call: desktop-desktop.screenshot
+    - name: e2b-desktop-left-click
+      description: E2B Desktop Left Click
+      hints:
+        readOnly: false
+        destructive: true
+      call: desktop-desktop.leftclick
+      with:
+        x: tools.x
+        y: tools.y
+    - name: e2b-desktop-type
+      description: E2B Desktop Type Text
+      hints:
+        readOnly: false
+        destructive: true
+      call: desktop-desktop.type
+      with:
+        text: tools.text
+    - name: e2b-desktop-press
+      description: E2B Desktop Press Key
+      hints:
+        readOnly: false
+        destructive: true
+      call: desktop-desktop.press
+      with:
+        key: tools.key
+    - name: e2b-desktop-stream-url
+      description: E2B Get Desktop Stream URL (noVNC)
+      hints:
+        readOnly: true
+      call: desktop-desktop.streamurl
