@@ -21,7 +21,16 @@ apis:
     type: Documentation
   - url: https://e2b.dev/docs/sandbox/persistence
     type: Documentation
+  - url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+    name: Sandbox Lifecycle Webhooks
+    type: Documentation
+  - url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+    name: Sandbox Lifecycle Events API
+    type: Documentation
   - url: openapi/e2b-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/e2b-events-openapi.yml
+    name: Sandbox Events and Webhooks
     type: OpenAPI
   - url: json-schema/e2b-sandbox-schema.json
     type: JSONSchema
@@ -90,6 +99,28 @@ apis:
   description: Provision and manage persistent volumes that can be attached to sandboxes so agent state, datasets,
     and workspaces survive across sandbox runs. The Volume Content API uses a short-lived JWT to read and write
     files and directories inside a mounted volume from any sandbox or external client.
+- aid: e2b-dev:e2b-events-api
+  name: E2B Sandbox Events and Webhooks API
+  tags:
+  - AI
+  - Agents
+  - Events
+  - Webhooks
+  - Lifecycle
+  humanURL: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  baseURL: https://api.e2b.app
+  properties:
+  - url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+    type: Documentation
+  - url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+    type: Documentation
+  - url: openapi/e2b-events-openapi.yml
+    type: OpenAPI
+  description: REST surface for sandbox lifecycle events. Exposes polling endpoints at /events/sandboxes and
+    /events/sandboxes/{sandboxID} for created, updated, killed, paused, resumed, and checkpointed events, and
+    a webhook subscription surface at /events/webhooks for push delivery. Webhook deliveries are signed with
+    a SHA-256 HMAC-style hash of the shared secret concatenated with the raw body, sent in the e2b-signature
+    header alongside e2b-webhook-id, e2b-delivery-id, and e2b-signature-version.
 - aid: e2b-dev:e2b-team-api
   name: E2B Team and Identity API
   tags:
@@ -317,7 +348,7 @@ common:
   - https://github.com/e2b-dev/E2B/blob/main/spec/openapi.yml
   updated: '2026-05-25'
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-05-30'
 position: Consuming
 description: E2B (e2b-dev) provides secure, isolated cloud sandboxes for AI agents and AI-generated code, built
   on a forked Firecracker microVM runtime. The platform ships a REST Sandbox API, JavaScript and Python SDKs,
