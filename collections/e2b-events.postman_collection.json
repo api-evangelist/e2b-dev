@@ -1,0 +1,802 @@
+{
+  "item": [
+    {
+      "id": "6716a214-f47a-4870-9a39-824066db45e2",
+      "name": "events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e25a1e26-7529-478a-b6d4-3db252dc382b",
+          "name": "List team sandbox lifecycle events",
+          "request": {
+            "name": "List team sandbox lifecycle events",
+            "description": {
+              "content": "Returns sandbox lifecycle events across the entire team. Supports\npagination via offset/limit and filtering by event type.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                "sandboxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filter by event type. Repeatable."
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filter by event type. Repeatable."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "706c5c72-7386-4a83-a6fa-c1945ec10ed9",
+              "name": "Team sandbox events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "sandbox.lifecycle.resumed"
+                    },
+                    {
+                      "key": "types",
+                      "value": "sandbox.lifecycle.killed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"sandbox.lifecycle.checkpointed\",\n      \"timestamp\": \"1957-05-14T18:45:32.688Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1992-01-17T06:57:04.995Z\",\n          \"vcpu_count\": 1414,\n          \"memory_mb\": 4432,\n          \"execution_time\": 8870\n        },\n        \"set_timeout\": 8447,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": false,\n        \"key_3\": 5500\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"sandbox.lifecycle.resumed\",\n      \"timestamp\": \"1981-03-17T10:59:44.093Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1990-02-28T07:09:11.783Z\",\n          \"vcpu_count\": 8422,\n          \"memory_mb\": 2485,\n          \"execution_time\": 5288\n        },\n        \"set_timeout\": 5095\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb315bac-d5fd-4c21-ba8c-a5807736636f",
+          "name": "List events for a single sandbox",
+          "request": {
+            "name": "List events for a single sandbox",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "sandboxes",
+                ":sandboxID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandboxID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b783402-1f04-46c8-821b-9d5991dc23cc",
+              "name": "Sandbox events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "sandboxes",
+                    ":sandboxID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "sandbox.lifecycle.resumed"
+                    },
+                    {
+                      "key": "types",
+                      "value": "sandbox.lifecycle.killed"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandboxID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"sandbox.lifecycle.checkpointed\",\n      \"timestamp\": \"1957-05-14T18:45:32.688Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1992-01-17T06:57:04.995Z\",\n          \"vcpu_count\": 1414,\n          \"memory_mb\": 4432,\n          \"execution_time\": 8870\n        },\n        \"set_timeout\": 8447,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": false,\n        \"key_3\": 5500\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"sandbox.lifecycle.resumed\",\n      \"timestamp\": \"1981-03-17T10:59:44.093Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1990-02-28T07:09:11.783Z\",\n          \"vcpu_count\": 8422,\n          \"memory_mb\": 2485,\n          \"execution_time\": 5288\n        },\n        \"set_timeout\": 5095\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "566a2279-bad6-4de2-b181-8fb171fee076",
+      "name": "webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d7aacbc-87fd-4a35-afff-9517a942de21",
+          "name": "List webhook subscriptions",
+          "request": {
+            "name": "List webhook subscriptions",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "047fb994-6ee3-4100-af68-62907a355ba8",
+              "name": "Registered webhooks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"teamId\": \"string\",\n    \"name\": \"string\",\n    \"url\": \"https://fQQGyYCSPJ.allvklr2glCCbcD-,l8u2Nq,HziZUvto0jzOCLwbMlCJU3.9xNwXUubXz27\",\n    \"events\": [\n      \"sandbox.lifecycle.created\",\n      \"sandbox.lifecycle.paused\"\n    ],\n    \"createdAt\": \"1976-11-17T12:01:54.218Z\",\n    \"enabled\": true\n  },\n  {\n    \"id\": \"string\",\n    \"teamId\": \"string\",\n    \"name\": \"string\",\n    \"url\": \"https://yYSrDYbWBmUSabCdDshGIUPYMArSJIt.qzvnyimnFOH02NIAYsbzqPVJ9e9UQ++iD\",\n    \"events\": [\n      \"sandbox.lifecycle.paused\",\n      \"sandbox.lifecycle.checkpointed\"\n    ],\n    \"createdAt\": \"1960-04-23T19:54:38.715Z\",\n    \"enabled\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba0a2b65-2397-4aeb-9ff1-155425c14066",
+          "name": "Register a webhook subscription",
+          "request": {
+            "name": "Register a webhook subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled\": true,\n  \"signatureSecret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "95a2c9b5-402b-40f7-981f-f375a2c00af2",
+              "name": "Webhook created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"events\": [\n    \"sandbox.lifecycle.updated\",\n    \"sandbox.lifecycle.resumed\"\n  ],\n  \"enabled\": true,\n  \"signatureSecret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"teamId\": \"string\",\n  \"name\": \"string\",\n  \"url\": \"http://qUashHgBHyNgPFjuDThJfulHKmFkrRzFh.ljrILyG84\",\n  \"events\": [\n    \"sandbox.lifecycle.resumed\",\n    \"sandbox.lifecycle.killed\"\n  ],\n  \"createdAt\": \"1971-12-17T09:40:36.977Z\",\n  \"enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db3c5c32-4703-4958-84a9-0f81fa715e03",
+          "name": "Get a webhook subscription",
+          "request": {
+            "name": "Get a webhook subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "webhooks",
+                ":webhookID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2945a944-3c0b-40f0-8d2e-4cf5183e7bdf",
+              "name": "Webhook configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "webhooks",
+                    ":webhookID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"teamId\": \"string\",\n  \"name\": \"string\",\n  \"url\": \"http://qUashHgBHyNgPFjuDThJfulHKmFkrRzFh.ljrILyG84\",\n  \"events\": [\n    \"sandbox.lifecycle.resumed\",\n    \"sandbox.lifecycle.killed\"\n  ],\n  \"createdAt\": \"1971-12-17T09:40:36.977Z\",\n  \"enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21deb20f-fb0e-4366-9757-36dc73170b96",
+          "name": "Update a webhook subscription",
+          "request": {
+            "name": "Update a webhook subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "webhooks",
+                ":webhookID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"enabled\": \"<boolean>\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53356552-73fa-46a6-8409-6c554883a52d",
+              "name": "Updated webhook",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "webhooks",
+                    ":webhookID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"enabled\": \"<boolean>\",\n  \"events\": [\n    \"sandbox.lifecycle.created\",\n    \"sandbox.lifecycle.created\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"teamId\": \"string\",\n  \"name\": \"string\",\n  \"url\": \"http://qUashHgBHyNgPFjuDThJfulHKmFkrRzFh.ljrILyG84\",\n  \"events\": [\n    \"sandbox.lifecycle.resumed\",\n    \"sandbox.lifecycle.killed\"\n  ],\n  \"createdAt\": \"1971-12-17T09:40:36.977Z\",\n  \"enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84eaa0c3-fa34-4eff-af24-43ec352cd4f9",
+          "name": "Delete a webhook subscription",
+          "request": {
+            "name": "Delete a webhook subscription",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "webhooks",
+                ":webhookID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "064ceb11-7ed0-4792-820a-43472a05909c",
+              "name": "Webhook deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "webhooks",
+                    ":webhookID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.e2b.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "693af314-56c1-4344-9032-2e7edee347af",
+    "name": "E2B Sandbox Events and Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documented REST surface for E2B sandbox lifecycle events and webhook\nsubscriptions. Modeled directly from the public documentation at\nhttps://e2b.dev/docs/sandbox/lifecycle-events-webhooks and\nhttps://e2b.dev/docs/sandbox/lifecycle-events-api.\n\nThis spec covers two surfaces:\n  1. Polling REST events at /events/sandboxes (team-wide) and\n     /events/sandboxes/{sandboxID} (single sandbox).\n  2. Webhook subscription management at /events/webhooks, plus the\n     signed POST payload that E2B delivers to subscribed URLs.\n\nWebhook deliveries include the headers e2b-webhook-id,\ne2b-delivery-id, e2b-signature-version, and e2b-signature. The\nsignature is a base64-encoded SHA-256 of the concatenation of the\nsubscription secret and the raw payload body, with trailing \"=\"\npadding stripped.\n",
+      "type": "text/plain"
+    }
+  }
+}

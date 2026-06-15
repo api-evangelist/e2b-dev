@@ -1,0 +1,1528 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/health"
+          },
+          "docs": "Health check"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all teams"
+        },
+        {
+          "info": {
+            "name": "GET /teams/{teamID}/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams/:teamID/metrics",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get metrics for the team"
+        },
+        {
+          "info": {
+            "name": "GET /teams/{teamID}/metrics/max",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams/:teamID/metrics/max",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "metric",
+                "value": "",
+                "type": "query",
+                "description": "Metric to retrieve the maximum value for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the maximum metrics for the team in the given interval"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "sandboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes",
+            "params": [
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata query used to filter the sandboxes (e.g. \"user=abc&app=prod\"). Each key and values must be URL encoded."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all running sandboxes"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a sandbox from the template"
+        },
+        {
+          "info": {
+            "name": "GET /v2/sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/v2/sandboxes",
+            "params": [
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata query used to filter the sandboxes (e.g. \"user=abc&app=prod\"). Each key and values must be URL encoded."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter sandboxes by one or more states"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start the list from"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all sandboxes"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/metrics",
+            "params": [
+              {
+                "name": "sandbox_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of sandbox IDs to get metrics for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List metrics for given sandboxes"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/logs",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox logs. Use /v2/sandboxes/{sandboxID}/logs instead."
+        },
+        {
+          "info": {
+            "name": "GET /v2/sandboxes/{sandboxID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/v2/sandboxes/:sandboxID/logs",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of the logs that should be returned"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "Minimum log level to return. Logs below this level are excluded"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-sensitive substring match on log message content"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox logs"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a sandbox by id"
+        },
+        {
+          "info": {
+            "name": "DELETE /sandboxes/{sandboxID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Kill a sandbox"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/metrics",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox metrics"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/pause",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/pause",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Pause the sandbox"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/resume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/resume",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resume the sandbox"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/connect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/connect",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns sandbox details. If the sandbox is paused, it will be resumed. TTL is only extended."
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/timeout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/timeout",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set the timeout for the sandbox. The sandbox will expire x seconds from the time of the request. Calling this method multiple times overwrites the TTL, each time using the current timestamp as the starting point to measure the timeout duration."
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/refreshes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/refreshes",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Refresh the sandbox extending its time to live"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/snapshots",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a persistent snapshot from the sandbox's current state. Snapshots can be used to create new sandboxes and persist beyond the original sandbox's lifetime."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "snapshots",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/snapshots",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start the list from"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all snapshots for the team"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /v3/templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v3/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "POST /v2/templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v2/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/files/{hash}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/files/:hash",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an upload link for a tar file containing build layer files"
+        },
+        {
+          "info": {
+            "name": "GET /templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all templates"
+        },
+        {
+          "info": {
+            "name": "POST /templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start the list from"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all builds for a template"
+        },
+        {
+          "info": {
+            "name": "POST /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rebuild an template"
+        },
+        {
+          "info": {
+            "name": "PATCH /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template"
+        },
+        {
+          "info": {
+            "name": "DELETE /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a template"
+        },
+        {
+          "info": {
+            "name": "POST /templates/{templateID}/builds/{buildID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start the build"
+        },
+        {
+          "info": {
+            "name": "POST /v2/templates/{templateID}/builds/{buildID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v2/templates/:templateID/builds/:buildID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Start the build"
+        },
+        {
+          "info": {
+            "name": "PATCH /v2/templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/v2/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/builds/{buildID}/status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID/status",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "logsOffset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the starting build log that should be returned with the template"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get template build info"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/builds/{buildID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID/logs",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Source of the logs that should be returned from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get template build logs"
+        },
+        {
+          "info": {
+            "name": "GET /templates/aliases/{alias}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/aliases/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check if template with given alias exists"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /templates/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Assign tag(s) to a template build"
+        },
+        {
+          "info": {
+            "name": "DELETE /templates/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/templates/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete multiple tags from templates"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/tags",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all tags for a template"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/nodes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all nodes"
+        },
+        {
+          "info": {
+            "name": "GET /nodes/{nodeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/nodes/:nodeID",
+            "params": [
+              {
+                "name": "nodeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the cluster"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get node info"
+        },
+        {
+          "info": {
+            "name": "POST /nodes/{nodeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/nodes/:nodeID",
+            "params": [
+              {
+                "name": "nodeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Change status of a node"
+        },
+        {
+          "info": {
+            "name": "Kill all sandboxes for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/admin/teams/:teamID/sandboxes/kill",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Kills all sandboxes for the specified team"
+        },
+        {
+          "info": {
+            "name": "Cancel all builds for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/admin/teams/:teamID/builds/cancel",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels all in-progress and pending builds for the specified team"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "access-tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /access-tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/access-tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new access token"
+        },
+        {
+          "info": {
+            "name": "DELETE /access-tokens/{accessTokenID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/access-tokens/:accessTokenID",
+            "params": [
+              {
+                "name": "accessTokenID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an access token"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "api-keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /api-keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/api-keys",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all team API keys"
+        },
+        {
+          "info": {
+            "name": "POST /api-keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/api-keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new team API key"
+        },
+        {
+          "info": {
+            "name": "PATCH /api-keys/{apiKeyID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/api-keys/:apiKeyID",
+            "params": [
+              {
+                "name": "apiKeyID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a team API key"
+        },
+        {
+          "info": {
+            "name": "DELETE /api-keys/{apiKeyID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/api-keys/:apiKeyID",
+            "params": [
+              {
+                "name": "apiKeyID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a team API key"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all team volumes"
+        },
+        {
+          "info": {
+            "name": "POST /volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new team volume"
+        },
+        {
+          "info": {
+            "name": "GET /volumes/{volumeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumes/:volumeID",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get team volume info"
+        },
+        {
+          "info": {
+            "name": "DELETE /volumes/{volumeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/volumes/:volumeID",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a team volume"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
