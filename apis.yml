@@ -142,7 +142,7 @@ apis:
       - url: https://e2b.dev/docs/code-interpreting/analyze-data-with-ai
         type: Documentation
       - url: https://github.com/e2b-dev/code-interpreter
-        type: SDK
+        type: SDKs
     description: >-
       Higher-level SDK on top of the Sandbox API that exposes a Jupyter-style code interpreter for LLM-driven Python and
       JavaScript execution. Returns structured execution results including stdout, stderr, text, png, jpeg, svg, html,
@@ -161,7 +161,7 @@ apis:
       - url: https://github.com/e2b-dev/desktop
         type: Documentation
       - url: https://github.com/e2b-dev/desktop
-        type: SDK
+        type: SDKs
     description: >-
       Sandbox flavor that boots a Linux desktop environment with a noVNC stream and exposes mouse, keyboard, screenshot,
       and window-management primitives. Built for computer-use agents pairing vision-capable models like Claude and GPT
@@ -203,7 +203,7 @@ common:
     name: API Keys
     type: Authentication
   - url: https://e2b.dev/auth/sign-up
-    type: SignUp
+    type: Signup
   - url: https://e2b.dev/blog
     type: Blog
   - url: https://e2b.dev/changelog
@@ -221,7 +221,7 @@ common:
   - url: https://www.linkedin.com/company/e2b-dev
     type: LinkedIn
   - url: https://discord.gg/U7KEcGErtQ
-    type: Forum
+    type: Forums
   - url: https://github.com/e2b-dev
     type: GitHubOrganization
   - url: https://github.com/e2b-dev/E2B
@@ -271,22 +271,22 @@ common:
     type: GitHubRepository
   - url: https://www.npmjs.com/package/e2b
     name: e2b npm
-    type: SDK
+    type: SDKs
   - url: https://www.npmjs.com/package/@e2b/code-interpreter
     name: '@e2b/code-interpreter npm'
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/e2b/
     name: e2b PyPI
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/e2b-code-interpreter/
     name: e2b-code-interpreter PyPI
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/e2b-desktop/
     name: e2b-desktop PyPI
-    type: SDK
+    type: SDKs
   - url: https://www.npmjs.com/package/@e2b/desktop
     name: '@e2b/desktop npm'
-    type: SDK
+    type: SDKs
   - url: https://www.npmjs.com/package/@e2b/cli
     name: '@e2b/cli'
     type: CLI
