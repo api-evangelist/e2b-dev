@@ -1,0 +1,42 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/e2b-api-openapi.yml, openapi/e2b-events-openapi.yml, openapi/e2b-volumes-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  sources:
+  - openapi/e2b-api-openapi.yml
+  - openapi/e2b-events-openapi.yml
+- name: AccessTokenAuth
+  type: http
+  scheme: bearer
+  bearerFormat: access_token
+  sources:
+  - openapi/e2b-api-openapi.yml
+  - openapi/e2b-volumes-openapi.yml
+- name: Supabase1TokenAuth
+  type: apiKey
+  in: header
+  parameter: X-Supabase-Token
+  sources:
+  - openapi/e2b-api-openapi.yml
+- name: Supabase2TeamAuth
+  type: apiKey
+  in: header
+  parameter: X-Supabase-Team
+  sources:
+  - openapi/e2b-api-openapi.yml
+- name: AdminTokenAuth
+  type: apiKey
+  in: header
+  parameter: X-Admin-Token
+  sources:
+  - openapi/e2b-api-openapi.yml
