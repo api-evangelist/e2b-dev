@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: E2B access-tokens Health API
+servers:
+- url: https://api.e2b.app
+tags:
+- name: Health
+paths:
+  /health:
+    get:
+      description: Health check
+      responses:
+        '200':
+          description: Request was successful
+        '401':
+          $ref: '#/components/responses/401'
+      tags:
+      - Health
+components:
+  schemas:
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+  responses:
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: access_token
+    Supabase1TokenAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Token
+    Supabase2TeamAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Team
+    AdminTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Admin-Token

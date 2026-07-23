@@ -1,0 +1,183 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: E2B access-tokens webhooks API
+servers:
+- url: https://api.e2b.app
+tags:
+- name: webhooks
+paths:
+  /events/webhooks:
+    get:
+      summary: List webhook subscriptions
+      tags:
+      - webhooks
+      responses:
+        '200':
+          description: Registered webhooks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+    post:
+      summary: Register a webhook subscription
+      tags:
+      - webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookCreateRequest'
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+  /events/webhooks/{webhookID}:
+    get:
+      summary: Get a webhook subscription
+      tags:
+      - webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookID'
+      responses:
+        '200':
+          description: Webhook configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    patch:
+      summary: Update a webhook subscription
+      tags:
+      - webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookUpdateRequest'
+      responses:
+        '200':
+          description: Updated webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    delete:
+      summary: Delete a webhook subscription
+      tags:
+      - webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookID'
+      responses:
+        '200':
+          description: Webhook deleted
+components:
+  schemas:
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+    Webhook:
+      type: object
+      required:
+      - id
+      - teamId
+      - name
+      - url
+      - events
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        enabled:
+          type: boolean
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+    WebhookCreateRequest:
+      type: object
+      required:
+      - name
+      - url
+      - events
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+          default: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+        signatureSecret:
+          type: string
+          description: Shared secret used to sign delivery payloads.
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
+  parameters:
+    webhookID:
+      name: webhookID
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: access_token
+    Supabase1TokenAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Token
+    Supabase2TeamAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Team
+    AdminTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Admin-Token

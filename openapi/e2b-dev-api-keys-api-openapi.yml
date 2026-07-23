@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: E2B access-tokens api-keys API
+servers:
+- url: https://api.e2b.app
+tags:
+- name: api-keys
+paths:
+  /api-keys:
+    get:
+      description: List all team API keys
+      tags:
+      - api-keys
+      security:
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      responses:
+        '200':
+          description: Successfully returned all team API keys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamAPIKey'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Create a new team API key
+      tags:
+      - api-keys
+      security:
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTeamAPIKey'
+      responses:
+        '201':
+          description: Team API key created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedTeamAPIKey'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /api-keys/{apiKeyID}:
+    patch:
+      description: Update a team API key
+      tags:
+      - api-keys
+      security:
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/apiKeyID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamAPIKey'
+      responses:
+        '200':
+          description: Team API key updated successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      description: Delete a team API key
+      tags:
+      - api-keys
+      security:
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/apiKeyID'
+      responses:
+        '204':
+          description: Team API key deleted successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    UpdateTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New name for the API key
+    NewTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the API key
+    TeamUser:
+      required:
+      - id
+      - email
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the user
+        email:
+          type: string
+          description: Email of the user
+    CreatedTeamAPIKey:
+      required:
+      - id
+      - key
+      - mask
+      - name
+      - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the API key
+        key:
+          type: string
+          description: Raw value of the API key
+        mask:
+          $ref: '#/components/schemas/IdentifierMaskingDetails'
+        name:
+          type: string
+          description: Name of the API key
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of API key creation
+        createdBy:
+          allOf:
+          - $ref: '#/components/schemas/TeamUser'
+          nullable: true
+        lastUsed:
+          type: string
+          format: date-time
+          description: Last time this API key was used
+          nullable: true
+    TeamAPIKey:
+      required:
+      - id
+      - name
+      - mask
+      - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the API key
+        name:
+          type: string
+          description: Name of the API key
+        mask:
+          $ref: '#/components/schemas/IdentifierMaskingDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of API key creation
+        createdBy:
+          allOf:
+          - $ref: '#/components/schemas/TeamUser'
+          nullable: true
+        lastUsed:
+          type: string
+          format: date-time
+          description: Last time this API key was used
+          nullable: true
+    IdentifierMaskingDetails:
+      required:
+      - prefix
+      - valueLength
+      - maskedValuePrefix
+      - maskedValueSuffix
+      properties:
+        prefix:
+          type: string
+          description: Prefix that identifies the token or key type
+        valueLength:
+          type: integer
+          description: Length of the token or key
+        maskedValuePrefix:
+          type: string
+          description: Prefix used in masked version of the token or key
+        maskedValueSuffix:
+          type: string
+          description: Suffix used in masked version of the token or key
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+  parameters:
+    apiKeyID:
+      name: apiKeyID
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: access_token
+    Supabase1TokenAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Token
+    Supabase2TeamAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Team
+    AdminTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Admin-Token

@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: E2B access-tokens events API
+servers:
+- url: https://api.e2b.app
+tags:
+- name: events
+paths:
+  /events/sandboxes:
+    get:
+      summary: List team sandbox lifecycle events
+      description: 'Returns sandbox lifecycle events across the entire team. Supports
+
+        pagination via offset/limit and filtering by event type.
+
+        '
+      tags:
+      - events
+      parameters:
+      - in: query
+        name: offset
+        schema:
+          type: integer
+          default: 0
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - in: query
+        name: orderAsc
+        schema:
+          type: boolean
+      - in: query
+        name: types
+        description: Filter by event type. Repeatable.
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+        style: form
+        explode: true
+      responses:
+        '200':
+          description: Team sandbox events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxEventsResponse'
+  /events/sandboxes/{sandboxID}:
+    get:
+      summary: List events for a single sandbox
+      tags:
+      - events
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      - in: query
+        name: offset
+        schema:
+          type: integer
+          default: 0
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - in: query
+        name: orderAsc
+        schema:
+          type: boolean
+      - in: query
+        name: types
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+        style: form
+        explode: true
+      responses:
+        '200':
+          description: Sandbox events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxEventsResponse'
+components:
+  schemas:
+    SandboxEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxEvent'
+    SandboxEvent:
+      type: object
+      required:
+      - id
+      - version
+      - type
+      - timestamp
+      - sandbox_id
+      - sandbox_team_id
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+          example: v2
+        type:
+          $ref: '#/components/schemas/SandboxLifecycleEventType'
+        timestamp:
+          type: string
+          format: date-time
+        event_category:
+          type: string
+          example: lifecycle
+        event_label:
+          type: string
+        event_data:
+          $ref: '#/components/schemas/SandboxEventData'
+        sandbox_id:
+          type: string
+        sandbox_execution_id:
+          type: string
+        sandbox_template_id:
+          type: string
+        sandbox_build_id:
+          type: string
+        sandbox_team_id:
+          type: string
+    SandboxExecution:
+      type: object
+      description: 'Execution metrics included on terminal events such as
+
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+
+        '
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
+    SandboxEventData:
+      type: object
+      description: 'Event-specific payload. May be null on events that have no
+
+        additional context. For sandbox.lifecycle.updated the payload
+
+        may include set_timeout. For sandbox.lifecycle.killed and
+
+        sandbox.lifecycle.paused the payload includes execution
+
+        details.
+
+        '
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
+  parameters:
+    sandboxID:
+      name: sandboxID
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: access_token
+    Supabase1TokenAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Token
+    Supabase2TeamAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Team
+    AdminTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Admin-Token

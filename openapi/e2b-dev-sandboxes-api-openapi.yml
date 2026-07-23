@@ -1,0 +1,1056 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: E2B access-tokens sandboxes API
+servers:
+- url: https://api.e2b.app
+tags:
+- name: sandboxes
+paths:
+  /sandboxes:
+    get:
+      description: List all running sandboxes
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - name: metadata
+        in: query
+        description: Metadata query used to filter the sandboxes (e.g. "user=abc&app=prod"). Each key and values must be URL encoded.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned all running sandboxes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/ListedSandbox'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Create a sandbox from the template
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSandbox'
+      responses:
+        '201':
+          description: The sandbox was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/sandboxes:
+    get:
+      description: List all sandboxes
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - name: metadata
+        in: query
+        description: Metadata query used to filter the sandboxes (e.g. "user=abc&app=prod"). Each key and values must be URL encoded.
+        required: false
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: Filter sandboxes by one or more states
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxState'
+        style: form
+        explode: false
+      - $ref: '#/components/parameters/paginationNextToken'
+      - $ref: '#/components/parameters/paginationLimit'
+      responses:
+        '200':
+          description: Successfully returned all running sandboxes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/ListedSandbox'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/metrics:
+    get:
+      description: List metrics for given sandboxes
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - name: sandbox_ids
+        in: query
+        required: true
+        description: Comma-separated list of sandbox IDs to get metrics for
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+          maxItems: 100
+          uniqueItems: true
+      responses:
+        '200':
+          description: Successfully returned all running sandboxes with metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxesWithMetrics'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/logs:
+    get:
+      description: Get sandbox logs. Use /v2/sandboxes/{sandboxID}/logs instead.
+      deprecated: true
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      - in: query
+        name: start
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+        description: Starting timestamp of the logs that should be returned in milliseconds
+      - in: query
+        name: limit
+        schema:
+          default: 1000
+          format: int32
+          minimum: 0
+          type: integer
+        description: Maximum number of logs that should be returned
+      responses:
+        '200':
+          description: Successfully returned the sandbox logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxLogs'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/sandboxes/{sandboxID}/logs:
+    get:
+      description: Get sandbox logs
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      - in: query
+        name: cursor
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+        description: Starting timestamp of the logs that should be returned in milliseconds
+      - in: query
+        name: limit
+        schema:
+          default: 1000
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 1000
+        description: Maximum number of logs that should be returned
+      - in: query
+        name: direction
+        schema:
+          $ref: '#/components/schemas/LogsDirection'
+        description: Direction of the logs that should be returned
+      - in: query
+        name: level
+        schema:
+          $ref: '#/components/schemas/LogLevel'
+        description: Minimum log level to return. Logs below this level are excluded
+      - in: query
+        name: search
+        schema:
+          type: string
+          maxLength: 256
+        description: Case-sensitive substring match on log message content
+      responses:
+        '200':
+          description: Successfully returned the sandbox logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxLogsV2Response'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}:
+    get:
+      description: Get a sandbox by id
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      responses:
+        '200':
+          description: Successfully returned the sandbox
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxDetail'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      description: Kill a sandbox
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      responses:
+        '204':
+          description: The sandbox was killed successfully
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/metrics:
+    get:
+      description: Get sandbox metrics
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      - in: query
+        name: start
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+        description: Unix timestamp for the start of the interval, in seconds, for which the metrics
+      - in: query
+        name: end
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Unix timestamp for the end of the interval, in seconds, for which the metrics
+      responses:
+        '200':
+          description: Successfully returned the sandbox metrics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxMetric'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/pause:
+    post:
+      description: Pause the sandbox
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      responses:
+        '204':
+          description: The sandbox was paused successfully and can be resumed
+        '409':
+          $ref: '#/components/responses/409'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/resume:
+    post:
+      deprecated: true
+      description: Resume the sandbox
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResumedSandbox'
+      responses:
+        '201':
+          description: The sandbox was resumed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+        '409':
+          $ref: '#/components/responses/409'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/connect:
+    post:
+      description: Returns sandbox details. If the sandbox is paused, it will be resumed. TTL is only extended.
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectSandbox'
+      responses:
+        '200':
+          description: The sandbox was already running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+        '201':
+          description: The sandbox was resumed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/timeout:
+    post:
+      description: Set the timeout for the sandbox. The sandbox will expire x seconds from the time of the request. Calling this method multiple times overwrites the TTL, each time using the current timestamp as the starting point to measure the timeout duration.
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      tags:
+      - sandboxes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - timeout
+              properties:
+                timeout:
+                  description: Timeout in seconds from the current time after which the sandbox should expire
+                  type: integer
+                  format: int32
+                  minimum: 0
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      responses:
+        '204':
+          description: Successfully set the sandbox timeout
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /sandboxes/{sandboxID}/refreshes:
+    post:
+      description: Refresh the sandbox extending its time to live
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      tags:
+      - sandboxes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                duration:
+                  description: Duration for which the sandbox should be kept alive in seconds
+                  type: integer
+                  maximum: 3600
+                  minimum: 0
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      responses:
+        '204':
+          description: Successfully refreshed the sandbox
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+  /sandboxes/{sandboxID}/snapshots:
+    post:
+      description: Create a persistent snapshot from the sandbox's current state. Snapshots can be used to create new sandboxes and persist beyond the original sandbox's lifetime.
+      tags:
+      - sandboxes
+      security:
+      - ApiKeyAuth: []
+      - Supabase1TokenAuth: []
+        Supabase2TeamAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sandboxID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Optional name for the snapshot template. If a snapshot template with this name already exists, a new build will be assigned to the existing template instead of creating a new one.
+      responses:
+        '201':
+          description: Snapshot created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotInfo'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    SandboxLog:
+      description: Log entry with timestamp and line
+      required:
+      - timestamp
+      - line
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        line:
+          type: string
+          description: Log line content
+    SandboxAutoResumeEnabled:
+      type: boolean
+      description: Auto-resume enabled flag for paused sandboxes. Default false.
+      default: false
+    SandboxAutoResumeConfig:
+      type: object
+      description: Auto-resume configuration for paused sandboxes.
+      required:
+      - enabled
+      properties:
+        enabled:
+          $ref: '#/components/schemas/SandboxAutoResumeEnabled'
+    ListedSandbox:
+      required:
+      - templateID
+      - sandboxID
+      - clientID
+      - startedAt
+      - cpuCount
+      - memoryMB
+      - diskSizeMB
+      - endAt
+      - state
+      - envdVersion
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the template from which is the sandbox created
+        alias:
+          type: string
+          description: Alias of the template
+        sandboxID:
+          type: string
+          description: Identifier of the sandbox
+        clientID:
+          type: string
+          deprecated: true
+          description: Identifier of the client
+        startedAt:
+          type: string
+          format: date-time
+          description: Time when the sandbox was started
+        endAt:
+          type: string
+          format: date-time
+          description: Time when the sandbox will expire
+        cpuCount:
+          $ref: '#/components/schemas/CPUCount'
+        memoryMB:
+          $ref: '#/components/schemas/MemoryMB'
+        diskSizeMB:
+          $ref: '#/components/schemas/DiskSizeMB'
+        metadata:
+          $ref: '#/components/schemas/SandboxMetadata'
+        state:
+          $ref: '#/components/schemas/SandboxState'
+        envdVersion:
+          $ref: '#/components/schemas/EnvdVersion'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxVolumeMount'
+    Sandbox:
+      required:
+      - templateID
+      - sandboxID
+      - clientID
+      - envdVersion
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the template from which is the sandbox created
+        sandboxID:
+          type: string
+          description: Identifier of the sandbox
+        alias:
+          type: string
+          description: Alias of the template
+        clientID:
+          type: string
+          deprecated: true
+          description: Identifier of the client
+        envdVersion:
+          $ref: '#/components/schemas/EnvdVersion'
+        envdAccessToken:
+          type: string
+          description: Access token used for envd communication
+        trafficAccessToken:
+          type: string
+          nullable: true
+          description: Token required for accessing sandbox via proxy.
+        domain:
+          type: string
+          nullable: true
+          description: Base domain where the sandbox traffic is accessible
+    DiskSizeMB:
+      type: integer
+      format: int32
+      minimum: 0
+      description: Disk size for the sandbox in MiB
+    ResumedSandbox:
+      properties:
+        timeout:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 15
+          description: Time to live for the sandbox in seconds.
+        autoPause:
+          type: boolean
+          deprecated: true
+          description: Automatically pauses the sandbox after the timeout
+    ConnectSandbox:
+      type: object
+      required:
+      - timeout
+      properties:
+        timeout:
+          description: Timeout in seconds from the current time after which the sandbox should expire
+          type: integer
+          format: int32
+          minimum: 0
+    SandboxMetric:
+      description: Metric entry with timestamp and line
+      required:
+      - timestamp
+      - timestampUnix
+      - cpuCount
+      - cpuUsedPct
+      - memUsed
+      - memTotal
+      - diskUsed
+      - diskTotal
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          deprecated: true
+          description: Timestamp of the metric entry
+        timestampUnix:
+          type: integer
+          format: int64
+          description: Timestamp of the metric entry in Unix time (seconds since epoch)
+        cpuCount:
+          type: integer
+          format: int32
+          description: Number of CPU cores
+        cpuUsedPct:
+          type: number
+          format: float
+          description: CPU usage percentage
+        memUsed:
+          type: integer
+          format: int64
+          description: Memory used in bytes
+        memTotal:
+          type: integer
+          format: int64
+          description: Total memory in bytes
+        diskUsed:
+          type: integer
+          format: int64
+          description: Disk used in bytes
+        diskTotal:
+          type: integer
+          format: int64
+          description: Total disk space in bytes
+    EnvVars:
+      additionalProperties:
+        type: string
+        description: Environment variables for the sandbox
+    SandboxVolumeMount:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the volume
+        path:
+          type: string
+          description: Path of the volume
+      required:
+      - name
+      - path
+    SandboxMetadata:
+      additionalProperties:
+        type: string
+        description: Metadata of the sandbox
+    SandboxLogsV2Response:
+      required:
+      - logs
+      properties:
+        logs:
+          default: []
+          description: Sandbox logs structured
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLogEntry'
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    NewSandbox:
+      required:
+      - templateID
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the required template
+        timeout:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 15
+          description: Time to live for the sandbox in seconds.
+        autoPause:
+          type: boolean
+          default: false
+          description: Automatically pauses the sandbox after the timeout
+        autoResume:
+          $ref: '#/components/schemas/SandboxAutoResumeConfig'
+        secure:
+          type: boolean
+          description: Secure all system communication with sandbox
+        allow_internet_access:
+          type: boolean
+          description: Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+        network:
+          $ref: '#/components/schemas/SandboxNetworkConfig'
+        metadata:
+          $ref: '#/components/schemas/SandboxMetadata'
+        envVars:
+          $ref: '#/components/schemas/EnvVars'
+        mcp:
+          $ref: '#/components/schemas/Mcp'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxVolumeMount'
+    SandboxLifecycle:
+      type: object
+      description: Sandbox lifecycle policy returned by sandbox info.
+      required:
+      - autoResume
+      - onTimeout
+      properties:
+        autoResume:
+          type: boolean
+          description: Whether the sandbox can auto-resume.
+        onTimeout:
+          $ref: '#/components/schemas/SandboxOnTimeout'
+    LogLevel:
+      type: string
+      description: State of the sandbox
+      enum:
+      - debug
+      - info
+      - warn
+      - error
+    CPUCount:
+      type: integer
+      format: int32
+      minimum: 1
+      description: CPU cores for the sandbox
+    SandboxDetail:
+      required:
+      - templateID
+      - sandboxID
+      - clientID
+      - startedAt
+      - cpuCount
+      - memoryMB
+      - diskSizeMB
+      - endAt
+      - state
+      - envdVersion
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the template from which is the sandbox created
+        alias:
+          type: string
+          description: Alias of the template
+        sandboxID:
+          type: string
+          description: Identifier of the sandbox
+        clientID:
+          type: string
+          deprecated: true
+          description: Identifier of the client
+        startedAt:
+          type: string
+          format: date-time
+          description: Time when the sandbox was started
+        endAt:
+          type: string
+          format: date-time
+          description: Time when the sandbox will expire
+        envdVersion:
+          $ref: '#/components/schemas/EnvdVersion'
+        envdAccessToken:
+          type: string
+          description: Access token used for envd communication
+        allowInternetAccess:
+          type: boolean
+          nullable: true
+          description: Whether internet access was explicitly enabled or disabled for the sandbox. Null means it was not explicitly set.
+        domain:
+          type: string
+          nullable: true
+          description: Base domain where the sandbox traffic is accessible
+        cpuCount:
+          $ref: '#/components/schemas/CPUCount'
+        memoryMB:
+          $ref: '#/components/schemas/MemoryMB'
+        diskSizeMB:
+          $ref: '#/components/schemas/DiskSizeMB'
+        metadata:
+          $ref: '#/components/schemas/SandboxMetadata'
+        state:
+          $ref: '#/components/schemas/SandboxState'
+        network:
+          $ref: '#/components/schemas/SandboxNetworkConfig'
+        lifecycle:
+          $ref: '#/components/schemas/SandboxLifecycle'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxVolumeMount'
+    SandboxOnTimeout:
+      type: string
+      description: Action taken when the sandbox times out.
+      enum:
+      - kill
+      - pause
+    MemoryMB:
+      type: integer
+      format: int32
+      minimum: 128
+      description: Memory for the sandbox in MiB
+    EnvdVersion:
+      type: string
+      description: Version of the envd running in the sandbox
+    SandboxState:
+      type: string
+      description: State of the sandbox
+      enum:
+      - running
+      - paused
+    SandboxesWithMetrics:
+      required:
+      - sandboxes
+      properties:
+        sandboxes:
+          additionalProperties:
+            $ref: '#/components/schemas/SandboxMetric'
+    SandboxNetworkConfig:
+      type: object
+      properties:
+        allowPublicTraffic:
+          type: boolean
+          default: true
+          description: Specify if the sandbox URLs should be accessible only with authentication.
+        allowOut:
+          type: array
+          description: List of allowed CIDR blocks or IP addresses for egress traffic. Allowed addresses always take precedence over blocked addresses.
+          items:
+            type: string
+        denyOut:
+          type: array
+          description: List of denied CIDR blocks or IP addresses for egress traffic
+          items:
+            type: string
+        maskRequestHost:
+          type: string
+          description: Specify host mask which will be used for all sandbox requests
+    SnapshotInfo:
+      type: object
+      required:
+      - snapshotID
+      - names
+      properties:
+        snapshotID:
+          type: string
+          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
+        names:
+          type: array
+          items:
+            type: string
+          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
+    SandboxLogs:
+      required:
+      - logs
+      - logEntries
+      properties:
+        logs:
+          description: Logs of the sandbox
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLog'
+        logEntries:
+          description: Structured logs of the sandbox
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLogEntry'
+    LogsDirection:
+      type: string
+      description: Direction of the logs that should be returned
+      enum:
+      - forward
+      - backward
+      x-enum-varnames:
+      - LogsDirectionForward
+      - LogsDirectionBackward
+    Mcp:
+      type: object
+      description: MCP configuration for the sandbox
+      additionalProperties: {}
+      nullable: true
+    SandboxLogEntry:
+      required:
+      - timestamp
+      - level
+      - message
+      - fields
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        message:
+          type: string
+          description: Log message content
+        level:
+          $ref: '#/components/schemas/LogLevel'
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+  parameters:
+    paginationNextToken:
+      name: nextToken
+      in: query
+      description: Cursor to start the list from
+      required: false
+      schema:
+        type: string
+    paginationLimit:
+      name: limit
+      in: query
+      description: Maximum number of items to return per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 100
+        maximum: 100
+    sandboxID:
+      name: sandboxID
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: access_token
+    Supabase1TokenAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Token
+    Supabase2TeamAuth:
+      type: apiKey
+      in: header
+      name: X-Supabase-Team
+    AdminTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Admin-Token
