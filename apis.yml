@@ -1,171 +1,453 @@
 aid: e2b-dev
 url: https://raw.githubusercontent.com/api-evangelist/e2b-dev/refs/heads/main/apis.yml
 apis:
-  - aid: e2b-dev:e2b-sandbox-api
-    name: E2B Sandbox API
-    tags:
-      - AI
-      - Agents
-      - Sandboxes
-      - Code Execution
-      - Firecracker
-      - microVMs
-    humanURL: https://e2b.dev/docs
-    baseURL: https://api.e2b.app
-    properties:
-      - url: https://e2b.dev/docs
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox/api/lifecycle
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox/persistence
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
-        name: Sandbox Lifecycle Webhooks
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox/lifecycle-events-api
-        name: Sandbox Lifecycle Events API
-        type: Documentation
-      - url: openapi/e2b-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/e2b-events-openapi.yml
-        name: Sandbox Events and Webhooks
-        type: OpenAPI
-      - url: json-schema/e2b-sandbox-schema.json
-        type: JSONSchema
-      - url: json-ld/e2b-dev-context.jsonld
-        type: JSONLD
-    description: >-
-      Create, control, and tear down isolated Firecracker microVMs on demand for AI agents. Sandboxes cold-start in
-      under 200ms and run for up to 24 hours, supporting pause/resume/snapshot, metadata, env vars, metrics, log
-      streaming, and connect upgrades. The same surface backs the JavaScript and Python SDKs as well as the e2b CLI.
-  - aid: e2b-dev:e2b-template-api
-    name: E2B Template API
-    tags:
-      - AI
-      - Agents
-      - Templates
-      - Sandboxes
-      - Build
-    humanURL: https://e2b.dev/docs/sandbox-template
-    baseURL: https://api.e2b.app
-    properties:
-      - url: https://e2b.dev/docs/sandbox-template
-        type: Documentation
-      - url: https://e2b.dev/docs/cli
-        type: Documentation
-      - url: openapi/e2b-api-openapi.yml
-        type: OpenAPI
-      - url: json-schema/e2b-template-schema.json
-        type: JSONSchema
-    description: >-
-      Define, build, version, and publish reusable sandbox base images. Templates are built from an e2b.toml or
-      programmatic SDK definition, cache layers across builds, support custom CPU and RAM, expose namespace/alias
-      aliasing, and can be marked public or team-private. Builds expose status and streaming logs via the API and the
-      e2b CLI.
-  - aid: e2b-dev:e2b-volume-api
-    name: E2B Volume API
-    tags:
-      - AI
-      - Agents
-      - Storage
-      - Volumes
-      - Persistence
-    humanURL: https://e2b.dev/docs/sandbox/persistence
-    baseURL: https://api.e2b.app
-    properties:
-      - url: https://e2b.dev/docs/sandbox/persistence
-        type: Documentation
-      - url: openapi/e2b-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/e2b-volumes-openapi.yml
-        type: OpenAPI
-    description: >-
-      Provision and manage persistent volumes that can be attached to sandboxes so agent state, datasets, and workspaces
-      survive across sandbox runs. The Volume Content API uses a short-lived JWT to read and write files and directories
-      inside a mounted volume from any sandbox or external client.
-  - aid: e2b-dev:e2b-events-api
-    name: E2B Sandbox Events and Webhooks API
-    tags:
-      - AI
-      - Agents
-      - Events
-      - Webhooks
-      - Lifecycle
-    humanURL: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
-    baseURL: https://api.e2b.app
-    properties:
-      - url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
-        type: Documentation
-      - url: https://e2b.dev/docs/sandbox/lifecycle-events-api
-        type: Documentation
-      - url: openapi/e2b-events-openapi.yml
-        type: OpenAPI
-    description: >-
-      REST surface for sandbox lifecycle events. Exposes polling endpoints at /events/sandboxes and
-      /events/sandboxes/{sandboxID} for created, updated, killed, paused, resumed, and checkpointed events, and a
-      webhook subscription surface at /events/webhooks for push delivery. Webhook deliveries are signed with a SHA-256
-      HMAC-style hash of the shared secret concatenated with the raw body, sent in the e2b-signature header alongside
-      e2b-webhook-id, e2b-delivery-id, and e2b-signature-version.
-  - aid: e2b-dev:e2b-team-api
-    name: E2B Team and Identity API
-    tags:
-      - AI
-      - Agents
-      - Teams
-      - Administration
-      - API Keys
-    humanURL: https://e2b.dev/docs/api-key
-    baseURL: https://api.e2b.app
-    properties:
-      - url: https://e2b.dev/docs/api-key
-        type: Documentation
-      - url: openapi/e2b-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Manage E2B team identity, API keys, and CLI access tokens. API keys authenticate SDK and REST traffic via the
-      X-API-Key header. Access tokens authenticate the e2b CLI and CI workflows. Team metrics expose aggregated sandbox
-      usage counts for the workspace.
-  - aid: e2b-dev:e2b-code-interpreter-api
-    name: E2B Code Interpreter SDK
-    tags:
-      - AI
-      - Agents
-      - Code Interpreter
-      - Jupyter
-      - Data Analysis
-    humanURL: https://github.com/e2b-dev/code-interpreter
-    properties:
-      - url: https://github.com/e2b-dev/code-interpreter
-        type: Documentation
-      - url: https://e2b.dev/docs/code-interpreting/analyze-data-with-ai
-        type: Documentation
-      - url: https://github.com/e2b-dev/code-interpreter
-        type: SDKs
-    description: >-
-      Higher-level SDK on top of the Sandbox API that exposes a Jupyter-style code interpreter for LLM-driven Python and
-      JavaScript execution. Returns structured execution results including stdout, stderr, text, png, jpeg, svg, html,
-      markdown, latex, json, javascript, pdf and chart outputs that map cleanly onto tool-use schemas for Anthropic,
-      OpenAI, Mistral, Llama and other model providers.
-  - aid: e2b-dev:e2b-desktop-api
-    name: E2B Desktop Sandbox SDK
-    tags:
-      - AI
-      - Agents
-      - Desktop
-      - Computer Use
-      - GUI
-    humanURL: https://github.com/e2b-dev/desktop
-    properties:
-      - url: https://github.com/e2b-dev/desktop
-        type: Documentation
-      - url: https://github.com/e2b-dev/desktop
-        type: SDKs
-    description: >-
-      Sandbox flavor that boots a Linux desktop environment with a noVNC stream and exposes mouse, keyboard, screenshot,
-      and window-management primitives. Built for computer-use agents pairing vision-capable models like Claude and GPT
-      with a real graphical desktop they can drive end to end.
+- aid: e2b-dev:e2b-code-interpreter-api
+  name: E2B Code Interpreter SDK
+  tags:
+  - AI
+  - Agents
+  - Code Interpreter
+  - Jupyter
+  - Data Analysis
+  humanURL: https://github.com/e2b-dev/code-interpreter
+  properties:
+  - url: https://github.com/e2b-dev/code-interpreter
+    type: Documentation
+  - url: https://e2b.dev/docs/code-interpreting/analyze-data-with-ai
+    type: Documentation
+  - url: https://github.com/e2b-dev/code-interpreter
+    type: SDKs
+  description: >-
+    Higher-level SDK on top of the Sandbox API that exposes a Jupyter-style code interpreter for LLM-driven
+    Python and JavaScript execution. Returns structured execution results including stdout, stderr, text,
+    png, jpeg, svg, html, markdown, latex, json, javascript, pdf and chart outputs that map cleanly onto
+    tool-use schemas for Anthropic, OpenAI, Mistral, Llama and other model providers.
+- aid: e2b-dev:e2b-desktop-api
+  name: E2B Desktop Sandbox SDK
+  tags:
+  - AI
+  - Agents
+  - Desktop
+  - Computer Use
+  - GUI
+  humanURL: https://github.com/e2b-dev/desktop
+  properties:
+  - url: https://github.com/e2b-dev/desktop
+    type: Documentation
+  - url: https://github.com/e2b-dev/desktop
+    type: SDKs
+  description: >-
+    Sandbox flavor that boots a Linux desktop environment with a noVNC stream and exposes mouse, keyboard,
+    screenshot, and window-management primitives. Built for computer-use agents pairing vision-capable
+    models like Claude and GPT with a real graphical desktop they can drive end to end.
+- aid: e2b-dev:e2b-dev-access-tokens-api
+  name: E2B access-tokens API
+  description: The access-tokens API from E2B — 2 operation(s) for access-tokens.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - access-tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-access-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-admin-api
+  name: E2B admin API
+  description: The admin API from E2B — 4 operation(s) for admin.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - admin
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-admin-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-api-keys-api
+  name: E2B api-keys API
+  description: The api-keys API from E2B — 2 operation(s) for api-keys.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - api-keys
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-auth-api
+  name: E2B auth API
+  description: The auth API from E2B — 3 operation(s) for auth.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-auth-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-events-api
+  name: E2B events API
+  description: The events API from E2B — 2 operation(s) for events.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - events
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-events-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-health-api
+  name: E2B Health API
+  description: The Health API from E2B — 1 operation(s) for health.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-health-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-sandboxes-api
+  name: E2B sandboxes API
+  description: The sandboxes API from E2B — 13 operation(s) for sandboxes.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - sandboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-sandboxes-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-snapshots-api
+  name: E2B snapshots API
+  description: The snapshots API from E2B — 1 operation(s) for snapshots.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - snapshots
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-snapshots-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-tags-api
+  name: E2B tags API
+  description: The tags API from E2B — 2 operation(s) for tags.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - tags
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-tags-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-templates-api
+  name: E2B templates API
+  description: The templates API from E2B — 11 operation(s) for templates.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - templates
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-templates-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-volumes-api
+  name: E2B volumes API
+  description: The volumes API from E2B — 5 operation(s) for volumes.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-webhooks-api
+  name: E2B webhooks API
+  description: The webhooks API from E2B — 2 operation(s) for webhooks.
+  humanURL: https://e2b.dev/docs
+  baseURL: https://api.e2b.app
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://e2b.dev/docs
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/api/lifecycle
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/persistence
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-webhooks
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox/lifecycle-events-api
+  - type: JSONSchema
+    url: json-schema/e2b-sandbox-schema.json
+  - type: JSONLD
+    url: json-ld/e2b-dev-context.jsonld
+  - type: Documentation
+    url: https://e2b.dev/docs/sandbox-template
+  - type: Documentation
+    url: https://e2b.dev/docs/cli
+  - type: JSONSchema
+    url: json-schema/e2b-template-schema.json
+  - type: Documentation
+    url: https://e2b.dev/docs/api-key
 name: E2B
 tags:
   - AI
@@ -181,9 +463,24 @@ tags:
   - MCP
   - Open Source
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/e2b-dev.png
 access: 3rd-Party
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/e2b/overview
   - type: AgenticAccess
     url: agentic-access/e2b-dev-agentic-access.yml
   - type: VulnerabilityDisclosure
