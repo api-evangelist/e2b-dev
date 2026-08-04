@@ -1,0 +1,2651 @@
+{
+  "info": {
+    "_postman_id": "9cfdf9c7-2f48-44be-8a34-eaef50dc87c9",
+    "name": "E2B access-tokens volumes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:47.000Z",
+    "updatedAt": "2026-07-28T01:33:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9cfdf9c7-2f48-44be-8a34-eaef50dc87c9"
+  },
+  "item": [
+    {
+      "name": "volumes",
+      "item": [
+        {
+          "name": "{volumeID}",
+          "item": [
+            {
+              "name": "Get team volume info",
+              "id": "ba8b7ae2-32f9-4283-95c9-b43c2539463b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/volumes/:volumeID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes",
+                    ":volumeID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "34bd36b8-b034-4dca-84b4-d6c01bd5bda4",
+                      "key": "volumeID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Get team volume info"
+              },
+              "response": [
+                {
+                  "id": "079983c6-cb3c-4c0a-93c0-c9ac55b20dbc",
+                  "name": "Successfully retrieved a team volume",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"volumeID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-079983c6-cb3c-4c0a-93c0-c9ac55b20dbc"
+                },
+                {
+                  "id": "d2032ee8-04fe-4d7a-80b5-71228a1f39fb",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-d2032ee8-04fe-4d7a-80b5-71228a1f39fb"
+                },
+                {
+                  "id": "d5b6038c-8efa-48b1-a98c-07fb5219b617",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-d5b6038c-8efa-48b1-a98c-07fb5219b617"
+                },
+                {
+                  "id": "56f1fab1-966f-4379-ade3-653d17e4d3e0",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-56f1fab1-966f-4379-ade3-653d17e4d3e0"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-ba8b7ae2-32f9-4283-95c9-b43c2539463b"
+            },
+            {
+              "name": "Delete a team volume",
+              "id": "d9dd4639-d19c-4dcd-8bc6-981fa110c451",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/volumes/:volumeID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes",
+                    ":volumeID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6439d4c8-95a2-4685-848c-49138df49031",
+                      "key": "volumeID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a team volume"
+              },
+              "response": [
+                {
+                  "id": "5cee3fde-2f55-43d9-a0c0-2139a6774f0a",
+                  "name": "Successfully deleted a team volume",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-5cee3fde-2f55-43d9-a0c0-2139a6774f0a"
+                },
+                {
+                  "id": "d70d54dd-6de6-4348-9b8e-bd59fdfb4272",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-d70d54dd-6de6-4348-9b8e-bd59fdfb4272"
+                },
+                {
+                  "id": "7d673935-072e-4b8a-94db-c8621a700523",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-7d673935-072e-4b8a-94db-c8621a700523"
+                },
+                {
+                  "id": "91b751dd-2f05-4c5b-8527-d9d9286a93ad",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumes/:volumeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumes",
+                        ":volumeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "volumeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-91b751dd-2f05-4c5b-8527-d9d9286a93ad"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-d9dd4639-d19c-4dcd-8bc6-981fa110c451"
+            }
+          ],
+          "id": "dd4990aa-67e9-4a23-8630-e472a4724054",
+          "createdAt": "2026-07-28T01:33:47.000Z",
+          "updatedAt": "2026-07-28T01:33:47.000Z",
+          "uid": "35240-dd4990aa-67e9-4a23-8630-e472a4724054"
+        },
+        {
+          "name": "List all team volumes",
+          "id": "7b9732fb-c8d0-4acc-b9b8-e70ea044d154",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/volumes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "volumes"
+              ]
+            },
+            "description": "List all team volumes"
+          },
+          "response": [
+            {
+              "id": "ff662558-3abd-452d-ba84-3a84d36fe566",
+              "name": "Successfully listed all team volumes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"volumeID\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  {\n    \"volumeID\": \"<string>\",\n    \"name\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-ff662558-3abd-452d-ba84-3a84d36fe566"
+            },
+            {
+              "id": "8fa062b8-7839-494c-a623-5ee773b4fa4d",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-8fa062b8-7839-494c-a623-5ee773b4fa4d"
+            },
+            {
+              "id": "23de5489-618d-4c1f-9995-63aa01c0dd36",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-23de5489-618d-4c1f-9995-63aa01c0dd36"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:47.000Z",
+          "updatedAt": "2026-07-28T01:33:47.000Z",
+          "uid": "35240-7b9732fb-c8d0-4acc-b9b8-e70ea044d154"
+        },
+        {
+          "name": "Create a new team volume",
+          "id": "493d962e-1a69-4245-ac11-8a24306c0d14",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HoCEzA\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/volumes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "volumes"
+              ]
+            },
+            "description": "Create a new team volume"
+          },
+          "response": [
+            {
+              "id": "f6ca8787-16f0-4dc6-a830-66a01cb33344",
+              "name": "Successfully created a new team volume",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"HoCEzA\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"volumeID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-f6ca8787-16f0-4dc6-a830-66a01cb33344"
+            },
+            {
+              "id": "a6fd728c-ad68-4eff-90c2-0ef24707f889",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"HoCEzA\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-a6fd728c-ad68-4eff-90c2-0ef24707f889"
+            },
+            {
+              "id": "5205698e-09d8-4d25-8e65-25cd3d6c7458",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"HoCEzA\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-5205698e-09d8-4d25-8e65-25cd3d6c7458"
+            },
+            {
+              "id": "678dca7c-af4a-45f7-a886-0cfaae6b936a",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"HoCEzA\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/volumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "volumes"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-678dca7c-af4a-45f7-a886-0cfaae6b936a"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:47.000Z",
+          "updatedAt": "2026-07-28T01:33:47.000Z",
+          "uid": "35240-493d962e-1a69-4245-ac11-8a24306c0d14"
+        }
+      ],
+      "id": "f943bc87-dfb7-49aa-a535-a335767c5316",
+      "createdAt": "2026-07-28T01:33:47.000Z",
+      "updatedAt": "2026-07-28T01:33:47.000Z",
+      "uid": "35240-f943bc87-dfb7-49aa-a535-a335767c5316"
+    },
+    {
+      "name": "volumecontent",
+      "item": [
+        {
+          "name": "{volumeID}",
+          "item": [
+            {
+              "name": "path",
+              "item": [
+                {
+                  "name": "Get path information",
+                  "id": "ec807731-2b4c-42f4-941a-c403fd957b1d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "path"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "a5384226-6e40-4881-a3cf-31d8e095ee59",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Get path information"
+                  },
+                  "response": [
+                    {
+                      "id": "750941a6-b16a-4627-951c-b7e4528d4cc9",
+                      "name": "Successfully retrieved path information",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"symlink\",\n  \"path\": \"<string>\",\n  \"size\": \"<long>\",\n  \"mode\": \"<integer>\",\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"atime\": \"<dateTime>\",\n  \"mtime\": \"<dateTime>\",\n  \"ctime\": \"<dateTime>\",\n  \"target\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-750941a6-b16a-4627-951c-b7e4528d4cc9"
+                    },
+                    {
+                      "id": "394b4dfb-fbf9-4bd0-a3f3-579361cae5eb",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-394b4dfb-fbf9-4bd0-a3f3-579361cae5eb"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-ec807731-2b4c-42f4-941a-c403fd957b1d"
+                },
+                {
+                  "name": "Update path metadata",
+                  "id": "b6b43ed6-8b4a-4f6e-8f44-eba9211c4365",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"mode\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "path"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "cbc9c47a-1183-44ff-a3a2-987e56c084eb",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Update path metadata"
+                  },
+                  "response": [
+                    {
+                      "id": "a3dd9ae6-b89e-4469-8e35-3bbdca80a633",
+                      "name": "Successfully updated a file's metadata",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"mode\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"symlink\",\n  \"path\": \"<string>\",\n  \"size\": \"<long>\",\n  \"mode\": \"<integer>\",\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"atime\": \"<dateTime>\",\n  \"mtime\": \"<dateTime>\",\n  \"ctime\": \"<dateTime>\",\n  \"target\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-a3dd9ae6-b89e-4469-8e35-3bbdca80a633"
+                    },
+                    {
+                      "id": "a9dc355d-f4cc-416a-98ab-72d27b9e623f",
+                      "name": "Invalid metadata provided",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"mode\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-a9dc355d-f4cc-416a-98ab-72d27b9e623f"
+                    },
+                    {
+                      "id": "9ea9839f-4ea9-4a28-8903-9216d0e21eca",
+                      "name": "path not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"mode\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-9ea9839f-4ea9-4a28-8903-9216d0e21eca"
+                    },
+                    {
+                      "id": "f2ed0e10-8603-443f-9496-7628471ca56d",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"mode\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-f2ed0e10-8603-443f-9496-7628471ca56d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-b6b43ed6-8b4a-4f6e-8f44-eba9211c4365"
+                },
+                {
+                  "name": "Delete a path",
+                  "id": "7bf7a4d7-5142-4b9b-9375-bd04ac560bfe",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "path"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "8a5b122d-3a8a-403e-b54a-c97b5dfd75ac",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Delete a path"
+                  },
+                  "response": [
+                    {
+                      "id": "f9b8587c-553e-4efb-b0fb-183d2bdf4f26",
+                      "name": "Successfully deleted a path",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-f9b8587c-553e-4efb-b0fb-183d2bdf4f26"
+                    },
+                    {
+                      "id": "0db79e48-3861-4a0b-8026-6ae51fb3cfc3",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-0db79e48-3861-4a0b-8026-6ae51fb3cfc3"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-7bf7a4d7-5142-4b9b-9375-bd04ac560bfe"
+                }
+              ],
+              "id": "1e5f4cc5-c2f5-4e2d-b4ad-e0707dc1ea09",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-1e5f4cc5-c2f5-4e2d-b4ad-e0707dc1ea09"
+            },
+            {
+              "name": "dir",
+              "item": [
+                {
+                  "name": "List directory contents",
+                  "id": "c790046f-8055-4e6f-a2c1-2b2d90aa9fb8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&depth=1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "dir"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of layers deep to recurse into the directory",
+                          "key": "depth",
+                          "value": "1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "ed19c626-e44f-426e-8124-726af1134c68",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "List directory contents"
+                  },
+                  "response": [
+                    {
+                      "id": "6335eb7c-2364-4bee-819a-5c6aa1358b79",
+                      "name": "Successfully retrieved a directory listing",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&depth=1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Number of layers deep to recurse into the directory",
+                              "key": "depth",
+                              "value": "1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"name\": \"<string>\",\n    \"type\": \"unknown\",\n    \"path\": \"<string>\",\n    \"size\": \"<long>\",\n    \"mode\": \"<integer>\",\n    \"uid\": \"<integer>\",\n    \"gid\": \"<integer>\",\n    \"atime\": \"<dateTime>\",\n    \"mtime\": \"<dateTime>\",\n    \"ctime\": \"<dateTime>\",\n    \"target\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"type\": \"unknown\",\n    \"path\": \"<string>\",\n    \"size\": \"<long>\",\n    \"mode\": \"<integer>\",\n    \"uid\": \"<integer>\",\n    \"gid\": \"<integer>\",\n    \"atime\": \"<dateTime>\",\n    \"mtime\": \"<dateTime>\",\n    \"ctime\": \"<dateTime>\",\n    \"target\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-6335eb7c-2364-4bee-819a-5c6aa1358b79"
+                    },
+                    {
+                      "id": "7c103734-7ddf-4fbd-a75c-b523ee9e1740",
+                      "name": "Invalid path provided",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&depth=1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Number of layers deep to recurse into the directory",
+                              "key": "depth",
+                              "value": "1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-7c103734-7ddf-4fbd-a75c-b523ee9e1740"
+                    },
+                    {
+                      "id": "aaab1877-344d-4f6d-84ba-4d1dfadfa62f",
+                      "name": "path not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&depth=1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Number of layers deep to recurse into the directory",
+                              "key": "depth",
+                              "value": "1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-aaab1877-344d-4f6d-84ba-4d1dfadfa62f"
+                    },
+                    {
+                      "id": "515cc4b6-cce1-419c-a56d-e2b0ec66c8e1",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&depth=1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Number of layers deep to recurse into the directory",
+                              "key": "depth",
+                              "value": "1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-515cc4b6-cce1-419c-a56d-e2b0ec66c8e1"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-c790046f-8055-4e6f-a2c1-2b2d90aa9fb8"
+                },
+                {
+                  "name": "Create a directory",
+                  "id": "8740662a-ae2f-432e-9e0a-564cb488b611",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "dir"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "User ID of the created directory",
+                          "key": "uid",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Group ID of the created directory",
+                          "key": "gid",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Mode of the created directory",
+                          "key": "mode",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Create the parents of a directory if they don't exist",
+                          "key": "force",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "abca1535-9e81-4139-9f9d-b18551d0cb69",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Create a directory"
+                  },
+                  "response": [
+                    {
+                      "id": "8a08c557-b94d-43d0-90b1-b8b0cf4f0af6",
+                      "name": "Successfully created a directory",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the created directory",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the created directory",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the created directory",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Create the parents of a directory if they don't exist",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"symlink\",\n  \"path\": \"<string>\",\n  \"size\": \"<long>\",\n  \"mode\": \"<integer>\",\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"atime\": \"<dateTime>\",\n  \"mtime\": \"<dateTime>\",\n  \"ctime\": \"<dateTime>\",\n  \"target\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-8a08c557-b94d-43d0-90b1-b8b0cf4f0af6"
+                    },
+                    {
+                      "id": "2d02c278-0b9b-4d4d-af30-ec8f9ed526bc",
+                      "name": "path not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the created directory",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the created directory",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the created directory",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Create the parents of a directory if they don't exist",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-2d02c278-0b9b-4d4d-af30-ec8f9ed526bc"
+                    },
+                    {
+                      "id": "ba2fe306-67ec-41c5-ad52-62d335fa3db3",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/dir?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "dir"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the created directory",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the created directory",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the created directory",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Create the parents of a directory if they don't exist",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-ba2fe306-67ec-41c5-ad52-62d335fa3db3"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-8740662a-ae2f-432e-9e0a-564cb488b611"
+                }
+              ],
+              "id": "1c4df120-6c96-47c1-9b04-070a682e9bd7",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-1c4df120-6c96-47c1-9b04-070a682e9bd7"
+            },
+            {
+              "name": "file",
+              "item": [
+                {
+                  "name": "Download file",
+                  "id": "89d0a0a2-0dc9-4229-a26a-9e39c8c0ca96",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "file"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "e8c3c607-b43c-4be2-8bf1-0f268a666a19",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Download file"
+                  },
+                  "response": [
+                    {
+                      "id": "04ac5b2e-188a-4a71-87a7-54a5fe163994",
+                      "name": "Successfully downloaded a file",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/octet-stream"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<binary>",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-04ac5b2e-188a-4a71-87a7-54a5fe163994"
+                    },
+                    {
+                      "id": "a3de46e9-7850-4752-b33f-76fdb84b025e",
+                      "name": "path not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-a3de46e9-7850-4752-b33f-76fdb84b025e"
+                    },
+                    {
+                      "id": "31f461f6-5b2c-4ead-bba8-a1ce043c6bda",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-31f461f6-5b2c-4ead-bba8-a1ce043c6bda"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-89d0a0a2-0dc9-4229-a26a-9e39c8c0ca96"
+                },
+                {
+                  "name": "Upload file",
+                  "id": "1e82321d-8314-4461-ae60-d4dc2b614cba",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "file",
+                      "file": {}
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "volumecontent",
+                        ":volumeID",
+                        "file"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "path",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "User ID of the uploaded file",
+                          "key": "uid",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Group ID of the uploaded file",
+                          "key": "gid",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Mode of the uploaded file",
+                          "key": "mode",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Force overwrite of an existing file",
+                          "key": "force",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "db89f5a7-cfa4-41bb-b7b0-dd8fbaa3c8ac",
+                          "key": "volumeID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Upload file"
+                  },
+                  "response": [
+                    {
+                      "id": "9a094d2f-bd16-4275-a979-3f9ac5d661bc",
+                      "name": "Successfully created a file",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "file",
+                          "file": {}
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the uploaded file",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the uploaded file",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the uploaded file",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Force overwrite of an existing file",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"symlink\",\n  \"path\": \"<string>\",\n  \"size\": \"<long>\",\n  \"mode\": \"<integer>\",\n  \"uid\": \"<integer>\",\n  \"gid\": \"<integer>\",\n  \"atime\": \"<dateTime>\",\n  \"mtime\": \"<dateTime>\",\n  \"ctime\": \"<dateTime>\",\n  \"target\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-9a094d2f-bd16-4275-a979-3f9ac5d661bc"
+                    },
+                    {
+                      "id": "a9c879eb-b04f-449b-9f19-bc86c2191b72",
+                      "name": "path not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/octet-stream"
+                          }
+                        ],
+                        "body": {
+                          "mode": "file",
+                          "file": {}
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the uploaded file",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the uploaded file",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the uploaded file",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Force overwrite of an existing file",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-a9c879eb-b04f-449b-9f19-bc86c2191b72"
+                    },
+                    {
+                      "id": "9601f98f-c162-4467-89b9-d78b7eaa3c56",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "file",
+                          "file": {}
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/volumecontent/:volumeID/file?path=<string>&uid=<integer>&gid=<integer>&mode=<integer>&force=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "volumecontent",
+                            ":volumeID",
+                            "file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "path",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "User ID of the uploaded file",
+                              "key": "uid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Group ID of the uploaded file",
+                              "key": "gid",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Mode of the uploaded file",
+                              "key": "mode",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Force overwrite of an existing file",
+                              "key": "force",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "volumeID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:47.000Z",
+                      "updatedAt": "2026-07-28T01:33:47.000Z",
+                      "uid": "35240-9601f98f-c162-4467-89b9-d78b7eaa3c56"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:47.000Z",
+                  "updatedAt": "2026-07-28T01:33:47.000Z",
+                  "uid": "35240-1e82321d-8314-4461-ae60-d4dc2b614cba"
+                }
+              ],
+              "id": "39901106-f537-4292-9a92-51a80423f1b0",
+              "createdAt": "2026-07-28T01:33:47.000Z",
+              "updatedAt": "2026-07-28T01:33:47.000Z",
+              "uid": "35240-39901106-f537-4292-9a92-51a80423f1b0"
+            }
+          ],
+          "id": "b2665299-a724-420e-aa8d-13b1ee6c793d",
+          "createdAt": "2026-07-28T01:33:47.000Z",
+          "updatedAt": "2026-07-28T01:33:47.000Z",
+          "uid": "35240-b2665299-a724-420e-aa8d-13b1ee6c793d"
+        }
+      ],
+      "id": "d9b3ae6f-705b-4eab-a588-7b5475a8de0d",
+      "createdAt": "2026-07-28T01:33:47.000Z",
+      "updatedAt": "2026-07-28T01:33:47.000Z",
+      "uid": "35240-d9b3ae6f-705b-4eab-a588-7b5475a8de0d"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}

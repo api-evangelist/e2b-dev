@@ -1,0 +1,513 @@
+{
+  "info": {
+    "_postman_id": "c6a8f1fa-2317-4c31-a50e-a81fbb2bb4ca",
+    "name": "E2B access-tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:17.000Z",
+    "updatedAt": "2026-07-28T01:33:17.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c6a8f1fa-2317-4c31-a50e-a81fbb2bb4ca"
+  },
+  "item": [
+    {
+      "name": "access-tokens",
+      "item": [
+        {
+          "name": "{accessTokenID}",
+          "item": [
+            {
+              "name": "Delete an access token",
+              "id": "b6c5eb63-db0d-4f8f-b40a-a2b4ffb25032",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-Supabase-Token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/access-tokens/:accessTokenID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "access-tokens",
+                    ":accessTokenID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f9febb53-f1a0-4608-bf1c-e3b5c2ac07a9",
+                      "key": "accessTokenID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete an access token"
+              },
+              "response": [
+                {
+                  "id": "43dd3ead-a19f-4af2-b45c-e55826717ebe",
+                  "name": "Access token deleted successfully",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Supabase-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/access-tokens/:accessTokenID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "access-tokens",
+                        ":accessTokenID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "accessTokenID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:18.000Z",
+                  "updatedAt": "2026-07-28T01:33:18.000Z",
+                  "uid": "35240-43dd3ead-a19f-4af2-b45c-e55826717ebe"
+                },
+                {
+                  "id": "7dbdf2fb-3e63-49bb-ab2b-80d8da29163d",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Supabase-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/access-tokens/:accessTokenID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "access-tokens",
+                        ":accessTokenID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "accessTokenID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:18.000Z",
+                  "updatedAt": "2026-07-28T01:33:18.000Z",
+                  "uid": "35240-7dbdf2fb-3e63-49bb-ab2b-80d8da29163d"
+                },
+                {
+                  "id": "78dd9de9-5db1-4bae-9209-cba902881180",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Supabase-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/access-tokens/:accessTokenID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "access-tokens",
+                        ":accessTokenID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "accessTokenID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:18.000Z",
+                  "updatedAt": "2026-07-28T01:33:18.000Z",
+                  "uid": "35240-78dd9de9-5db1-4bae-9209-cba902881180"
+                },
+                {
+                  "id": "e0791f98-b50b-4dcc-8b38-74f9138deb03",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Supabase-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/access-tokens/:accessTokenID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "access-tokens",
+                        ":accessTokenID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "accessTokenID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:18.000Z",
+                  "updatedAt": "2026-07-28T01:33:18.000Z",
+                  "uid": "35240-e0791f98-b50b-4dcc-8b38-74f9138deb03"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:18.000Z",
+              "updatedAt": "2026-07-28T01:33:18.000Z",
+              "uid": "35240-b6c5eb63-db0d-4f8f-b40a-a2b4ffb25032"
+            }
+          ],
+          "id": "84750c72-8d75-40f0-b881-68b95081c382",
+          "createdAt": "2026-07-28T01:33:18.000Z",
+          "updatedAt": "2026-07-28T01:33:18.000Z",
+          "uid": "35240-84750c72-8d75-40f0-b881-68b95081c382"
+        },
+        {
+          "name": "Create a new access token",
+          "id": "b6d451d0-5560-47ea-a7fb-18c2bd5154d6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Supabase-Token",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/access-tokens",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-tokens"
+              ]
+            },
+            "description": "Create a new access token"
+          },
+          "response": [
+            {
+              "id": "a09d98e2-fa9b-46bd-9211-bb790e74863c",
+              "name": "Access token created successfully",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Supabase-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/access-tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "access-tokens"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"token\": \"<string>\",\n  \"mask\": {\n    \"prefix\": \"<string>\",\n    \"valueLength\": \"<integer>\",\n    \"maskedValuePrefix\": \"<string>\",\n    \"maskedValueSuffix\": \"<string>\"\n  },\n  \"createdAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-07-28T01:33:18.000Z",
+              "updatedAt": "2026-07-28T01:33:18.000Z",
+              "uid": "35240-a09d98e2-fa9b-46bd-9211-bb790e74863c"
+            },
+            {
+              "id": "ccc7da34-a7f4-49b3-b457-30d84918c805",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Supabase-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/access-tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "access-tokens"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:18.000Z",
+              "updatedAt": "2026-07-28T01:33:18.000Z",
+              "uid": "35240-ccc7da34-a7f4-49b3-b457-30d84918c805"
+            },
+            {
+              "id": "8a2e320d-8d4d-4ccb-a5f0-b085b941d843",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Supabase-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/access-tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "access-tokens"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:18.000Z",
+              "updatedAt": "2026-07-28T01:33:18.000Z",
+              "uid": "35240-8a2e320d-8d4d-4ccb-a5f0-b085b941d843"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:18.000Z",
+          "updatedAt": "2026-07-28T01:33:18.000Z",
+          "uid": "35240-b6d451d0-5560-47ea-a7fb-18c2bd5154d6"
+        }
+      ],
+      "id": "b72741e9-0665-45a7-939a-ab13f0c5209f",
+      "createdAt": "2026-07-28T01:33:18.000Z",
+      "updatedAt": "2026-07-28T01:33:18.000Z",
+      "uid": "35240-b72741e9-0665-45a7-939a-ab13f0c5209f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}

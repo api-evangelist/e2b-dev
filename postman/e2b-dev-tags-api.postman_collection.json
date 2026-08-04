@@ -1,0 +1,1054 @@
+{
+  "info": {
+    "_postman_id": "3b872140-fca2-4ca4-b8f1-7f849f230403",
+    "name": "E2B access-tokens tags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:43.000Z",
+    "updatedAt": "2026-07-28T01:33:43.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3b872140-fca2-4ca4-b8f1-7f849f230403"
+  },
+  "item": [
+    {
+      "name": "templates",
+      "item": [
+        {
+          "name": "tags",
+          "item": [
+            {
+              "name": "Assign tag(s) to a template build",
+              "id": "cde1a566-db67-4a1d-9fa6-32fec25cb60b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates/tags",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    "tags"
+                  ]
+                },
+                "description": "Assign tag(s) to a template build"
+              },
+              "response": [
+                {
+                  "id": "b133bc38-0c73-42f4-b050-af8cca1b2102",
+                  "name": "Tag assigned successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"buildID\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-b133bc38-0c73-42f4-b050-af8cca1b2102"
+                },
+                {
+                  "id": "d98da4c3-767e-4bb8-8125-d0e0e72e58d4",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-d98da4c3-767e-4bb8-8125-d0e0e72e58d4"
+                },
+                {
+                  "id": "e3f39eeb-2f90-4ae5-9b92-16c8373d15a3",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-e3f39eeb-2f90-4ae5-9b92-16c8373d15a3"
+                },
+                {
+                  "id": "8cb59081-63a5-4a47-bca4-387cc08c4cbd",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-8cb59081-63a5-4a47-bca4-387cc08c4cbd"
+                },
+                {
+                  "id": "e1342009-809e-4adc-b684-05bdd9ad07b2",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-e1342009-809e-4adc-b684-05bdd9ad07b2"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:44.000Z",
+              "updatedAt": "2026-07-28T01:33:44.000Z",
+              "uid": "35240-cde1a566-db67-4a1d-9fa6-32fec25cb60b"
+            },
+            {
+              "name": "Delete multiple tags from templates",
+              "id": "879c0532-1008-4708-aa58-172f7e4ffa43",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates/tags",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    "tags"
+                  ]
+                },
+                "description": "Delete multiple tags from templates"
+              },
+              "response": [
+                {
+                  "id": "ac655994-8ba0-4121-a236-a3f1d4593789",
+                  "name": "Tags deleted successfully",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-ac655994-8ba0-4121-a236-a3f1d4593789"
+                },
+                {
+                  "id": "cbf776dc-586f-4cbb-af0f-04e597260b53",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-cbf776dc-586f-4cbb-af0f-04e597260b53"
+                },
+                {
+                  "id": "379ed1dc-2da4-48b0-99e5-54e49a00edda",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-379ed1dc-2da4-48b0-99e5-54e49a00edda"
+                },
+                {
+                  "id": "82e77dc0-f2f3-43c5-a120-535d3978f300",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-82e77dc0-f2f3-43c5-a120-535d3978f300"
+                },
+                {
+                  "id": "0357dfe0-6c16-4f4d-afda-6bca6b0cffbe",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "tags"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-0357dfe0-6c16-4f4d-afda-6bca6b0cffbe"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:44.000Z",
+              "updatedAt": "2026-07-28T01:33:44.000Z",
+              "uid": "35240-879c0532-1008-4708-aa58-172f7e4ffa43"
+            }
+          ],
+          "id": "ae66da1e-0d12-42f9-befd-1aed7bdc191b",
+          "createdAt": "2026-07-28T01:33:44.000Z",
+          "updatedAt": "2026-07-28T01:33:44.000Z",
+          "uid": "35240-ae66da1e-0d12-42f9-befd-1aed7bdc191b"
+        },
+        {
+          "name": "{templateID}",
+          "item": [
+            {
+              "name": "tags",
+              "item": [
+                {
+                  "name": "List all tags for a template",
+                  "id": "1885af42-7438-4851-8be9-25b005d52971",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "X-API-Key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID/tags",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID",
+                        "tags"
+                      ],
+                      "variable": [
+                        {
+                          "id": "51310fa2-dcb9-4f22-be9f-ca7ccc46d351",
+                          "key": "templateID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "List all tags for a template"
+                  },
+                  "response": [
+                    {
+                      "id": "f8a0a512-1741-4921-9654-97344b87e939",
+                      "name": "Successfully returned the template tags",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/tags",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "tags"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"tag\": \"<string>\",\n    \"buildID\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"tag\": \"<string>\",\n    \"buildID\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-07-28T01:33:44.000Z",
+                      "updatedAt": "2026-07-28T01:33:44.000Z",
+                      "uid": "35240-f8a0a512-1741-4921-9654-97344b87e939"
+                    },
+                    {
+                      "id": "b833d07c-040d-4466-91ae-b63e00b66f37",
+                      "name": "Authentication error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/tags",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "tags"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:44.000Z",
+                      "updatedAt": "2026-07-28T01:33:44.000Z",
+                      "uid": "35240-b833d07c-040d-4466-91ae-b63e00b66f37"
+                    },
+                    {
+                      "id": "65cd0593-c473-413f-876a-14c39ea2d0c3",
+                      "name": "Forbidden",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/tags",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "tags"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:44.000Z",
+                      "updatedAt": "2026-07-28T01:33:44.000Z",
+                      "uid": "35240-65cd0593-c473-413f-876a-14c39ea2d0c3"
+                    },
+                    {
+                      "id": "9df0cba2-efaf-4a6e-b2ae-b777be06200e",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/tags",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "tags"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:44.000Z",
+                      "updatedAt": "2026-07-28T01:33:44.000Z",
+                      "uid": "35240-9df0cba2-efaf-4a6e-b2ae-b777be06200e"
+                    },
+                    {
+                      "id": "01a2fea0-76ac-44f7-b271-44eb484a455f",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/tags",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "tags"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:44.000Z",
+                      "updatedAt": "2026-07-28T01:33:44.000Z",
+                      "uid": "35240-01a2fea0-76ac-44f7-b271-44eb484a455f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:44.000Z",
+                  "updatedAt": "2026-07-28T01:33:44.000Z",
+                  "uid": "35240-1885af42-7438-4851-8be9-25b005d52971"
+                }
+              ],
+              "id": "44585b1c-0811-454e-abbf-5ea9a2e8153d",
+              "createdAt": "2026-07-28T01:33:44.000Z",
+              "updatedAt": "2026-07-28T01:33:44.000Z",
+              "uid": "35240-44585b1c-0811-454e-abbf-5ea9a2e8153d"
+            }
+          ],
+          "id": "a96f9da5-bced-4ff4-96db-16b47afa3dec",
+          "createdAt": "2026-07-28T01:33:44.000Z",
+          "updatedAt": "2026-07-28T01:33:44.000Z",
+          "uid": "35240-a96f9da5-bced-4ff4-96db-16b47afa3dec"
+        }
+      ],
+      "id": "0e850e06-af17-44d1-b297-49f1726e33f5",
+      "createdAt": "2026-07-28T01:33:44.000Z",
+      "updatedAt": "2026-07-28T01:33:44.000Z",
+      "uid": "35240-0e850e06-af17-44d1-b297-49f1726e33f5"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}

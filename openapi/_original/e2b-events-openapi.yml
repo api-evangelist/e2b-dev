@@ -1,0 +1,396 @@
+openapi: 3.1.0
+info:
+  title: E2B Sandbox Events and Webhooks API
+  version: 0.1.0
+  description: |
+    Documented REST surface for E2B sandbox lifecycle events and webhook
+    subscriptions. Modeled directly from the public documentation at
+    https://e2b.dev/docs/sandbox/lifecycle-events-webhooks and
+    https://e2b.dev/docs/sandbox/lifecycle-events-api.
+
+    This spec covers two surfaces:
+      1. Polling REST events at /events/sandboxes (team-wide) and
+         /events/sandboxes/{sandboxID} (single sandbox).
+      2. Webhook subscription management at /events/webhooks, plus the
+         signed POST payload that E2B delivers to subscribed URLs.
+
+    Webhook deliveries include the headers e2b-webhook-id,
+    e2b-delivery-id, e2b-signature-version, and e2b-signature. The
+    signature is a base64-encoded SHA-256 of the concatenation of the
+    subscription secret and the raw payload body, with trailing "="
+    padding stripped.
+
+servers:
+  - url: https://api.e2b.app
+
+security:
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  parameters:
+    sandboxID:
+      name: sandboxID
+      in: path
+      required: true
+      schema:
+        type: string
+    webhookID:
+      name: webhookID
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+        - sandbox.lifecycle.created
+        - sandbox.lifecycle.updated
+        - sandbox.lifecycle.killed
+        - sandbox.lifecycle.paused
+        - sandbox.lifecycle.resumed
+        - sandbox.lifecycle.checkpointed
+
+    SandboxExecution:
+      type: object
+      description: |
+        Execution metrics included on terminal events such as
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
+
+    SandboxEventData:
+      type: object
+      description: |
+        Event-specific payload. May be null on events that have no
+        additional context. For sandbox.lifecycle.updated the payload
+        may include set_timeout. For sandbox.lifecycle.killed and
+        sandbox.lifecycle.paused the payload includes execution
+        details.
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
+
+    SandboxEvent:
+      type: object
+      required:
+        - id
+        - version
+        - type
+        - timestamp
+        - sandbox_id
+        - sandbox_team_id
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+          example: v2
+        type:
+          $ref: '#/components/schemas/SandboxLifecycleEventType'
+        timestamp:
+          type: string
+          format: date-time
+        event_category:
+          type: string
+          example: lifecycle
+        event_label:
+          type: string
+        event_data:
+          $ref: '#/components/schemas/SandboxEventData'
+        sandbox_id:
+          type: string
+        sandbox_execution_id:
+          type: string
+        sandbox_template_id:
+          type: string
+        sandbox_build_id:
+          type: string
+        sandbox_team_id:
+          type: string
+
+    SandboxEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxEvent'
+
+    WebhookCreateRequest:
+      type: object
+      required:
+        - name
+        - url
+        - events
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+          default: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+        signatureSecret:
+          type: string
+          description: Shared secret used to sign delivery payloads.
+
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+
+    Webhook:
+      type: object
+      required:
+        - id
+        - teamId
+        - name
+        - url
+        - events
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        enabled:
+          type: boolean
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+
+paths:
+  /events/sandboxes:
+    get:
+      summary: List team sandbox lifecycle events
+      description: |
+        Returns sandbox lifecycle events across the entire team. Supports
+        pagination via offset/limit and filtering by event type.
+      tags: [events]
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+        - in: query
+          name: orderAsc
+          schema:
+            type: boolean
+        - in: query
+          name: types
+          description: Filter by event type. Repeatable.
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SandboxLifecycleEventType'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Team sandbox events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxEventsResponse'
+
+  /events/sandboxes/{sandboxID}:
+    get:
+      summary: List events for a single sandbox
+      tags: [events]
+      parameters:
+        - $ref: '#/components/parameters/sandboxID'
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+        - in: query
+          name: orderAsc
+          schema:
+            type: boolean
+        - in: query
+          name: types
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SandboxLifecycleEventType'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Sandbox events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxEventsResponse'
+
+  /events/webhooks:
+    get:
+      summary: List webhook subscriptions
+      tags: [webhooks]
+      responses:
+        '200':
+          description: Registered webhooks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+    post:
+      summary: Register a webhook subscription
+      tags: [webhooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookCreateRequest'
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+
+  /events/webhooks/{webhookID}:
+    get:
+      summary: Get a webhook subscription
+      tags: [webhooks]
+      parameters:
+        - $ref: '#/components/parameters/webhookID'
+      responses:
+        '200':
+          description: Webhook configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    patch:
+      summary: Update a webhook subscription
+      tags: [webhooks]
+      parameters:
+        - $ref: '#/components/parameters/webhookID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookUpdateRequest'
+      responses:
+        '200':
+          description: Updated webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    delete:
+      summary: Delete a webhook subscription
+      tags: [webhooks]
+      parameters:
+        - $ref: '#/components/parameters/webhookID'
+      responses:
+        '200':
+          description: Webhook deleted
+
+webhooks:
+  sandboxLifecycle:
+    post:
+      summary: Sandbox lifecycle event delivery
+      description: |
+        Delivered to the registered subscription URL when a matching
+        sandbox lifecycle event occurs. Signed with SHA-256 over
+        signatureSecret + raw body, base64-encoded with trailing "="
+        padding stripped, and sent in the e2b-signature header.
+      parameters:
+        - in: header
+          name: e2b-webhook-id
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: e2b-delivery-id
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: e2b-signature-version
+          required: true
+          schema:
+            type: string
+            example: v1
+        - in: header
+          name: e2b-signature
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SandboxEvent'
+      responses:
+        '2XX':
+          description: Subscriber accepted the event.

@@ -1,0 +1,4447 @@
+{
+  "info": {
+    "_postman_id": "e0acfa2d-604a-4633-832b-283cf4a08744",
+    "name": "E2B access-tokens templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:45.000Z",
+    "updatedAt": "2026-07-28T01:33:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e0acfa2d-604a-4633-832b-283cf4a08744"
+  },
+  "item": [
+    {
+      "name": "v3",
+      "item": [
+        {
+          "name": "templates",
+          "item": [
+            {
+              "name": "Create a new template",
+              "id": "16e8488f-3eb0-4155-bf44-3291a6c87f2d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v3/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v3",
+                    "templates"
+                  ]
+                },
+                "description": "Create a new template"
+              },
+              "response": [
+                {
+                  "id": "1e5208bf-f39f-4b67-a3e7-4ac9125e040f",
+                  "name": "The build was requested successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v3/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v3",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"templateID\": \"<string>\",\n  \"buildID\": \"<string>\",\n  \"public\": \"<boolean>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-1e5208bf-f39f-4b67-a3e7-4ac9125e040f"
+                },
+                {
+                  "id": "0278475c-5d72-47bb-b6d2-2ed5818b4b83",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v3/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v3",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-0278475c-5d72-47bb-b6d2-2ed5818b4b83"
+                },
+                {
+                  "id": "5fb4f95e-7941-43c8-bf51-bc21dde1802f",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v3/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v3",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-5fb4f95e-7941-43c8-bf51-bc21dde1802f"
+                },
+                {
+                  "id": "a8835108-abbe-42f1-aae6-912a03cf9367",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v3/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v3",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-a8835108-abbe-42f1-aae6-912a03cf9367"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-16e8488f-3eb0-4155-bf44-3291a6c87f2d"
+            }
+          ],
+          "id": "912ec080-c468-4481-90fe-0ef50df638cf",
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-912ec080-c468-4481-90fe-0ef50df638cf"
+        }
+      ],
+      "id": "a120a856-53e0-432c-a478-78d7c6b9dea9",
+      "createdAt": "2026-07-28T01:33:45.000Z",
+      "updatedAt": "2026-07-28T01:33:45.000Z",
+      "uid": "35240-a120a856-53e0-432c-a478-78d7c6b9dea9"
+    },
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "templates",
+          "item": [
+            {
+              "name": "{templateID}",
+              "item": [
+                {
+                  "name": "builds",
+                  "item": [
+                    {
+                      "name": "{buildID}",
+                      "item": [
+                        {
+                          "name": "Start the build",
+                          "id": "6cf84c09-2e39-4d66-b7ca-939e0722885b",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "apikey",
+                              "apikey": [
+                                {
+                                  "key": "key",
+                                  "value": "X-API-Key",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "value",
+                                  "value": "{{apiKey}}",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "in",
+                                  "value": "header",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"fromImage\": \"<string>\",\n  \"fromTemplate\": \"<string>\",\n  \"fromImageRegistry\": {\n    \"type\": \"aws\",\n    \"awsAccessKeyId\": \"<string>\",\n    \"awsSecretAccessKey\": \"<string>\",\n    \"awsRegion\": \"<string>\"\n  },\n  \"force\": false,\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/templates/:templateID/builds/:buildID",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "a85d00a1-5eca-4849-82f7-d47e49dc4397",
+                                  "key": "templateID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "b793aef0-99b5-403c-b6c9-824d45d91d84",
+                                  "key": "buildID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Start the build"
+                          },
+                          "response": [
+                            {
+                              "id": "d9b7e0d6-0823-48b3-87b7-fb388e81a9b6",
+                              "name": "The build has started",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-API-Key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"fromImage\": \"<string>\",\n  \"fromTemplate\": \"<string>\",\n  \"fromImageRegistry\": {\n    \"type\": \"aws\",\n    \"awsAccessKeyId\": \"<string>\",\n    \"awsSecretAccessKey\": \"<string>\",\n    \"awsRegion\": \"<string>\"\n  },\n  \"force\": false,\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/templates/:templateID/builds/:buildID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Accepted",
+                              "code": 202,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-d9b7e0d6-0823-48b3-87b7-fb388e81a9b6"
+                            },
+                            {
+                              "id": "c046fe9c-4bef-42fe-b38c-93fd8776796f",
+                              "name": "Authentication error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-API-Key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"fromImage\": \"<string>\",\n  \"fromTemplate\": \"<string>\",\n  \"fromImageRegistry\": {\n    \"type\": \"aws\",\n    \"awsAccessKeyId\": \"<string>\",\n    \"awsSecretAccessKey\": \"<string>\",\n    \"awsRegion\": \"<string>\"\n  },\n  \"force\": false,\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/templates/:templateID/builds/:buildID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-c046fe9c-4bef-42fe-b38c-93fd8776796f"
+                            },
+                            {
+                              "id": "1152e499-652d-4c1e-b58d-ada5555b0714",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-API-Key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"fromImage\": \"<string>\",\n  \"fromTemplate\": \"<string>\",\n  \"fromImageRegistry\": {\n    \"type\": \"aws\",\n    \"awsAccessKeyId\": \"<string>\",\n    \"awsSecretAccessKey\": \"<string>\",\n    \"awsRegion\": \"<string>\"\n  },\n  \"force\": false,\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/templates/:templateID/builds/:buildID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-1152e499-652d-4c1e-b58d-ada5555b0714"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-6cf84c09-2e39-4d66-b7ca-939e0722885b"
+                        }
+                      ],
+                      "id": "311792aa-fe4d-4410-b2f1-3ade7eab6c68",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-311792aa-fe4d-4410-b2f1-3ade7eab6c68"
+                    }
+                  ],
+                  "id": "d7879782-c0ad-4921-9be5-e4e05c816e21",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-d7879782-c0ad-4921-9be5-e4e05c816e21"
+                },
+                {
+                  "name": "Update template",
+                  "id": "a10e50ab-aacd-419c-92c6-30b78d847414",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "X-API-Key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d1798600-32a1-402e-b542-60a7b7050f7d",
+                          "key": "templateID",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Update template"
+                  },
+                  "response": [
+                    {
+                      "id": "7e65aa3c-e266-4147-b8cc-14eab4813ef0",
+                      "name": "The template was updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/templates/:templateID",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "templates",
+                            ":templateID"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-7e65aa3c-e266-4147-b8cc-14eab4813ef0"
+                    },
+                    {
+                      "id": "76153668-bedf-41c1-85ec-fd165a690705",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/templates/:templateID",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "templates",
+                            ":templateID"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-76153668-bedf-41c1-85ec-fd165a690705"
+                    },
+                    {
+                      "id": "225eed98-591a-49da-985c-8945d0884b18",
+                      "name": "Authentication error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/templates/:templateID",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "templates",
+                            ":templateID"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-225eed98-591a-49da-985c-8945d0884b18"
+                    },
+                    {
+                      "id": "5ce4dbe4-e3b5-4902-b2a8-5acbcd60dc1b",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/templates/:templateID",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "templates",
+                            ":templateID"
+                          ],
+                          "variable": [
+                            {
+                              "key": "templateID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-5ce4dbe4-e3b5-4902-b2a8-5acbcd60dc1b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-a10e50ab-aacd-419c-92c6-30b78d847414"
+                }
+              ],
+              "id": "313a1b73-8e41-47c0-8304-e566523b61a6",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-313a1b73-8e41-47c0-8304-e566523b61a6"
+            },
+            {
+              "name": "Create a new template",
+              "id": "e96d4b40-d996-4d68-ba48-49988328a398",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "templates"
+                  ]
+                },
+                "description": "Create a new template"
+              },
+              "response": [
+                {
+                  "id": "cc18c722-6920-4976-8ff9-ed56995c84c1",
+                  "name": "The build was requested successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"templateID\": \"<string>\",\n  \"buildID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\",\n  \"diskSizeMB\": \"<integer>\",\n  \"public\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"email\": \"<string>\"\n  },\n  \"lastSpawnedAt\": \"<dateTime>\",\n  \"spawnCount\": \"<long>\",\n  \"buildCount\": \"<integer>\",\n  \"envdVersion\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-cc18c722-6920-4976-8ff9-ed56995c84c1"
+                },
+                {
+                  "id": "87e94977-4117-4355-b368-326ff01c51c9",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-87e94977-4117-4355-b368-326ff01c51c9"
+                },
+                {
+                  "id": "29723b16-d21d-40de-ab25-d8fb9113e77b",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-29723b16-d21d-40de-ab25-d8fb9113e77b"
+                },
+                {
+                  "id": "b9824d9a-92df-4940-abc7-a8f8b3f33207",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/templates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "templates"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-b9824d9a-92df-4940-abc7-a8f8b3f33207"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-e96d4b40-d996-4d68-ba48-49988328a398"
+            }
+          ],
+          "id": "3a9af4d9-02be-4085-8f81-394298648b11",
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-3a9af4d9-02be-4085-8f81-394298648b11"
+        }
+      ],
+      "id": "21b48f59-4dd9-41d5-a1b1-bf45429fd8f0",
+      "createdAt": "2026-07-28T01:33:45.000Z",
+      "updatedAt": "2026-07-28T01:33:45.000Z",
+      "uid": "35240-21b48f59-4dd9-41d5-a1b1-bf45429fd8f0"
+    },
+    {
+      "name": "templates",
+      "item": [
+        {
+          "name": "{templateID}",
+          "item": [
+            {
+              "name": "files",
+              "item": [
+                {
+                  "name": "{hash}",
+                  "item": [
+                    {
+                      "name": "Get an upload link for a tar file containing build layer files",
+                      "id": "b1960c2a-13ef-472e-b997-e0fc720443a1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "files",
+                            ":hash"
+                          ],
+                          "variable": [
+                            {
+                              "id": "191d44aa-b04c-4163-b8be-4b7a22a716f4",
+                              "key": "templateID",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "87c77155-50ba-4d6b-bf74-42a5d6a4f500",
+                              "key": "hash",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Get an upload link for a tar file containing build layer files"
+                      },
+                      "response": [
+                        {
+                          "id": "f19a982e-3c3a-4f0e-9302-b753be8a2c27",
+                          "name": "The upload link where to upload the tar file",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "files",
+                                ":hash"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "hash"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"present\": \"<boolean>\",\n  \"url\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-f19a982e-3c3a-4f0e-9302-b753be8a2c27"
+                        },
+                        {
+                          "id": "9deaf765-dc3f-4241-9803-5cee8fe897c0",
+                          "name": "Bad request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "files",
+                                ":hash"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "hash"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-9deaf765-dc3f-4241-9803-5cee8fe897c0"
+                        },
+                        {
+                          "id": "7bd17a0a-3680-466f-abe5-cfee69626b41",
+                          "name": "Authentication error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "files",
+                                ":hash"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "hash"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-7bd17a0a-3680-466f-abe5-cfee69626b41"
+                        },
+                        {
+                          "id": "da8dafe0-bd9f-48d5-a21a-92e750680e89",
+                          "name": "Not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "files",
+                                ":hash"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "hash"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-da8dafe0-bd9f-48d5-a21a-92e750680e89"
+                        },
+                        {
+                          "id": "e7a66f56-9265-4ee7-afa8-f62281c2d47b",
+                          "name": "Server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/files/:hash",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "files",
+                                ":hash"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "hash"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-e7a66f56-9265-4ee7-afa8-f62281c2d47b"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-b1960c2a-13ef-472e-b997-e0fc720443a1"
+                    }
+                  ],
+                  "id": "0757854a-ec28-4a66-abad-04b34da21f7e",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-0757854a-ec28-4a66-abad-04b34da21f7e"
+                }
+              ],
+              "id": "9416af77-7a52-4c87-a2aa-d66f8ffc4979",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-9416af77-7a52-4c87-a2aa-d66f8ffc4979"
+            },
+            {
+              "name": "builds",
+              "item": [
+                {
+                  "name": "{buildID}",
+                  "item": [
+                    {
+                      "name": "status",
+                      "item": [
+                        {
+                          "name": "Get template build info",
+                          "id": "d78dcdeb-86d1-4fd6-80a5-56fc883e3d22",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/status?logsOffset=0&limit=100&level=error",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID",
+                                "status"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Index of the starting build log that should be returned with the template",
+                                  "key": "logsOffset",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Maximum number of logs that should be returned",
+                                  "key": "limit",
+                                  "value": "100"
+                                },
+                                {
+                                  "key": "level",
+                                  "value": "error"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "8e3f9505-4bfa-42df-af8e-921228df491c",
+                                  "key": "templateID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "a2c0a9e9-bd82-44d1-90de-f2f02ea153e2",
+                                  "key": "buildID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Get template build info"
+                          },
+                          "response": [
+                            {
+                              "id": "d535a662-236f-409e-bd31-d91a861c4b65",
+                              "name": "Successfully returned the template",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/status?logsOffset=0&limit=100&level=error",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "status"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Index of the starting build log that should be returned with the template",
+                                      "key": "logsOffset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"templateID\": \"<string>\",\n  \"buildID\": \"<string>\",\n  \"status\": \"ready\",\n  \"logs\": [],\n  \"logEntries\": [],\n  \"reason\": {\n    \"message\": \"<string>\",\n    \"step\": \"<string>\"\n  }\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-d535a662-236f-409e-bd31-d91a861c4b65"
+                            },
+                            {
+                              "id": "d33759b9-7aa4-440e-a9db-3ddd9215f5f4",
+                              "name": "Authentication error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/status?logsOffset=0&limit=100&level=error",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "status"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Index of the starting build log that should be returned with the template",
+                                      "key": "logsOffset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-d33759b9-7aa4-440e-a9db-3ddd9215f5f4"
+                            },
+                            {
+                              "id": "40fece62-3b8a-481e-b69e-f284f8341e3b",
+                              "name": "Not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/status?logsOffset=0&limit=100&level=error",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "status"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Index of the starting build log that should be returned with the template",
+                                      "key": "logsOffset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-40fece62-3b8a-481e-b69e-f284f8341e3b"
+                            },
+                            {
+                              "id": "a65d6c15-bf59-4a73-a8a6-1fe458b213aa",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/status?logsOffset=0&limit=100&level=error",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "status"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Index of the starting build log that should be returned with the template",
+                                      "key": "logsOffset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-a65d6c15-bf59-4a73-a8a6-1fe458b213aa"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-d78dcdeb-86d1-4fd6-80a5-56fc883e3d22"
+                        }
+                      ],
+                      "id": "f197aa39-45e7-41c7-8cfd-bd4dffd865e9",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-f197aa39-45e7-41c7-8cfd-bd4dffd865e9"
+                    },
+                    {
+                      "name": "logs",
+                      "item": [
+                        {
+                          "name": "Get template build logs",
+                          "id": "ce2ccbd7-f971-41a7-bb6f-820e680a8823",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/logs?cursor=<long>&limit=100&direction=forward&level=error&source=persistent",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID",
+                                "logs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Starting timestamp of the logs that should be returned in milliseconds",
+                                  "key": "cursor",
+                                  "value": "<long>"
+                                },
+                                {
+                                  "description": "Maximum number of logs that should be returned",
+                                  "key": "limit",
+                                  "value": "100"
+                                },
+                                {
+                                  "key": "direction",
+                                  "value": "forward"
+                                },
+                                {
+                                  "key": "level",
+                                  "value": "error"
+                                },
+                                {
+                                  "description": "Source of the logs that should be returned from",
+                                  "key": "source",
+                                  "value": "persistent"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "9cccaf52-8a68-465d-8bb9-c46cf5edc217",
+                                  "key": "templateID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "99436873-2f6e-4221-884a-5e35090d142b",
+                                  "key": "buildID",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Get template build logs"
+                          },
+                          "response": [
+                            {
+                              "id": "f2188df8-3711-4c65-b00b-88af74258ea0",
+                              "name": "Successfully returned the template build logs",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/logs?cursor=<long>&limit=100&direction=forward&level=error&source=persistent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "logs"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Starting timestamp of the logs that should be returned in milliseconds",
+                                      "key": "cursor",
+                                      "value": "<long>"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "direction",
+                                      "value": "forward"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    },
+                                    {
+                                      "description": "Source of the logs that should be returned from",
+                                      "key": "source",
+                                      "value": "persistent"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"logs\": []\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-f2188df8-3711-4c65-b00b-88af74258ea0"
+                            },
+                            {
+                              "id": "d342ea4b-c59a-4e4d-b3c5-e5b50e415e70",
+                              "name": "Authentication error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/logs?cursor=<long>&limit=100&direction=forward&level=error&source=persistent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "logs"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Starting timestamp of the logs that should be returned in milliseconds",
+                                      "key": "cursor",
+                                      "value": "<long>"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "direction",
+                                      "value": "forward"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    },
+                                    {
+                                      "description": "Source of the logs that should be returned from",
+                                      "key": "source",
+                                      "value": "persistent"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-d342ea4b-c59a-4e4d-b3c5-e5b50e415e70"
+                            },
+                            {
+                              "id": "40032170-4c63-4d4d-ad99-a2a94a3a1994",
+                              "name": "Not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/logs?cursor=<long>&limit=100&direction=forward&level=error&source=persistent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "logs"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Starting timestamp of the logs that should be returned in milliseconds",
+                                      "key": "cursor",
+                                      "value": "<long>"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "direction",
+                                      "value": "forward"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    },
+                                    {
+                                      "description": "Source of the logs that should be returned from",
+                                      "key": "source",
+                                      "value": "persistent"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-40032170-4c63-4d4d-ad99-a2a94a3a1994"
+                            },
+                            {
+                              "id": "c0321ff2-08e3-4cc8-84e3-a789c3bf11eb",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID/logs?cursor=<long>&limit=100&direction=forward&level=error&source=persistent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "templates",
+                                    ":templateID",
+                                    "builds",
+                                    ":buildID",
+                                    "logs"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Starting timestamp of the logs that should be returned in milliseconds",
+                                      "key": "cursor",
+                                      "value": "<long>"
+                                    },
+                                    {
+                                      "description": "Maximum number of logs that should be returned",
+                                      "key": "limit",
+                                      "value": "100"
+                                    },
+                                    {
+                                      "key": "direction",
+                                      "value": "forward"
+                                    },
+                                    {
+                                      "key": "level",
+                                      "value": "error"
+                                    },
+                                    {
+                                      "description": "Source of the logs that should be returned from",
+                                      "key": "source",
+                                      "value": "persistent"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "templateID"
+                                    },
+                                    {
+                                      "key": "buildID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:45.000Z",
+                              "updatedAt": "2026-07-28T01:33:45.000Z",
+                              "uid": "35240-c0321ff2-08e3-4cc8-84e3-a789c3bf11eb"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-ce2ccbd7-f971-41a7-bb6f-820e680a8823"
+                        }
+                      ],
+                      "id": "30444c96-9a2b-4ddd-8df9-072307900db4",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-30444c96-9a2b-4ddd-8df9-072307900db4"
+                    },
+                    {
+                      "name": "Start the build",
+                      "id": "1e0b7b85-f53f-4edf-a514-b5eab34cc3a5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            ":templateID",
+                            "builds",
+                            ":buildID"
+                          ],
+                          "variable": [
+                            {
+                              "id": "9864f0e2-931a-4d5d-b7a4-9fb182030912",
+                              "key": "templateID",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "1f493732-b3e5-4912-bffd-0a3986357e51",
+                              "key": "buildID",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Start the build"
+                      },
+                      "response": [
+                        {
+                          "id": "629f4947-6c90-4f7a-92b9-4fd551ca7a6b",
+                          "name": "The build has started",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "buildID"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Accepted",
+                          "code": 202,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-629f4947-6c90-4f7a-92b9-4fd551ca7a6b"
+                        },
+                        {
+                          "id": "996f9295-77f1-4970-a165-736972452336",
+                          "name": "Authentication error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "buildID"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-996f9295-77f1-4970-a165-736972452336"
+                        },
+                        {
+                          "id": "4eddbdaf-5942-495c-805c-c08a2fddfaed",
+                          "name": "Server error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/templates/:templateID/builds/:buildID",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "templates",
+                                ":templateID",
+                                "builds",
+                                ":buildID"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "templateID"
+                                },
+                                {
+                                  "key": "buildID"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:33:45.000Z",
+                          "updatedAt": "2026-07-28T01:33:45.000Z",
+                          "uid": "35240-4eddbdaf-5942-495c-805c-c08a2fddfaed"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-1e0b7b85-f53f-4edf-a514-b5eab34cc3a5"
+                    }
+                  ],
+                  "id": "5fbb7897-91d7-4702-9e25-601b4f3f7c3c",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-5fbb7897-91d7-4702-9e25-601b4f3f7c3c"
+                }
+              ],
+              "id": "2c3bd245-232d-4349-9cb8-515df97cfdfa",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-2c3bd245-232d-4349-9cb8-515df97cfdfa"
+            },
+            {
+              "name": "List all builds for a template",
+              "id": "f80363c3-93c2-4794-9bd0-ff255f0c8495",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/templates/:templateID?nextToken=<string>&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    ":templateID"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor to start the list from",
+                      "key": "nextToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return per page",
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "9c3394f7-d767-40f7-a988-f04027db85cf",
+                      "key": "templateID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "List all builds for a template"
+              },
+              "response": [
+                {
+                  "id": "98dec583-3378-414c-b0aa-577f2af7316c",
+                  "name": "Successfully returned the template with its builds",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID?nextToken=<string>&limit=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor to start the list from",
+                          "key": "nextToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of items to return per page",
+                          "key": "limit",
+                          "value": "100"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"templateID\": \"<string>\",\n  \"public\": \"<boolean>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"lastSpawnedAt\": \"<dateTime>\",\n  \"spawnCount\": \"<long>\",\n  \"builds\": [\n    {\n      \"buildID\": \"<uuid>\",\n      \"status\": \"error\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"cpuCount\": \"<integer>\",\n      \"memoryMB\": \"<integer>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"diskSizeMB\": \"<integer>\",\n      \"envdVersion\": \"<string>\"\n    },\n    {\n      \"buildID\": \"<uuid>\",\n      \"status\": \"error\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"cpuCount\": \"<integer>\",\n      \"memoryMB\": \"<integer>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"diskSizeMB\": \"<integer>\",\n      \"envdVersion\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-98dec583-3378-414c-b0aa-577f2af7316c"
+                },
+                {
+                  "id": "6c3074d7-19b0-4e82-9b0b-9a657ebeba2a",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID?nextToken=<string>&limit=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor to start the list from",
+                          "key": "nextToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of items to return per page",
+                          "key": "limit",
+                          "value": "100"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-6c3074d7-19b0-4e82-9b0b-9a657ebeba2a"
+                },
+                {
+                  "id": "8611d5e3-f42b-46d8-bbc2-0c102d109459",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID?nextToken=<string>&limit=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor to start the list from",
+                          "key": "nextToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of items to return per page",
+                          "key": "limit",
+                          "value": "100"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-8611d5e3-f42b-46d8-bbc2-0c102d109459"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-f80363c3-93c2-4794-9bd0-ff255f0c8495"
+            },
+            {
+              "name": "Rebuild an template",
+              "id": "20ac80cc-6dfb-4ed2-8eb1-93058fcc8c30",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates/:templateID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    ":templateID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cc7a376f-031f-43bc-9c95-6f3174252398",
+                      "key": "templateID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Rebuild an template"
+              },
+              "response": [
+                {
+                  "id": "ab5a19f7-d971-4ecf-9b60-2428f32428f1",
+                  "name": "The build was accepted",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"templateID\": \"<string>\",\n  \"buildID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\",\n  \"diskSizeMB\": \"<integer>\",\n  \"public\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"email\": \"<string>\"\n  },\n  \"lastSpawnedAt\": \"<dateTime>\",\n  \"spawnCount\": \"<long>\",\n  \"buildCount\": \"<integer>\",\n  \"envdVersion\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-ab5a19f7-d971-4ecf-9b60-2428f32428f1"
+                },
+                {
+                  "id": "5a8f64d0-3001-4cd2-96ba-76e903407392",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-5a8f64d0-3001-4cd2-96ba-76e903407392"
+                },
+                {
+                  "id": "003c0e56-435e-4ffc-a1af-2e5ab65b651b",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-003c0e56-435e-4ffc-a1af-2e5ab65b651b"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-20ac80cc-6dfb-4ed2-8eb1-93058fcc8c30"
+            },
+            {
+              "name": "Delete a template",
+              "id": "011c2d9a-163a-4f59-b41f-5ddbc169cd18",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/templates/:templateID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    ":templateID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6474f040-2a97-4bea-8def-11fb05cee6e5",
+                      "key": "templateID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a template"
+              },
+              "response": [
+                {
+                  "id": "c048e078-f211-4054-8e0b-36176e9da21d",
+                  "name": "The template was deleted successfully",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-c048e078-f211-4054-8e0b-36176e9da21d"
+                },
+                {
+                  "id": "b3b70d26-40d6-481f-815e-39457f0374cf",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-b3b70d26-40d6-481f-815e-39457f0374cf"
+                },
+                {
+                  "id": "568ad342-3ce3-46b2-b5bd-db02d4246b87",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-568ad342-3ce3-46b2-b5bd-db02d4246b87"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-011c2d9a-163a-4f59-b41f-5ddbc169cd18"
+            },
+            {
+              "name": "Update template",
+              "id": "a0a6f83a-18a9-4282-9d89-f78da3648b4b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-API-Key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates/:templateID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates",
+                    ":templateID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5db3ea3a-5fe9-4f2a-a564-22cc325e6bec",
+                      "key": "templateID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update template"
+              },
+              "response": [
+                {
+                  "id": "6c54d13f-1bbd-42b7-a1ac-c4d54c9dcb28",
+                  "name": "The template was updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-6c54d13f-1bbd-42b7-a1ac-c4d54c9dcb28"
+                },
+                {
+                  "id": "4b1387b4-e2ba-419c-bc4b-8bd329f2894a",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-4b1387b4-e2ba-419c-bc4b-8bd329f2894a"
+                },
+                {
+                  "id": "5d7a8a8d-81a0-40df-9105-a67cac5f70b4",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-5d7a8a8d-81a0-40df-9105-a67cac5f70b4"
+                },
+                {
+                  "id": "8756dc5b-7928-4b45-97f8-68b46d88f3c5",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/:templateID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        ":templateID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "templateID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-8756dc5b-7928-4b45-97f8-68b46d88f3c5"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-a0a6f83a-18a9-4282-9d89-f78da3648b4b"
+            }
+          ],
+          "id": "d18e301a-9fc3-481b-81cb-728c43c55b10",
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-d18e301a-9fc3-481b-81cb-728c43c55b10"
+        },
+        {
+          "name": "aliases",
+          "item": [
+            {
+              "name": "{alias}",
+              "item": [
+                {
+                  "name": "Check if template with given alias exists",
+                  "id": "798b4d15-db5f-434a-997a-bea51ed40570",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "X-API-Key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/templates/aliases/:alias",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "templates",
+                        "aliases",
+                        ":alias"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9d17da9b-4990-466f-a36d-67440f53589d",
+                          "key": "alias",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Check if template with given alias exists"
+                  },
+                  "response": [
+                    {
+                      "id": "2eb52c6b-f96d-4366-b38c-1123ac33619a",
+                      "name": "Successfully queried template by alias",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/aliases/:alias",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            "aliases",
+                            ":alias"
+                          ],
+                          "variable": [
+                            {
+                              "key": "alias"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"templateID\": \"<string>\",\n  \"public\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-2eb52c6b-f96d-4366-b38c-1123ac33619a"
+                    },
+                    {
+                      "id": "79654e03-ae33-4863-af84-4f265df5ddea",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/aliases/:alias",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            "aliases",
+                            ":alias"
+                          ],
+                          "variable": [
+                            {
+                              "key": "alias"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-79654e03-ae33-4863-af84-4f265df5ddea"
+                    },
+                    {
+                      "id": "c32b0007-61cf-463d-8d31-5068574e7aa0",
+                      "name": "Forbidden",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/aliases/:alias",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            "aliases",
+                            ":alias"
+                          ],
+                          "variable": [
+                            {
+                              "key": "alias"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-c32b0007-61cf-463d-8d31-5068574e7aa0"
+                    },
+                    {
+                      "id": "6fdb62d1-594c-4ac1-b86b-8d2af19ac364",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/aliases/:alias",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            "aliases",
+                            ":alias"
+                          ],
+                          "variable": [
+                            {
+                              "key": "alias"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-6fdb62d1-594c-4ac1-b86b-8d2af19ac364"
+                    },
+                    {
+                      "id": "bc03f677-653c-4021-bcd9-7959fea77fa2",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-Key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/templates/aliases/:alias",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "templates",
+                            "aliases",
+                            ":alias"
+                          ],
+                          "variable": [
+                            {
+                              "key": "alias"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:33:45.000Z",
+                      "updatedAt": "2026-07-28T01:33:45.000Z",
+                      "uid": "35240-bc03f677-653c-4021-bcd9-7959fea77fa2"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:33:45.000Z",
+                  "updatedAt": "2026-07-28T01:33:45.000Z",
+                  "uid": "35240-798b4d15-db5f-434a-997a-bea51ed40570"
+                }
+              ],
+              "id": "1d311633-e623-4f7e-a203-37ecfd712db0",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-1d311633-e623-4f7e-a203-37ecfd712db0"
+            }
+          ],
+          "id": "096bb33b-0489-43b6-ab43-d6bdb137a6e3",
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-096bb33b-0489-43b6-ab43-d6bdb137a6e3"
+        },
+        {
+          "name": "List all templates",
+          "id": "3fb6b085-e18c-40a2-97a9-33c14cf96e6d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/templates?teamID=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "templates"
+              ],
+              "query": [
+                {
+                  "key": "teamID",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "List all templates"
+          },
+          "response": [
+            {
+              "id": "856e3e50-70a8-468d-8b27-dc9dc90a6eef",
+              "name": "Successfully returned all templates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/templates?teamID=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamID",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"templateID\": \"<string>\",\n    \"buildID\": \"<string>\",\n    \"cpuCount\": \"<integer>\",\n    \"memoryMB\": \"<integer>\",\n    \"diskSizeMB\": \"<integer>\",\n    \"public\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<uuid>\",\n      \"email\": \"<string>\"\n    },\n    \"lastSpawnedAt\": \"<dateTime>\",\n    \"spawnCount\": \"<long>\",\n    \"buildCount\": \"<integer>\",\n    \"envdVersion\": \"<string>\",\n    \"aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"names\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"buildStatus\": \"building\"\n  },\n  {\n    \"templateID\": \"<string>\",\n    \"buildID\": \"<string>\",\n    \"cpuCount\": \"<integer>\",\n    \"memoryMB\": \"<integer>\",\n    \"diskSizeMB\": \"<integer>\",\n    \"public\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<uuid>\",\n      \"email\": \"<string>\"\n    },\n    \"lastSpawnedAt\": \"<dateTime>\",\n    \"spawnCount\": \"<long>\",\n    \"buildCount\": \"<integer>\",\n    \"envdVersion\": \"<string>\",\n    \"aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"names\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"buildStatus\": \"ready\"\n  }\n]",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-856e3e50-70a8-468d-8b27-dc9dc90a6eef"
+            },
+            {
+              "id": "57052f78-e537-4271-8161-bde96c78e3aa",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/templates?teamID=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamID",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-57052f78-e537-4271-8161-bde96c78e3aa"
+            },
+            {
+              "id": "66b260d9-12e3-4df6-9e76-15aaa6391612",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/templates?teamID=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamID",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-66b260d9-12e3-4df6-9e76-15aaa6391612"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-3fb6b085-e18c-40a2-97a9-33c14cf96e6d"
+        },
+        {
+          "name": "Create a new template",
+          "id": "c87fcc53-dc51-4922-83aa-af79371fcb1d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "templates"
+              ]
+            },
+            "description": "Create a new template"
+          },
+          "response": [
+            {
+              "id": "a5c00d56-cf16-4ac8-9c63-f9d76edc98d1",
+              "name": "The build was accepted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"templateID\": \"<string>\",\n  \"buildID\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\",\n  \"diskSizeMB\": \"<integer>\",\n  \"public\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"email\": \"<string>\"\n  },\n  \"lastSpawnedAt\": \"<dateTime>\",\n  \"spawnCount\": \"<long>\",\n  \"buildCount\": \"<integer>\",\n  \"envdVersion\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-a5c00d56-cf16-4ac8-9c63-f9d76edc98d1"
+            },
+            {
+              "id": "c4a7bbe9-205f-4fcb-b57e-9b25b379cd57",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-c4a7bbe9-205f-4fcb-b57e-9b25b379cd57"
+            },
+            {
+              "id": "f58ade1c-9fdb-4d8d-ad30-965d3dee3a15",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-f58ade1c-9fdb-4d8d-ad30-965d3dee3a15"
+            },
+            {
+              "id": "0e795be6-63de-4897-aaa2-6f78f0fca253",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dockerfile\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"teamID\": \"<string>\",\n  \"startCmd\": \"<string>\",\n  \"readyCmd\": \"<string>\",\n  \"cpuCount\": \"<integer>\",\n  \"memoryMB\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "templates"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:45.000Z",
+              "updatedAt": "2026-07-28T01:33:45.000Z",
+              "uid": "35240-0e795be6-63de-4897-aaa2-6f78f0fca253"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:45.000Z",
+          "updatedAt": "2026-07-28T01:33:45.000Z",
+          "uid": "35240-c87fcc53-dc51-4922-83aa-af79371fcb1d"
+        }
+      ],
+      "id": "4eccb6b1-ce4d-4e61-b0f7-d9da14a75c38",
+      "createdAt": "2026-07-28T01:33:45.000Z",
+      "updatedAt": "2026-07-28T01:33:45.000Z",
+      "uid": "35240-4eccb6b1-ce4d-4e61-b0f7-d9da14a75c38"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}

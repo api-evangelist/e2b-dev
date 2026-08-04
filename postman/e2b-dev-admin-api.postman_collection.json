@@ -1,0 +1,1411 @@
+{
+  "info": {
+    "_postman_id": "b314c1a6-6669-486a-8df6-20da8071bfce",
+    "name": "E2B access-tokens admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:27.000Z",
+    "updatedAt": "2026-07-28T01:33:27.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b314c1a6-6669-486a-8df6-20da8071bfce"
+  },
+  "item": [
+    {
+      "name": "nodes",
+      "item": [
+        {
+          "name": "{nodeID}",
+          "item": [
+            {
+              "name": "Get node info",
+              "id": "f4bec44a-33fa-4552-8860-3dedce0db419",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-Admin-Token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/nodes/:nodeID?clusterID=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nodes",
+                    ":nodeID"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifier of the cluster",
+                      "key": "clusterID",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "2bc7aee3-3176-46c8-8e46-7ae08f0f425a",
+                      "key": "nodeID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Get node info"
+              },
+              "response": [
+                {
+                  "id": "3876fd54-7890-4449-abdd-6b64c9dde406",
+                  "name": "Successfully returned the node",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID?clusterID=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifier of the cluster",
+                          "key": "clusterID",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"serviceInstanceID\": \"<string>\",\n  \"clusterID\": \"<string>\",\n  \"status\": \"unhealthy\",\n  \"sandboxCount\": \"<integer>\",\n  \"cachedBuilds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createSuccesses\": \"<integer>\",\n  \"createFails\": \"<integer>\",\n  \"version\": \"<string>\",\n  \"commit\": \"<string>\",\n  \"metrics\": {\n    \"allocatedCPU\": \"<integer>\",\n    \"allocatedMemoryBytes\": \"<integer>\",\n    \"cpuPercent\": \"<integer>\",\n    \"memoryUsedBytes\": \"<integer>\",\n    \"cpuCount\": \"<integer>\",\n    \"memoryTotalBytes\": \"<integer>\",\n    \"disks\": [\n      {\n        \"mountPoint\": \"<string>\",\n        \"device\": \"<string>\",\n        \"filesystemType\": \"<string>\",\n        \"usedBytes\": \"<integer>\",\n        \"totalBytes\": \"<integer>\"\n      },\n      {\n        \"mountPoint\": \"<string>\",\n        \"device\": \"<string>\",\n        \"filesystemType\": \"<string>\",\n        \"usedBytes\": \"<integer>\",\n        \"totalBytes\": \"<integer>\"\n      }\n    ]\n  },\n  \"machineInfo\": {\n    \"cpuFamily\": \"<string>\",\n    \"cpuModel\": \"<string>\",\n    \"cpuModelName\": \"<string>\",\n    \"cpuArchitecture\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-3876fd54-7890-4449-abdd-6b64c9dde406"
+                },
+                {
+                  "id": "5d9002b9-d05b-4aad-9a20-68f78d77a615",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID?clusterID=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifier of the cluster",
+                          "key": "clusterID",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-5d9002b9-d05b-4aad-9a20-68f78d77a615"
+                },
+                {
+                  "id": "b0076903-d254-4b0e-8f74-8b75558090eb",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID?clusterID=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifier of the cluster",
+                          "key": "clusterID",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-b0076903-d254-4b0e-8f74-8b75558090eb"
+                },
+                {
+                  "id": "05cfeb8c-ca4f-4123-b184-d611ac7c3a39",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID?clusterID=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifier of the cluster",
+                          "key": "clusterID",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-05cfeb8c-ca4f-4123-b184-d611ac7c3a39"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-f4bec44a-33fa-4552-8860-3dedce0db419"
+            },
+            {
+              "name": "Change status of a node",
+              "id": "66bcde91-689e-4e04-8915-85c071da1dd3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "X-Admin-Token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ready\",\n  \"clusterID\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/nodes/:nodeID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nodes",
+                    ":nodeID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ce9748a8-9916-4d5d-9ed1-99edca9d4a76",
+                      "key": "nodeID",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Change status of a node"
+              },
+              "response": [
+                {
+                  "id": "fc00a089-b026-435e-9b83-2e12904da706",
+                  "name": "The node status was changed successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"ready\",\n  \"clusterID\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-fc00a089-b026-435e-9b83-2e12904da706"
+                },
+                {
+                  "id": "bd26b858-e590-4c2e-a239-21d49e182bd9",
+                  "name": "Authentication error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"ready\",\n  \"clusterID\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-bd26b858-e590-4c2e-a239-21d49e182bd9"
+                },
+                {
+                  "id": "0a0b7ce2-7322-46ad-958e-5cc8787b68da",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"ready\",\n  \"clusterID\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-0a0b7ce2-7322-46ad-958e-5cc8787b68da"
+                },
+                {
+                  "id": "186ad9a2-551e-4066-8856-929deb14fad1",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Admin-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"ready\",\n  \"clusterID\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/nodes/:nodeID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nodes",
+                        ":nodeID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "nodeID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-186ad9a2-551e-4066-8856-929deb14fad1"
+                }
+              ],
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-66bcde91-689e-4e04-8915-85c071da1dd3"
+            }
+          ],
+          "id": "e84574a1-a9a1-49fb-82ff-7c0743fc8cf6",
+          "createdAt": "2026-07-28T01:33:28.000Z",
+          "updatedAt": "2026-07-28T01:33:28.000Z",
+          "uid": "35240-e84574a1-a9a1-49fb-82ff-7c0743fc8cf6"
+        },
+        {
+          "name": "List all nodes",
+          "id": "32f28ffe-0083-4202-ab64-49a7d1913c4d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Admin-Token",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/nodes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "nodes"
+              ]
+            },
+            "description": "List all nodes"
+          },
+          "response": [
+            {
+              "id": "3578cc01-9ddf-4c73-9524-1f71d2f09f1c",
+              "name": "Successfully returned all nodes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Admin-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/nodes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nodes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<string>\",\n    \"serviceInstanceID\": \"<string>\",\n    \"clusterID\": \"<string>\",\n    \"status\": \"unhealthy\",\n    \"sandboxCount\": \"<integer>\",\n    \"metrics\": {\n      \"allocatedCPU\": \"<integer>\",\n      \"allocatedMemoryBytes\": \"<integer>\",\n      \"cpuPercent\": \"<integer>\",\n      \"memoryUsedBytes\": \"<integer>\",\n      \"cpuCount\": \"<integer>\",\n      \"memoryTotalBytes\": \"<integer>\",\n      \"disks\": [\n        {\n          \"mountPoint\": \"<string>\",\n          \"device\": \"<string>\",\n          \"filesystemType\": \"<string>\",\n          \"usedBytes\": \"<integer>\",\n          \"totalBytes\": \"<integer>\"\n        },\n        {\n          \"mountPoint\": \"<string>\",\n          \"device\": \"<string>\",\n          \"filesystemType\": \"<string>\",\n          \"usedBytes\": \"<integer>\",\n          \"totalBytes\": \"<integer>\"\n        }\n      ]\n    },\n    \"createSuccesses\": \"<integer>\",\n    \"createFails\": \"<integer>\",\n    \"sandboxStartingCount\": \"<integer>\",\n    \"version\": \"<string>\",\n    \"commit\": \"<string>\",\n    \"machineInfo\": {\n      \"cpuFamily\": \"<string>\",\n      \"cpuModel\": \"<string>\",\n      \"cpuModelName\": \"<string>\",\n      \"cpuArchitecture\": \"<string>\"\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"serviceInstanceID\": \"<string>\",\n    \"clusterID\": \"<string>\",\n    \"status\": \"ready\",\n    \"sandboxCount\": \"<integer>\",\n    \"metrics\": {\n      \"allocatedCPU\": \"<integer>\",\n      \"allocatedMemoryBytes\": \"<integer>\",\n      \"cpuPercent\": \"<integer>\",\n      \"memoryUsedBytes\": \"<integer>\",\n      \"cpuCount\": \"<integer>\",\n      \"memoryTotalBytes\": \"<integer>\",\n      \"disks\": [\n        {\n          \"mountPoint\": \"<string>\",\n          \"device\": \"<string>\",\n          \"filesystemType\": \"<string>\",\n          \"usedBytes\": \"<integer>\",\n          \"totalBytes\": \"<integer>\"\n        },\n        {\n          \"mountPoint\": \"<string>\",\n          \"device\": \"<string>\",\n          \"filesystemType\": \"<string>\",\n          \"usedBytes\": \"<integer>\",\n          \"totalBytes\": \"<integer>\"\n        }\n      ]\n    },\n    \"createSuccesses\": \"<integer>\",\n    \"createFails\": \"<integer>\",\n    \"sandboxStartingCount\": \"<integer>\",\n    \"version\": \"<string>\",\n    \"commit\": \"<string>\",\n    \"machineInfo\": {\n      \"cpuFamily\": \"<string>\",\n      \"cpuModel\": \"<string>\",\n      \"cpuModelName\": \"<string>\",\n      \"cpuArchitecture\": \"<string>\"\n    }\n  }\n]",
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-3578cc01-9ddf-4c73-9524-1f71d2f09f1c"
+            },
+            {
+              "id": "db74d948-81d7-4484-b6ae-c9b2ec24736a",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Admin-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/nodes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nodes"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-db74d948-81d7-4484-b6ae-c9b2ec24736a"
+            },
+            {
+              "id": "a7238f6f-bb4a-4d03-a4e7-fd4f3ba640e8",
+              "name": "Server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Admin-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/nodes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nodes"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-a7238f6f-bb4a-4d03-a4e7-fd4f3ba640e8"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:28.000Z",
+          "updatedAt": "2026-07-28T01:33:28.000Z",
+          "uid": "35240-32f28ffe-0083-4202-ab64-49a7d1913c4d"
+        }
+      ],
+      "id": "7ae92d57-4654-49e6-b4cd-f27ec7134d81",
+      "createdAt": "2026-07-28T01:33:28.000Z",
+      "updatedAt": "2026-07-28T01:33:28.000Z",
+      "uid": "35240-7ae92d57-4654-49e6-b4cd-f27ec7134d81"
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "teams",
+          "item": [
+            {
+              "name": "{teamID}",
+              "item": [
+                {
+                  "name": "sandboxes",
+                  "item": [
+                    {
+                      "name": "kill",
+                      "item": [
+                        {
+                          "name": "Kill all sandboxes for a team",
+                          "id": "5c4d1b4a-126d-4997-82fd-965ebfee603c",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "apikey",
+                              "apikey": [
+                                {
+                                  "key": "key",
+                                  "value": "X-Admin-Token",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "value",
+                                  "value": "{{apiKey}}",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "in",
+                                  "value": "header",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/admin/teams/:teamID/sandboxes/kill",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "admin",
+                                "teams",
+                                ":teamID",
+                                "sandboxes",
+                                "kill"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "57f641d8-ee46-439b-87eb-00fc9de20213",
+                                  "key": "teamID",
+                                  "value": "<uuid>",
+                                  "description": "(Required) Team ID"
+                                }
+                              ]
+                            },
+                            "description": "Kills all sandboxes for the specified team"
+                          },
+                          "response": [
+                            {
+                              "id": "4df5991f-50a2-4a2c-aa61-04a5bd351a70",
+                              "name": "Successfully killed sandboxes",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/sandboxes/kill",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "sandboxes",
+                                    "kill"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"killedCount\": \"<integer>\",\n  \"failedCount\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-4df5991f-50a2-4a2c-aa61-04a5bd351a70"
+                            },
+                            {
+                              "id": "e2f95a8b-c095-42d0-bfc4-6c5068e97dc0",
+                              "name": "Authentication error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/sandboxes/kill",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "sandboxes",
+                                    "kill"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-e2f95a8b-c095-42d0-bfc4-6c5068e97dc0"
+                            },
+                            {
+                              "id": "971c4ab4-a17c-45d0-9054-1f352049b096",
+                              "name": "Not found",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/sandboxes/kill",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "sandboxes",
+                                    "kill"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-971c4ab4-a17c-45d0-9054-1f352049b096"
+                            },
+                            {
+                              "id": "20a4a693-11a3-40ae-bdb0-28c53b23e409",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/sandboxes/kill",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "sandboxes",
+                                    "kill"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-20a4a693-11a3-40ae-bdb0-28c53b23e409"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:33:28.000Z",
+                          "updatedAt": "2026-07-28T01:33:28.000Z",
+                          "uid": "35240-5c4d1b4a-126d-4997-82fd-965ebfee603c"
+                        }
+                      ],
+                      "id": "d18bf5e7-0c0d-461b-8709-0948c4ba577e",
+                      "createdAt": "2026-07-28T01:33:28.000Z",
+                      "updatedAt": "2026-07-28T01:33:28.000Z",
+                      "uid": "35240-d18bf5e7-0c0d-461b-8709-0948c4ba577e"
+                    }
+                  ],
+                  "id": "50de2630-32c1-4a80-bd8c-2dacb1edab1d",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-50de2630-32c1-4a80-bd8c-2dacb1edab1d"
+                },
+                {
+                  "name": "builds",
+                  "item": [
+                    {
+                      "name": "cancel",
+                      "item": [
+                        {
+                          "name": "Cancel all builds for a team",
+                          "id": "b986edef-3396-4f1c-a784-02e3c2c5e850",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "apikey",
+                              "apikey": [
+                                {
+                                  "key": "key",
+                                  "value": "X-Admin-Token",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "value",
+                                  "value": "{{apiKey}}",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "in",
+                                  "value": "header",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/admin/teams/:teamID/builds/cancel",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "admin",
+                                "teams",
+                                ":teamID",
+                                "builds",
+                                "cancel"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "cabee640-17de-43df-94e4-dbd9c8963d97",
+                                  "key": "teamID",
+                                  "value": "<uuid>",
+                                  "description": "(Required) Team ID"
+                                }
+                              ]
+                            },
+                            "description": "Cancels all in-progress and pending builds for the specified team"
+                          },
+                          "response": [
+                            {
+                              "id": "6208ceea-54c3-41e0-b753-ffc58b33d1eb",
+                              "name": "Successfully cancelled builds",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/builds/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "builds",
+                                    "cancel"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"cancelledCount\": \"<integer>\",\n  \"failedCount\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-6208ceea-54c3-41e0-b753-ffc58b33d1eb"
+                            },
+                            {
+                              "id": "24abcb2f-f25a-4429-be47-97ebc34477ed",
+                              "name": "Authentication error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/builds/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "builds",
+                                    "cancel"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-24abcb2f-f25a-4429-be47-97ebc34477ed"
+                            },
+                            {
+                              "id": "6282c717-438c-482e-ad73-b47ab79f5e88",
+                              "name": "Not found",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/builds/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "builds",
+                                    "cancel"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-6282c717-438c-482e-ad73-b47ab79f5e88"
+                            },
+                            {
+                              "id": "412f2a73-4c29-47bb-88c0-490408dc3122",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Admin-Token",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/admin/teams/:teamID/builds/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "admin",
+                                    "teams",
+                                    ":teamID",
+                                    "builds",
+                                    "cancel"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "teamID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:33:28.000Z",
+                              "updatedAt": "2026-07-28T01:33:28.000Z",
+                              "uid": "35240-412f2a73-4c29-47bb-88c0-490408dc3122"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:33:28.000Z",
+                          "updatedAt": "2026-07-28T01:33:28.000Z",
+                          "uid": "35240-b986edef-3396-4f1c-a784-02e3c2c5e850"
+                        }
+                      ],
+                      "id": "07e6eea1-6191-40d4-8a57-028c022c903b",
+                      "createdAt": "2026-07-28T01:33:28.000Z",
+                      "updatedAt": "2026-07-28T01:33:28.000Z",
+                      "uid": "35240-07e6eea1-6191-40d4-8a57-028c022c903b"
+                    }
+                  ],
+                  "id": "babeff5d-9d6c-43cb-95ce-e32eef4103ca",
+                  "createdAt": "2026-07-28T01:33:28.000Z",
+                  "updatedAt": "2026-07-28T01:33:28.000Z",
+                  "uid": "35240-babeff5d-9d6c-43cb-95ce-e32eef4103ca"
+                }
+              ],
+              "id": "022bc137-3cf3-4de8-bce1-127e182beed9",
+              "createdAt": "2026-07-28T01:33:28.000Z",
+              "updatedAt": "2026-07-28T01:33:28.000Z",
+              "uid": "35240-022bc137-3cf3-4de8-bce1-127e182beed9"
+            }
+          ],
+          "id": "97a129ca-597b-4ac7-a9e7-20c1e2cde688",
+          "createdAt": "2026-07-28T01:33:28.000Z",
+          "updatedAt": "2026-07-28T01:33:28.000Z",
+          "uid": "35240-97a129ca-597b-4ac7-a9e7-20c1e2cde688"
+        }
+      ],
+      "id": "3027a51d-4223-477a-acc9-631473b81479",
+      "createdAt": "2026-07-28T01:33:28.000Z",
+      "updatedAt": "2026-07-28T01:33:28.000Z",
+      "uid": "35240-3027a51d-4223-477a-acc9-631473b81479"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}

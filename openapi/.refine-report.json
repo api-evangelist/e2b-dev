@@ -1,0 +1,36 @@
+{
+  "provider": "e2b-dev",
+  "sources": [
+    "e2b-dev-access-tokens-api-openapi.yml",
+    "e2b-dev-admin-api-openapi.yml",
+    "e2b-dev-api-keys-api-openapi.yml",
+    "e2b-dev-auth-api-openapi.yml",
+    "e2b-dev-events-api-openapi.yml",
+    "e2b-dev-health-api-openapi.yml",
+    "e2b-dev-sandboxes-api-openapi.yml",
+    "e2b-dev-snapshots-api-openapi.yml",
+    "e2b-dev-tags-api-openapi.yml",
+    "e2b-dev-templates-api-openapi.yml",
+    "e2b-dev-volumes-api-openapi.yml",
+    "e2b-dev-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "e2b-dev-access-tokens-api-openapi.yml",
+    "e2b-dev-admin-api-openapi.yml",
+    "e2b-dev-api-keys-api-openapi.yml",
+    "e2b-dev-auth-api-openapi.yml",
+    "e2b-dev-events-api-openapi.yml",
+    "e2b-dev-health-api-openapi.yml",
+    "e2b-dev-sandboxes-api-openapi.yml",
+    "e2b-dev-snapshots-api-openapi.yml",
+    "e2b-dev-tags-api-openapi.yml",
+    "e2b-dev-templates-api-openapi.yml",
+    "e2b-dev-volumes-api-openapi.yml",
+    "e2b-dev-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

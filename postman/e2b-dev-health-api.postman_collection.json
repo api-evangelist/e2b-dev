@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "83d9de02-ee69-4406-9027-c3c594d1c551",
+    "name": "E2B access-tokens Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:33:31.000Z",
+    "updatedAt": "2026-07-28T01:33:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-83d9de02-ee69-4406-9027-c3c594d1c551"
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "Health check",
+          "id": "288898a2-430a-496c-a1d3-0ed4b7a538a1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check"
+          },
+          "response": [
+            {
+              "id": "53638ef2-d423-4e03-83bd-7f42690ccd85",
+              "name": "Request was successful",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:33:31.000Z",
+              "updatedAt": "2026-07-28T01:33:31.000Z",
+              "uid": "35240-53638ef2-d423-4e03-83bd-7f42690ccd85"
+            },
+            {
+              "id": "1f7b06c9-e9e0-4659-9d7f-c8d252e1fe5f",
+              "name": "Authentication error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:33:31.000Z",
+              "updatedAt": "2026-07-28T01:33:31.000Z",
+              "uid": "35240-1f7b06c9-e9e0-4659-9d7f-c8d252e1fe5f"
+            }
+          ],
+          "createdAt": "2026-07-28T01:33:31.000Z",
+          "updatedAt": "2026-07-28T01:33:31.000Z",
+          "uid": "35240-288898a2-430a-496c-a1d3-0ed4b7a538a1"
+        }
+      ],
+      "id": "a0a1ee38-4088-42c1-9447-8c624c4398ae",
+      "createdAt": "2026-07-28T01:33:31.000Z",
+      "updatedAt": "2026-07-28T01:33:31.000Z",
+      "uid": "35240-a0a1ee38-4088-42c1-9447-8c624c4398ae"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.e2b.app"
+    }
+  ]
+}
