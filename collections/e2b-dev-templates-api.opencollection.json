@@ -1,0 +1,455 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens templates API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /v3/templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v3/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "POST /v2/templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v2/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/files/{hash}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/files/:hash",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an upload link for a tar file containing build layer files"
+        },
+        {
+          "info": {
+            "name": "GET /templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all templates"
+        },
+        {
+          "info": {
+            "name": "POST /templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start the list from"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all builds for a template"
+        },
+        {
+          "info": {
+            "name": "POST /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rebuild an template"
+        },
+        {
+          "info": {
+            "name": "PATCH /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template"
+        },
+        {
+          "info": {
+            "name": "DELETE /templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a template"
+        },
+        {
+          "info": {
+            "name": "POST /templates/{templateID}/builds/{buildID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start the build"
+        },
+        {
+          "info": {
+            "name": "POST /v2/templates/{templateID}/builds/{buildID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/v2/templates/:templateID/builds/:buildID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Start the build"
+        },
+        {
+          "info": {
+            "name": "PATCH /v2/templates/{templateID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/v2/templates/:templateID",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/builds/{buildID}/status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID/status",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "logsOffset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the starting build log that should be returned with the template"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get template build info"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/builds/{buildID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/builds/:buildID/logs",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "buildID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Source of the logs that should be returned from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get template build logs"
+        },
+        {
+          "info": {
+            "name": "GET /templates/aliases/{alias}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/aliases/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check if template with given alias exists"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

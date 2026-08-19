@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens events API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List team sandbox lifecycle events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/events/sandboxes",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event type. Repeatable."
+              }
+            ]
+          },
+          "docs": "Returns sandbox lifecycle events across the entire team. Supports\npagination via offset/limit and filtering by event type.\n"
+        },
+        {
+          "info": {
+            "name": "List events for a single sandbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/events/sandboxes/:sandboxID",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List events for a single sandbox"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

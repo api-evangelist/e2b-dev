@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "access-tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /access-tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/access-tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new access token"
+        },
+        {
+          "info": {
+            "name": "DELETE /access-tokens/{accessTokenID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/access-tokens/:accessTokenID",
+            "params": [
+              {
+                "name": "accessTokenID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Supabase-Token",
+              "value": "{{X-Supabase-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an access token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

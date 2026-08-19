@@ -1,0 +1,469 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens sandboxes API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sandboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes",
+            "params": [
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata query used to filter the sandboxes (e.g. \"user=abc&app=prod\"). Each key and values must be URL encoded."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all running sandboxes"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a sandbox from the template"
+        },
+        {
+          "info": {
+            "name": "GET /v2/sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/v2/sandboxes",
+            "params": [
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata query used to filter the sandboxes (e.g. \"user=abc&app=prod\"). Each key and values must be URL encoded."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter sandboxes by one or more states"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start the list from"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all sandboxes"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/metrics",
+            "params": [
+              {
+                "name": "sandbox_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of sandbox IDs to get metrics for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List metrics for given sandboxes"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/logs",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox logs. Use /v2/sandboxes/{sandboxID}/logs instead."
+        },
+        {
+          "info": {
+            "name": "GET /v2/sandboxes/{sandboxID}/logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/v2/sandboxes/:sandboxID/logs",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Starting timestamp of the logs that should be returned in milliseconds"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs that should be returned"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of the logs that should be returned"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "Minimum log level to return. Logs below this level are excluded"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-sensitive substring match on log message content"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox logs"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a sandbox by id"
+        },
+        {
+          "info": {
+            "name": "DELETE /sandboxes/{sandboxID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Kill a sandbox"
+        },
+        {
+          "info": {
+            "name": "GET /sandboxes/{sandboxID}/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/metrics",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get sandbox metrics"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/pause",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/pause",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Pause the sandbox"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/resume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/resume",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resume the sandbox"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/connect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/connect",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns sandbox details. If the sandbox is paused, it will be resumed. TTL is only extended."
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/timeout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/timeout",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set the timeout for the sandbox. The sandbox will expire x seconds from the time of the request. Calling this method multiple times overwrites the TTL, each time using the current timestamp as the starting point to measure the timeout duration."
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/refreshes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/refreshes",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Refresh the sandbox extending its time to live"
+        },
+        {
+          "info": {
+            "name": "POST /sandboxes/{sandboxID}/snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/sandboxes/:sandboxID/snapshots",
+            "params": [
+              {
+                "name": "sandboxID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a persistent snapshot from the sandbox's current state. Snapshots can be used to create new sandboxes and persist beyond the original sandbox's lifetime."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

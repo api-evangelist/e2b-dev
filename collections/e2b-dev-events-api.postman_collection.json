@@ -1,0 +1,287 @@
+{
+  "item": [
+    {
+      "id": "16d47a76-72eb-448a-95aa-8c3fce5c917f",
+      "name": "events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b168430-3fb9-4e1e-93b7-71002c94339d",
+          "name": "List team sandbox lifecycle events",
+          "request": {
+            "name": "List team sandbox lifecycle events",
+            "description": {
+              "content": "Returns sandbox lifecycle events across the entire team. Supports\npagination via offset/limit and filtering by event type.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                "sandboxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filter by event type. Repeatable."
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filter by event type. Repeatable."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "40f64aa0-ee7d-47b4-96b0-9fff2ef510eb",
+              "name": "Team sandbox events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"<string>\",\n      \"timestamp\": \"2024-01-08T12:40:36.267Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"2008-12-24T13:26:49.882Z\",\n          \"vcpu_count\": 2178,\n          \"memory_mb\": 44,\n          \"execution_time\": 2967\n        },\n        \"set_timeout\": 6350\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"<string>\",\n      \"timestamp\": \"1971-05-07T22:20:56.016Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1949-08-04T05:03:35.937Z\",\n          \"vcpu_count\": 2912,\n          \"memory_mb\": 4574,\n          \"execution_time\": 3960\n        },\n        \"set_timeout\": 7933,\n        \"key_0\": 721,\n        \"key_1\": true,\n        \"key_2\": 7330.277202730114\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "049c91be-c3c3-4ab0-9735-89e06748a957",
+          "name": "List events for a single sandbox",
+          "request": {
+            "name": "List events for a single sandbox",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "sandboxes",
+                ":sandboxID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandboxID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "014a1764-7908-40e2-8fe3-9fb6cc47ae53",
+              "name": "Sandbox events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "sandboxes",
+                    ":sandboxID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandboxID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"<string>\",\n      \"timestamp\": \"1998-02-26T15:20:02.565Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1973-10-14T13:23:14.879Z\",\n          \"vcpu_count\": 7722,\n          \"memory_mb\": 3866,\n          \"execution_time\": 1959\n        },\n        \"set_timeout\": 4047,\n        \"key_0\": true,\n        \"key_1\": 9042.94979828504,\n        \"key_2\": true,\n        \"key_3\": true\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"version\": \"v2\",\n      \"type\": \"<string>\",\n      \"timestamp\": \"1969-12-29T13:23:11.064Z\",\n      \"sandbox_id\": \"string\",\n      \"sandbox_team_id\": \"string\",\n      \"event_category\": \"lifecycle\",\n      \"event_label\": \"string\",\n      \"event_data\": {\n        \"sandbox_metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"execution\": {\n          \"started_at\": \"1970-06-26T11:03:19.454Z\",\n          \"vcpu_count\": 3559,\n          \"memory_mb\": 2901,\n          \"execution_time\": 3399\n        },\n        \"set_timeout\": 6195,\n        \"key_0\": \"string\",\n        \"key_1\": 7018.939585795656,\n        \"key_2\": \"string\"\n      },\n      \"sandbox_execution_id\": \"string\",\n      \"sandbox_template_id\": \"string\",\n      \"sandbox_build_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.e2b.app",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f8e092e1-1e72-4dbb-9a66-4fc489e56724",
+    "name": "E2B access-tokens events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

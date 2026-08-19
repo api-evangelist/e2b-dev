@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens tags API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /templates/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/templates/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Assign tag(s) to a template build"
+        },
+        {
+          "info": {
+            "name": "DELETE /templates/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/templates/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete multiple tags from templates"
+        },
+        {
+          "info": {
+            "name": "GET /templates/{templateID}/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/templates/:templateID/tags",
+            "params": [
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all tags for a template"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

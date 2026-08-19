@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens admin API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/nodes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all nodes"
+        },
+        {
+          "info": {
+            "name": "GET /nodes/{nodeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/nodes/:nodeID",
+            "params": [
+              {
+                "name": "nodeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the cluster"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get node info"
+        },
+        {
+          "info": {
+            "name": "POST /nodes/{nodeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/nodes/:nodeID",
+            "params": [
+              {
+                "name": "nodeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Change status of a node"
+        },
+        {
+          "info": {
+            "name": "Kill all sandboxes for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/admin/teams/:teamID/sandboxes/kill",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Kills all sandboxes for the specified team"
+        },
+        {
+          "info": {
+            "name": "Cancel all builds for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/admin/teams/:teamID/builds/cancel",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Admin-Token",
+              "value": "{{X-Admin-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels all in-progress and pending builds for the specified team"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

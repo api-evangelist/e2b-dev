@@ -1,0 +1,323 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens volumes API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all team volumes"
+        },
+        {
+          "info": {
+            "name": "POST /volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new team volume"
+        },
+        {
+          "info": {
+            "name": "GET /volumes/{volumeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumes/:volumeID",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get team volume info"
+        },
+        {
+          "info": {
+            "name": "DELETE /volumes/{volumeID}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/volumes/:volumeID",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a team volume"
+        },
+        {
+          "info": {
+            "name": "GET /volumecontent/{volumeID}/path",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/path",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get path information"
+        },
+        {
+          "info": {
+            "name": "PATCH /volumecontent/{volumeID}/path",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/path",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update path metadata"
+        },
+        {
+          "info": {
+            "name": "DELETE /volumecontent/{volumeID}/path",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/path",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a path"
+        },
+        {
+          "info": {
+            "name": "GET /volumecontent/{volumeID}/dir",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/dir",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "Number of layers deep to recurse into the directory"
+              }
+            ]
+          },
+          "docs": "List directory contents"
+        },
+        {
+          "info": {
+            "name": "POST /volumecontent/{volumeID}/dir",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/dir",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User ID of the created directory"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "query",
+                "description": "Group ID of the created directory"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Mode of the created directory"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Create the parents of a directory if they don't exist"
+              }
+            ]
+          },
+          "docs": "Create a directory"
+        },
+        {
+          "info": {
+            "name": "GET /volumecontent/{volumeID}/file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/file",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download file"
+        },
+        {
+          "info": {
+            "name": "PUT /volumecontent/{volumeID}/file",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.e2b.app/volumecontent/:volumeID/file",
+            "params": [
+              {
+                "name": "volumeID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User ID of the uploaded file"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "query",
+                "description": "Group ID of the uploaded file"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Mode of the uploaded file"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Force overwrite of an existing file"
+              }
+            ]
+          },
+          "docs": "Upload file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

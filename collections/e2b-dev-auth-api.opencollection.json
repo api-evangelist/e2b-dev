@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "E2B access-tokens auth API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all teams"
+        },
+        {
+          "info": {
+            "name": "GET /teams/{teamID}/metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams/:teamID/metrics",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get metrics for the team"
+        },
+        {
+          "info": {
+            "name": "GET /teams/{teamID}/metrics/max",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.e2b.app/teams/:teamID/metrics/max",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp for the start of the interval, in seconds, for which the metrics"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "metric",
+                "value": "",
+                "type": "query",
+                "description": "Metric to retrieve the maximum value for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the maximum metrics for the team in the given interval"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
