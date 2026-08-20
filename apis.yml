@@ -4,6 +4,12 @@ apis:
 - aid: e2b-dev:e2b-code-interpreter-api
   name: E2B Code Interpreter SDK
   tags:
+  - Artificial Intelligence
+  - Agents
+  - Code Interpreter
+  - Jupyter
+  - Data Analysis
+  tags_raw:
   - AI
   - Agents
   - Code Interpreter
@@ -25,6 +31,12 @@ apis:
 - aid: e2b-dev:e2b-desktop-api
   name: E2B Desktop Sandbox SDK
   tags:
+  - Artificial Intelligence
+  - Agents
+  - Desktop
+  - Computer Use
+  - GUI
+  tags_raw:
   - AI
   - Agents
   - Desktop
@@ -46,6 +58,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Access Tokens
+  tags_raw:
   - access-tokens
   properties:
   - type: OpenAPI
@@ -80,6 +94,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Admin
+  tags_raw:
   - admin
   properties:
   - type: OpenAPI
@@ -114,6 +130,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - APIKeys
+  tags_raw:
   - api-keys
   properties:
   - type: OpenAPI
@@ -148,6 +166,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -182,6 +202,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Event
+  tags_raw:
   - events
   properties:
   - type: OpenAPI
@@ -250,6 +272,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Sandboxes
+  tags_raw:
   - sandboxes
   properties:
   - type: OpenAPI
@@ -284,6 +308,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Snapshots
+  tags_raw:
   - snapshots
   properties:
   - type: OpenAPI
@@ -318,6 +344,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Tags
+  tags_raw:
   - tags
   properties:
   - type: OpenAPI
@@ -352,6 +380,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Templates
+  tags_raw:
   - templates
   properties:
   - type: OpenAPI
@@ -386,6 +416,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Volumes
+  tags_raw:
   - volumes
   properties:
   - type: OpenAPI
@@ -420,6 +452,8 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
@@ -450,6 +484,19 @@ apis:
     url: https://e2b.dev/docs/api-key
 name: E2B
 tags:
+  - Artificial Intelligence
+  - Agents
+  - Code Execution
+  - Code Interpreter
+  - Sandboxes
+  - Firecracker
+  - MicroVMs
+  - Computer Use
+  - Desktop Sandbox
+  - Templates
+  - MCP
+  - Open-Source
+tags_raw:
   - AI
   - Agents
   - Code Execution
