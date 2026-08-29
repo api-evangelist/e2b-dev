@@ -482,6 +482,18 @@ apis:
     url: json-schema/e2b-template-schema.json
   - type: Documentation
     url: https://e2b.dev/docs/api-key
+- aid: e2b-dev:e2b-dev-e2b-sandbox-events-and-webhooks-api-api
+  name: E2B E2B Sandbox Events And Webhooks API
+  description: >-
+    The E2B Sandbox Events And Webhooks API API from E2B — 0 operation(s) for e2b sandbox events and webhooks
+    api.
+  humanURL: https://github.com/e2b-dev/code-interpreter
+  baseURL: https://api.e2b.app
+  tags:
+  - E2B Sandbox Events And Webhooks API
+  properties:
+  - type: OpenAPI
+    url: openapi/e2b-dev-e2b-sandbox-events-and-webhooks-api-api-openapi.yml
 name: E2B
 tags:
   - Artificial Intelligence

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 0.1.0
-  title: E2B access-tokens auth API
+  title: E2B Auth API
 servers:
 - url: https://api.e2b.app
 tags:
@@ -141,6 +141,31 @@ components:
         value:
           type: number
           description: The maximum value of the requested metric in the given interval
+    TeamMetric:
+      description: Team metric with timestamp
+      required:
+      - timestamp
+      - timestampUnix
+      - concurrentSandboxes
+      - sandboxStartRate
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          deprecated: true
+          description: Timestamp of the metric entry
+        timestampUnix:
+          type: integer
+          format: int64
+          description: Timestamp of the metric entry in Unix time (seconds since epoch)
+        concurrentSandboxes:
+          type: integer
+          format: int32
+          description: The number of concurrent sandboxes for the team
+        sandboxStartRate:
+          type: number
+          format: float
+          description: Number of sandboxes started per second
     Team:
       required:
       - teamID
@@ -172,53 +197,9 @@ components:
         message:
           type: string
           description: Error
-    TeamMetric:
-      description: Team metric with timestamp
-      required:
-      - timestamp
-      - timestampUnix
-      - concurrentSandboxes
-      - sandboxStartRate
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          deprecated: true
-          description: Timestamp of the metric entry
-        timestampUnix:
-          type: integer
-          format: int64
-          description: Timestamp of the metric entry in Unix time (seconds since epoch)
-        concurrentSandboxes:
-          type: integer
-          format: int32
-          description: The number of concurrent sandboxes for the team
-        sandboxStartRate:
-          type: number
-          format: float
-          description: Number of sandboxes started per second
-  parameters:
-    teamID:
-      name: teamID
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '400':
       description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
       content:
         application/json:
           schema:
@@ -229,6 +210,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    teamID:
+      name: teamID
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

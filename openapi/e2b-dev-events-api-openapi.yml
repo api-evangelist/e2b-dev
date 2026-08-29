@@ -1,9 +1,12 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
+  title: E2B Sandbox and Webhooks Events API
   version: 0.1.0
-  title: E2B access-tokens events API
+  description: "Documented REST surface for E2B sandbox lifecycle events and webhook\nsubscriptions. Modeled directly from the public documentation at\nhttps://e2b.dev/docs/sandbox/lifecycle-events-webhooks and\nhttps://e2b.dev/docs/sandbox/lifecycle-events-api.\n\nThis spec covers two surfaces:\n  1. Polling REST events at /events/sandboxes (team-wide) and\n     /events/sandboxes/{sandboxID} (single sandbox).\n  2. Webhook subscription management at /events/webhooks, plus the\n     signed POST payload that E2B delivers to subscribed URLs.\n\nWebhook deliveries include the headers e2b-webhook-id,\ne2b-delivery-id, e2b-signature-version, and e2b-signature. The\nsignature is a base64-encoded SHA-256 of the concatenation of the\nsubscription secret and the raw payload body, with trailing \"=\"\npadding stripped.\n"
 servers:
 - url: https://api.e2b.app
+security:
+- ApiKeyAuth: []
 tags:
 - name: events
 paths:
@@ -88,6 +91,58 @@ paths:
                 $ref: '#/components/schemas/SandboxEventsResponse'
 components:
   schemas:
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
+    SandboxEventData:
+      type: object
+      description: 'Event-specific payload. May be null on events that have no
+
+        additional context. For sandbox.lifecycle.updated the payload
+
+        may include set_timeout. For sandbox.lifecycle.killed and
+
+        sandbox.lifecycle.paused the payload includes execution
+
+        details.
+
+        '
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
+    SandboxExecution:
+      type: object
+      description: 'Execution metrics included on terminal events such as
+
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+
+        '
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
     SandboxEventsResponse:
       type: object
       properties:
@@ -132,58 +187,6 @@ components:
           type: string
         sandbox_team_id:
           type: string
-    SandboxExecution:
-      type: object
-      description: 'Execution metrics included on terminal events such as
-
-        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
-
-        '
-      properties:
-        started_at:
-          type: string
-          format: date-time
-        vcpu_count:
-          type: integer
-        memory_mb:
-          type: integer
-        execution_time:
-          type: integer
-          description: Execution duration in milliseconds.
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
-    SandboxEventData:
-      type: object
-      description: 'Event-specific payload. May be null on events that have no
-
-        additional context. For sandbox.lifecycle.updated the payload
-
-        may include set_timeout. For sandbox.lifecycle.killed and
-
-        sandbox.lifecycle.paused the payload includes execution
-
-        details.
-
-        '
-      properties:
-        sandbox_metadata:
-          type: object
-          additionalProperties:
-            type: string
-        execution:
-          $ref: '#/components/schemas/SandboxExecution'
-        set_timeout:
-          type: integer
-          description: New timeout in seconds for sandbox.lifecycle.updated.
-      additionalProperties: true
   parameters:
     sandboxID:
       name: sandboxID
@@ -196,19 +199,3 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
-    AccessTokenAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: access_token
-    Supabase1TokenAuth:
-      type: apiKey
-      in: header
-      name: X-Supabase-Token
-    Supabase2TeamAuth:
-      type: apiKey
-      in: header
-      name: X-Supabase-Team
-    AdminTokenAuth:
-      type: apiKey
-      in: header
-      name: X-Admin-Token

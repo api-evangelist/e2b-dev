@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: E2B Sandbox Events And Webhooks API
+  version: 0.1.0
+  description: "Documented REST surface for E2B sandbox lifecycle events and webhook\nsubscriptions. Modeled directly from the public documentation at\nhttps://e2b.dev/docs/sandbox/lifecycle-events-webhooks and\nhttps://e2b.dev/docs/sandbox/lifecycle-events-api.\n\nThis spec covers two surfaces:\n  1. Polling REST events at /events/sandboxes (team-wide) and\n     /events/sandboxes/{sandboxID} (single sandbox).\n  2. Webhook subscription management at /events/webhooks, plus the\n     signed POST payload that E2B delivers to subscribed URLs.\n\nWebhook deliveries include the headers e2b-webhook-id,\ne2b-delivery-id, e2b-signature-version, and e2b-signature. The\nsignature is a base64-encoded SHA-256 of the concatenation of the\nsubscription secret and the raw payload body, with trailing \"=\"\npadding stripped.\n"
+servers:
+- url: https://api.e2b.app
+security:
+- ApiKeyAuth: []
+tags:
+- name: E2B Sandbox Events And Webhooks API
+paths: {}
+webhooks:
+  sandboxLifecycle:
+    post:
+      summary: Sandbox lifecycle event delivery
+      description: 'Delivered to the registered subscription URL when a matching
+
+        sandbox lifecycle event occurs. Signed with SHA-256 over
+
+        signatureSecret + raw body, base64-encoded with trailing "="
+
+        padding stripped, and sent in the e2b-signature header.
+
+        '
+      parameters:
+      - in: header
+        name: e2b-webhook-id
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: e2b-delivery-id
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: e2b-signature-version
+        required: true
+        schema:
+          type: string
+          example: v1
+      - in: header
+        name: e2b-signature
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SandboxEvent'
+      responses:
+        2XX:
+          description: Subscriber accepted the event.
+      tags:
+      - E2B Sandbox Events And Webhooks API
+components:
+  schemas:
+    SandboxEvent:
+      type: object
+      required:
+      - id
+      - version
+      - type
+      - timestamp
+      - sandbox_id
+      - sandbox_team_id
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+          example: v2
+        type:
+          $ref: '#/components/schemas/SandboxLifecycleEventType'
+        timestamp:
+          type: string
+          format: date-time
+        event_category:
+          type: string
+          example: lifecycle
+        event_label:
+          type: string
+        event_data:
+          $ref: '#/components/schemas/SandboxEventData'
+        sandbox_id:
+          type: string
+        sandbox_execution_id:
+          type: string
+        sandbox_template_id:
+          type: string
+        sandbox_build_id:
+          type: string
+        sandbox_team_id:
+          type: string
+    SandboxExecution:
+      type: object
+      description: 'Execution metrics included on terminal events such as
+
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+
+        '
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
+    SandboxEventData:
+      type: object
+      description: 'Event-specific payload. May be null on events that have no
+
+        additional context. For sandbox.lifecycle.updated the payload
+
+        may include set_timeout. For sandbox.lifecycle.killed and
+
+        sandbox.lifecycle.paused the payload includes execution
+
+        details.
+
+        '
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

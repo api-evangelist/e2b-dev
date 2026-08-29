@@ -1,36 +1,56 @@
 {
   "provider": "e2b-dev",
   "sources": [
-    "e2b-dev-access-tokens-api-openapi.yml",
-    "e2b-dev-admin-api-openapi.yml",
-    "e2b-dev-api-keys-api-openapi.yml",
-    "e2b-dev-auth-api-openapi.yml",
-    "e2b-dev-events-api-openapi.yml",
-    "e2b-dev-health-api-openapi.yml",
-    "e2b-dev-sandboxes-api-openapi.yml",
-    "e2b-dev-snapshots-api-openapi.yml",
-    "e2b-dev-tags-api-openapi.yml",
-    "e2b-dev-templates-api-openapi.yml",
-    "e2b-dev-volumes-api-openapi.yml",
-    "e2b-dev-webhooks-api-openapi.yml"
+    "_original/e2b-api-openapi.yml",
+    "_original/e2b-events-openapi.yml",
+    "_original/e2b-volumes-openapi.yml"
   ],
   "outputs": [
+    "e2b-dev-health-api-openapi.yml",
     "e2b-dev-access-tokens-api-openapi.yml",
     "e2b-dev-admin-api-openapi.yml",
     "e2b-dev-api-keys-api-openapi.yml",
     "e2b-dev-auth-api-openapi.yml",
-    "e2b-dev-events-api-openapi.yml",
-    "e2b-dev-health-api-openapi.yml",
     "e2b-dev-sandboxes-api-openapi.yml",
     "e2b-dev-snapshots-api-openapi.yml",
     "e2b-dev-tags-api-openapi.yml",
     "e2b-dev-templates-api-openapi.yml",
     "e2b-dev-volumes-api-openapi.yml",
+    "e2b-dev-e2b-sandbox-events-and-webhooks-api-api-openapi.yml",
+    "e2b-dev-events-api-openapi.yml",
     "e2b-dev-webhooks-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "e2b-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "e2b-api-openapi.yml: tagged paths GET /health -> Health",
+    "e2b-api-openapi.yml: declared missing tag: Health",
+    "e2b-api-openapi.yml: declared missing tag: admin",
+    "e2b-api-openapi.yml: declared missing tag: snapshots",
+    "e2b-events-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "e2b-events-openapi.yml: tagged webhooks POST sandboxLifecycle -> E2B Sandbox Events And Webhooks API",
+    "e2b-events-openapi.yml: declared missing tag: E2B Sandbox Events And Webhooks API",
+    "e2b-events-openapi.yml: declared missing tag: events",
+    "e2b-events-openapi.yml: declared missing tag: webhooks",
+    "e2b-volumes-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "e2b-volumes-openapi.yml: declared missing tag: volumes",
+    "tag 'volumes' spans 2 source specs (e2b-api-openapi.yml, e2b-volumes-openapi.yml): per-path servers applied"
+  ],
+  "skipped": [
+    "e2b-dev-access-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-api-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-sandboxes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-snapshots-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-volumes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
