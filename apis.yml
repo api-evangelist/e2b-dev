@@ -58,7 +58,7 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
-  - Access Tokens
+  - access-tokens
   tags_raw:
   - access-tokens
   properties:
@@ -272,7 +272,7 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
-  - Sandboxes
+  - sandboxes
   tags_raw:
   - sandboxes
   properties:
@@ -416,7 +416,7 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
-  - Volumes
+  - volumes
   tags_raw:
   - volumes
   properties:
@@ -502,7 +502,7 @@ tags:
   - Code Interpreter
   - Sandboxes
   - Firecracker
-  - MicroVMs
+  - microVMs
   - Computer Use
   - Desktop Sandbox
   - Templates
