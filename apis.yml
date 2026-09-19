@@ -270,7 +270,7 @@ apis:
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
   tags:
-  - Sandboxes
+  - Sandbox
   tags_raw:
   - sandboxes
   properties:
@@ -497,9 +497,9 @@ tags:
 - Agents
 - Code Execution
 - Code Interpreter
-- Sandboxes
+- Sandbox
 - Firecracker
-- MicroVMs
+- MicroVM
 - Computer Use
 - Desktop Sandbox
 - Templates
