@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: api-keys
+- name: API Keys
 paths:
   /api-keys:
     get:
       description: List all team API keys
       tags:
-      - api-keys
+      - API Keys
       security:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
@@ -28,10 +28,14 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get api keys
+      x-summary-source: derived
+      operationId: getApiKeys
+      x-operation-id-source: derived
     post:
       description: Create a new team API key
       tags:
-      - api-keys
+      - API Keys
       security:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
@@ -52,11 +56,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create api keys
+      x-summary-source: derived
+      operationId: postApiKeys
+      x-operation-id-source: derived
   /api-keys/{apiKeyID}:
     patch:
       description: Update a team API key
       tags:
-      - api-keys
+      - API Keys
       security:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
@@ -77,10 +85,14 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Update api keys by api key id
+      x-summary-source: derived
+      operationId: patchApiKeysByApiKeyID
+      x-operation-id-source: derived
     delete:
       description: Delete a team API key
       tags:
-      - api-keys
+      - API Keys
       security:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
@@ -95,27 +107,38 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Delete api keys by api key id
+      x-summary-source: derived
+      operationId: deleteApiKeysByApiKeyID
+      x-operation-id-source: derived
 components:
+  responses:
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    apiKeyID:
+      name: apiKeyID
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
-    IdentifierMaskingDetails:
-      required:
-      - prefix
-      - valueLength
-      - maskedValuePrefix
-      - maskedValueSuffix
-      properties:
-        prefix:
-          type: string
-          description: Prefix that identifies the token or key type
-        valueLength:
-          type: integer
-          description: Length of the token or key
-        maskedValuePrefix:
-          type: string
-          description: Prefix used in masked version of the token or key
-        maskedValueSuffix:
-          type: string
-          description: Suffix used in masked version of the token or key
     TeamUser:
       required:
       - id
@@ -128,42 +151,6 @@ components:
         email:
           type: string
           description: Email of the user
-    TeamAPIKey:
-      required:
-      - id
-      - name
-      - mask
-      - createdAt
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identifier of the API key
-        name:
-          type: string
-          description: Name of the API key
-        mask:
-          $ref: '#/components/schemas/IdentifierMaskingDetails'
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp of API key creation
-        createdBy:
-          allOf:
-          - $ref: '#/components/schemas/TeamUser'
-        lastUsed:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Last time this API key was used
-    NewTeamAPIKey:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the API key
     UpdateTeamAPIKey:
       required:
       - name
@@ -204,6 +191,25 @@ components:
           - 'null'
           format: date-time
           description: Last time this API key was used
+    IdentifierMaskingDetails:
+      required:
+      - prefix
+      - valueLength
+      - maskedValuePrefix
+      - maskedValueSuffix
+      properties:
+        prefix:
+          type: string
+          description: Prefix that identifies the token or key type
+        valueLength:
+          type: integer
+          description: Length of the token or key
+        maskedValuePrefix:
+          type: string
+          description: Prefix used in masked version of the token or key
+        maskedValueSuffix:
+          type: string
+          description: Suffix used in masked version of the token or key
     Error:
       required:
       - code
@@ -216,32 +222,42 @@ components:
         message:
           type: string
           description: Error
-  responses:
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    apiKeyID:
-      name: apiKeyID
-      in: path
-      required: true
-      schema:
-        type: string
+    NewTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the API key
+    TeamAPIKey:
+      required:
+      - id
+      - name
+      - mask
+      - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the API key
+        name:
+          type: string
+          description: Name of the API key
+        mask:
+          $ref: '#/components/schemas/IdentifierMaskingDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of API key creation
+        createdBy:
+          allOf:
+          - $ref: '#/components/schemas/TeamUser'
+        lastUsed:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Last time this API key was used
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -37,13 +37,15 @@
     "e2b-events-openapi.yml: declared missing tag: webhooks",
     "e2b-volumes-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "e2b-volumes-openapi.yml: declared missing tag: volumes",
-    "tag 'volumes' spans 2 source specs (e2b-api-openapi.yml, e2b-volumes-openapi.yml): per-path servers applied"
+    "tag 'volumes' spans 2 source specs (e2b-api-openapi.yml, e2b-volumes-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "e2b-dev-access-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-api-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "e2b-dev-e2b-sandbox-events-and-webhooks-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "e2b-dev-sandboxes-api-openapi.yml: previously refined output, superseded by openapi/_original/",

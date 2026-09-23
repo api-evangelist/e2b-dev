@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: tags
+- name: Tags
 paths:
   /templates/tags:
     post:
       description: Assign tag(s) to a template build
       tags:
-      - tags
+      - Tags
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -37,10 +37,14 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create templates tags
+      x-summary-source: derived
+      operationId: postTemplatesTags
+      x-operation-id-source: derived
     delete:
       description: Delete multiple tags from templates
       tags:
-      - tags
+      - Tags
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -62,11 +66,15 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Delete templates tags
+      x-summary-source: derived
+      operationId: deleteTemplatesTags
+      x-operation-id-source: derived
   /templates/{templateID}/tags:
     get:
       description: List all tags for a template
       tags:
-      - tags
+      - Tags
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -90,60 +98,24 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get templates by template id tags
+      x-summary-source: derived
+      operationId: getTemplatesByTemplateIDTags
+      x-operation-id-source: derived
 components:
-  parameters:
-    templateID:
-      name: templateID
-      in: path
-      required: true
-      schema:
-        type: string
-  responses:
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    AssignedTemplateTags:
+    Error:
       required:
-      - tags
-      - buildID
+      - code
+      - message
       properties:
-        tags:
-          type: array
-          items:
-            type: string
-          description: Assigned tags of the template
-        buildID:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
           type: string
-          format: uuid
-          description: Identifier of the build associated with these tags
+          description: Error
     AssignTemplateTagsRequest:
       required:
       - target
@@ -187,18 +159,58 @@ components:
           type: array
           items:
             type: string
-    Error:
+    AssignedTemplateTags:
       required:
-      - code
-      - message
+      - tags
+      - buildID
       properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
+        tags:
+          type: array
+          items:
+            type: string
+          description: Assigned tags of the template
+        buildID:
           type: string
-          description: Error
+          format: uuid
+          description: Identifier of the build associated with these tags
+  responses:
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    templateID:
+      name: templateID
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

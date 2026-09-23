@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: access-tokens
+- name: Access Tokens
 paths:
   /access-tokens:
     post:
       description: Create a new access token
       tags:
-      - access-tokens
+      - Access Tokens
       security:
       - Supabase1TokenAuth: []
       requestBody:
@@ -31,11 +31,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create access tokens
+      x-summary-source: derived
+      operationId: postAccessTokens
+      x-operation-id-source: derived
   /access-tokens/{accessTokenID}:
     delete:
       description: Delete an access token
       tags:
-      - access-tokens
+      - Access Tokens
       security:
       - Supabase1TokenAuth: []
       parameters:
@@ -49,27 +53,19 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Delete access tokens by access token id
+      x-summary-source: derived
+      operationId: deleteAccessTokensByAccessTokenID
+      x-operation-id-source: derived
 components:
   schemas:
-    IdentifierMaskingDetails:
+    NewAccessToken:
       required:
-      - prefix
-      - valueLength
-      - maskedValuePrefix
-      - maskedValueSuffix
+      - name
       properties:
-        prefix:
+        name:
           type: string
-          description: Prefix that identifies the token or key type
-        valueLength:
-          type: integer
-          description: Length of the token or key
-        maskedValuePrefix:
-          type: string
-          description: Prefix used in masked version of the token or key
-        maskedValueSuffix:
-          type: string
-          description: Suffix used in masked version of the token or key
+          description: Name of the access token
     CreatedAccessToken:
       required:
       - id
@@ -94,13 +90,25 @@ components:
           type: string
           format: date-time
           description: Timestamp of access token creation
-    NewAccessToken:
+    IdentifierMaskingDetails:
       required:
-      - name
+      - prefix
+      - valueLength
+      - maskedValuePrefix
+      - maskedValueSuffix
       properties:
-        name:
+        prefix:
           type: string
-          description: Name of the access token
+          description: Prefix that identifies the token or key type
+        valueLength:
+          type: integer
+          description: Length of the token or key
+        maskedValuePrefix:
+          type: string
+          description: Prefix used in masked version of the token or key
+        maskedValueSuffix:
+          type: string
+          description: Suffix used in masked version of the token or key
     Error:
       required:
       - code
@@ -113,14 +121,13 @@ components:
         message:
           type: string
           description: Error
-  parameters:
-    accessTokenID:
-      name: accessTokenID
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     '401':
       description: Authentication error
       content:
@@ -133,12 +140,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    accessTokenID:
+      name: accessTokenID
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

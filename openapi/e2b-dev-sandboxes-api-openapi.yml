@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: sandboxes
+- name: Sandboxes
 paths:
   /sandboxes:
     get:
       description: List all running sandboxes
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -39,10 +39,14 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes
+      x-summary-source: derived
+      operationId: getSandboxes
+      x-operation-id-source: derived
     post:
       description: Create a sandbox from the template
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -66,11 +70,15 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes
+      x-summary-source: derived
+      operationId: postSandboxes
+      x-operation-id-source: derived
   /v2/sandboxes:
     get:
       description: List all sandboxes
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -110,11 +118,15 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes
+      x-summary-source: derived
+      operationId: getV2Sandboxes
+      x-operation-id-source: derived
   /sandboxes/metrics:
     get:
       description: List metrics for given sandboxes
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -144,12 +156,16 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes metrics
+      x-summary-source: derived
+      operationId: getSandboxesMetrics
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/logs:
     get:
       description: Get sandbox logs. Use /v2/sandboxes/{sandboxID}/logs instead.
       deprecated: true
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -184,11 +200,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes by sandbox id logs
+      x-summary-source: derived
+      operationId: getSandboxesBySandboxIDLogs
+      x-operation-id-source: derived
   /v2/sandboxes/{sandboxID}/logs:
     get:
       description: Get sandbox logs
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -240,11 +260,15 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes by sandbox id logs
+      x-summary-source: derived
+      operationId: getV2SandboxesBySandboxIDLogs
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}:
     get:
       description: Get a sandbox by id
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -264,10 +288,14 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes by sandbox id
+      x-summary-source: derived
+      operationId: getSandboxesBySandboxID
+      x-operation-id-source: derived
     delete:
       description: Kill a sandbox
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -283,11 +311,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Delete sandboxes by sandbox id
+      x-summary-source: derived
+      operationId: deleteSandboxesBySandboxID
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/metrics:
     get:
       description: Get sandbox metrics
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -325,11 +357,15 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get sandboxes by sandbox id metrics
+      x-summary-source: derived
+      operationId: getSandboxesBySandboxIDMetrics
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/pause:
     post:
       description: Pause the sandbox
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -347,12 +383,16 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes by sandbox id pause
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDPause
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/resume:
     post:
       deprecated: true
       description: Resume the sandbox
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -380,11 +420,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes by sandbox id resume
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDResume
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/connect:
     post:
       description: Returns sandbox details. If the sandbox is paused, it will be resumed. TTL is only extended.
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -418,6 +462,10 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes by sandbox id connect
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDConnect
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/timeout:
     post:
       description: Set the timeout for the sandbox. The sandbox will expire x seconds from the time of the request. Calling this method multiple times overwrites the TTL, each time using the current timestamp as the starting point to measure the timeout duration.
@@ -426,7 +474,7 @@ paths:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
       tags:
-      - sandboxes
+      - Sandboxes
       requestBody:
         content:
           application/json:
@@ -451,6 +499,10 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes by sandbox id timeout
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDTimeout
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/refreshes:
     post:
       description: Refresh the sandbox extending its time to live
@@ -459,7 +511,7 @@ paths:
       - Supabase1TokenAuth: []
         Supabase2TeamAuth: []
       tags:
-      - sandboxes
+      - Sandboxes
       requestBody:
         content:
           application/json:
@@ -480,11 +532,15 @@ paths:
           $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
+      summary: Create sandboxes by sandbox id refreshes
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDRefreshes
+      x-operation-id-source: derived
   /sandboxes/{sandboxID}/snapshots:
     post:
       description: Create a persistent snapshot from the sandbox's current state. Snapshots can be used to create new sandboxes and persist beyond the original sandbox's lifetime.
       tags:
-      - sandboxes
+      - Sandboxes
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -516,73 +572,32 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      summary: Create sandboxes by sandbox id snapshots
+      x-summary-source: derived
+      operationId: postSandboxesBySandboxIDSnapshots
+      x-operation-id-source: derived
 components:
   schemas:
-    LogLevel:
+    Mcp:
+      type:
+      - object
+      - 'null'
+      description: MCP configuration for the sandbox
+      additionalProperties: {}
+    SandboxOnTimeout:
       type: string
-      description: State of the sandbox
+      description: Action taken when the sandbox times out.
       enum:
-      - debug
-      - info
-      - warn
-      - error
-    NewSandbox:
-      required:
-      - templateID
-      properties:
-        templateID:
-          type: string
-          description: Identifier of the required template
-        timeout:
-          type: integer
-          format: int32
-          minimum: 0
-          default: 15
-          description: Time to live for the sandbox in seconds.
-        autoPause:
-          type: boolean
-          default: false
-          description: Automatically pauses the sandbox after the timeout
-        autoResume:
-          $ref: '#/components/schemas/SandboxAutoResumeConfig'
-        secure:
-          type: boolean
-          description: Secure all system communication with sandbox
-        allow_internet_access:
-          type: boolean
-          description: Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
-        network:
-          $ref: '#/components/schemas/SandboxNetworkConfig'
-        metadata:
-          $ref: '#/components/schemas/SandboxMetadata'
-        envVars:
-          $ref: '#/components/schemas/EnvVars'
-        mcp:
-          $ref: '#/components/schemas/Mcp'
-        volumeMounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxVolumeMount'
-    SandboxLogEntry:
-      required:
-      - timestamp
-      - level
-      - message
-      - fields
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the log entry
-        message:
-          type: string
-          description: Log message content
-        level:
-          $ref: '#/components/schemas/LogLevel'
-        fields:
-          type: object
-          additionalProperties:
-            type: string
+      - kill
+      - pause
+    SandboxAutoResumeEnabled:
+      type: boolean
+      description: Auto-resume enabled flag for paused sandboxes. Default false.
+      default: false
+    SandboxMetadata:
+      additionalProperties:
+        type: string
+        description: Metadata of the sandbox
     SandboxVolumeMount:
       type: object
       properties:
@@ -595,6 +610,17 @@ components:
       required:
       - name
       - path
+    EnvVars:
+      additionalProperties:
+        type: string
+        description: Environment variables for the sandbox
+    SandboxesWithMetrics:
+      required:
+      - sandboxes
+      properties:
+        sandboxes:
+          additionalProperties:
+            $ref: '#/components/schemas/SandboxMetric'
     ListedSandbox:
       required:
       - templateID
@@ -645,12 +671,66 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxVolumeMount'
-    SandboxAutoResumeEnabled:
-      type: boolean
-      description: Auto-resume enabled flag for paused sandboxes. Default false.
-      default: false
-    ResumedSandbox:
+    Sandbox:
+      required:
+      - templateID
+      - sandboxID
+      - clientID
+      - envdVersion
       properties:
+        templateID:
+          type: string
+          description: Identifier of the template from which is the sandbox created
+        sandboxID:
+          type: string
+          description: Identifier of the sandbox
+        alias:
+          type: string
+          description: Alias of the template
+        clientID:
+          type: string
+          deprecated: true
+          description: Identifier of the client
+        envdVersion:
+          $ref: '#/components/schemas/EnvdVersion'
+        envdAccessToken:
+          type: string
+          description: Access token used for envd communication
+        trafficAccessToken:
+          type:
+          - string
+          - 'null'
+          description: Token required for accessing sandbox via proxy.
+        domain:
+          type:
+          - string
+          - 'null'
+          description: Base domain where the sandbox traffic is accessible
+    ConnectSandbox:
+      type: object
+      required:
+      - timeout
+      properties:
+        timeout:
+          description: Timeout in seconds from the current time after which the sandbox should expire
+          type: integer
+          format: int32
+          minimum: 0
+    EnvdVersion:
+      type: string
+      description: Version of the envd running in the sandbox
+    MemoryMB:
+      type: integer
+      format: int32
+      minimum: 128
+      description: Memory for the sandbox in MiB
+    NewSandbox:
+      required:
+      - templateID
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the required template
         timeout:
           type: integer
           format: int32
@@ -659,102 +739,28 @@ components:
           description: Time to live for the sandbox in seconds.
         autoPause:
           type: boolean
-          deprecated: true
+          default: false
           description: Automatically pauses the sandbox after the timeout
-    SandboxOnTimeout:
-      type: string
-      description: Action taken when the sandbox times out.
-      enum:
-      - kill
-      - pause
-    LogsDirection:
-      type: string
-      description: Direction of the logs that should be returned
-      enum:
-      - forward
-      - backward
-      x-enum-varnames:
-      - LogsDirectionForward
-      - LogsDirectionBackward
-    CPUCount:
-      type: integer
-      format: int32
-      minimum: 1
-      description: CPU cores for the sandbox
-    SandboxLifecycle:
-      type: object
-      description: Sandbox lifecycle policy returned by sandbox info.
-      required:
-      - autoResume
-      - onTimeout
-      properties:
         autoResume:
+          $ref: '#/components/schemas/SandboxAutoResumeConfig'
+        secure:
           type: boolean
-          description: Whether the sandbox can auto-resume.
-        onTimeout:
-          $ref: '#/components/schemas/SandboxOnTimeout'
-    SandboxMetadata:
-      additionalProperties:
-        type: string
-        description: Metadata of the sandbox
-    SandboxState:
-      type: string
-      description: State of the sandbox
-      enum:
-      - running
-      - paused
-    SnapshotInfo:
-      type: object
-      required:
-      - snapshotID
-      - names
-      properties:
-        snapshotID:
-          type: string
-          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
-        names:
+          description: Secure all system communication with sandbox
+        allow_internet_access:
+          type: boolean
+          description: Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+        network:
+          $ref: '#/components/schemas/SandboxNetworkConfig'
+        metadata:
+          $ref: '#/components/schemas/SandboxMetadata'
+        envVars:
+          $ref: '#/components/schemas/EnvVars'
+        mcp:
+          $ref: '#/components/schemas/Mcp'
+        volumeMounts:
           type: array
           items:
-            type: string
-          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
-    MemoryMB:
-      type: integer
-      format: int32
-      minimum: 128
-      description: Memory for the sandbox in MiB
-    EnvdVersion:
-      type: string
-      description: Version of the envd running in the sandbox
-    Mcp:
-      type:
-      - object
-      - 'null'
-      description: MCP configuration for the sandbox
-      additionalProperties: {}
-    SandboxesWithMetrics:
-      required:
-      - sandboxes
-      properties:
-        sandboxes:
-          additionalProperties:
-            $ref: '#/components/schemas/SandboxMetric'
-    SandboxLog:
-      description: Log entry with timestamp and line
-      required:
-      - timestamp
-      - line
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the log entry
-        line:
-          type: string
-          description: Log line content
-    EnvVars:
-      additionalProperties:
-        type: string
-        description: Environment variables for the sandbox
+            $ref: '#/components/schemas/SandboxVolumeMount'
     SandboxAutoResumeConfig:
       type: object
       description: Auto-resume configuration for paused sandboxes.
@@ -763,18 +769,31 @@ components:
       properties:
         enabled:
           $ref: '#/components/schemas/SandboxAutoResumeEnabled'
-    Error:
-      required:
-      - code
-      - message
+    SandboxNetworkConfig:
+      type: object
       properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
+        allowPublicTraffic:
+          type: boolean
+          default: true
+          description: Specify if the sandbox URLs should be accessible only with authentication.
+        allowOut:
+          type: array
+          description: List of allowed CIDR blocks or IP addresses for egress traffic. Allowed addresses always take precedence over blocked addresses.
+          items:
+            type: string
+        denyOut:
+          type: array
+          description: List of denied CIDR blocks or IP addresses for egress traffic
+          items:
+            type: string
+        maskRequestHost:
           type: string
-          description: Error
+          description: Specify host mask which will be used for all sandbox requests
+    DiskSizeMB:
+      type: integer
+      format: int32
+      minimum: 0
+      description: Disk size for the sandbox in MiB
     SandboxLogs:
       required:
       - logs
@@ -787,16 +806,6 @@ components:
             $ref: '#/components/schemas/SandboxLog'
         logEntries:
           description: Structured logs of the sandbox
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLogEntry'
-    SandboxLogsV2Response:
-      required:
-      - logs
-      properties:
-        logs:
-          default: []
-          description: Sandbox logs structured
           type: array
           items:
             $ref: '#/components/schemas/SandboxLogEntry'
@@ -867,26 +876,84 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxVolumeMount'
-    SandboxNetworkConfig:
-      type: object
+    ResumedSandbox:
       properties:
-        allowPublicTraffic:
+        timeout:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 15
+          description: Time to live for the sandbox in seconds.
+        autoPause:
           type: boolean
-          default: true
-          description: Specify if the sandbox URLs should be accessible only with authentication.
-        allowOut:
-          type: array
-          description: List of allowed CIDR blocks or IP addresses for egress traffic. Allowed addresses always take precedence over blocked addresses.
-          items:
-            type: string
-        denyOut:
-          type: array
-          description: List of denied CIDR blocks or IP addresses for egress traffic
-          items:
-            type: string
-        maskRequestHost:
+          deprecated: true
+          description: Automatically pauses the sandbox after the timeout
+    CPUCount:
+      type: integer
+      format: int32
+      minimum: 1
+      description: CPU cores for the sandbox
+    LogsDirection:
+      type: string
+      description: Direction of the logs that should be returned
+      enum:
+      - forward
+      - backward
+      x-enum-varnames:
+      - LogsDirectionForward
+      - LogsDirectionBackward
+    SandboxState:
+      type: string
+      description: State of the sandbox
+      enum:
+      - running
+      - paused
+    SandboxLifecycle:
+      type: object
+      description: Sandbox lifecycle policy returned by sandbox info.
+      required:
+      - autoResume
+      - onTimeout
+      properties:
+        autoResume:
+          type: boolean
+          description: Whether the sandbox can auto-resume.
+        onTimeout:
+          $ref: '#/components/schemas/SandboxOnTimeout'
+    SnapshotInfo:
+      type: object
+      required:
+      - snapshotID
+      - names
+      properties:
+        snapshotID:
           type: string
-          description: Specify host mask which will be used for all sandbox requests
+          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
+        names:
+          type: array
+          items:
+            type: string
+          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
+    SandboxLogEntry:
+      required:
+      - timestamp
+      - level
+      - message
+      - fields
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        message:
+          type: string
+          description: Log message content
+        level:
+          $ref: '#/components/schemas/LogLevel'
+        fields:
+          type: object
+          additionalProperties:
+            type: string
     SandboxMetric:
       description: Metric entry with timestamp and line
       required:
@@ -932,84 +999,52 @@ components:
           type: integer
           format: int64
           description: Total disk space in bytes
-    Sandbox:
+    SandboxLogsV2Response:
       required:
-      - templateID
-      - sandboxID
-      - clientID
-      - envdVersion
+      - logs
       properties:
-        templateID:
-          type: string
-          description: Identifier of the template from which is the sandbox created
-        sandboxID:
-          type: string
-          description: Identifier of the sandbox
-        alias:
-          type: string
-          description: Alias of the template
-        clientID:
-          type: string
-          deprecated: true
-          description: Identifier of the client
-        envdVersion:
-          $ref: '#/components/schemas/EnvdVersion'
-        envdAccessToken:
-          type: string
-          description: Access token used for envd communication
-        trafficAccessToken:
-          type:
-          - string
-          - 'null'
-          description: Token required for accessing sandbox via proxy.
-        domain:
-          type:
-          - string
-          - 'null'
-          description: Base domain where the sandbox traffic is accessible
-    DiskSizeMB:
-      type: integer
-      format: int32
-      minimum: 0
-      description: Disk size for the sandbox in MiB
-    ConnectSandbox:
-      type: object
+        logs:
+          default: []
+          description: Sandbox logs structured
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLogEntry'
+    LogLevel:
+      type: string
+      description: State of the sandbox
+      enum:
+      - debug
+      - info
+      - warn
+      - error
+    Error:
       required:
-      - timeout
+      - code
+      - message
       properties:
-        timeout:
-          description: Timeout in seconds from the current time after which the sandbox should expire
+        code:
           type: integer
           format: int32
-          minimum: 0
-  parameters:
-    sandboxID:
-      name: sandboxID
-      in: path
-      required: true
-      schema:
-        type: string
-    paginationNextToken:
-      name: nextToken
-      in: query
-      description: Cursor to start the list from
-      required: false
-      schema:
-        type: string
-    paginationLimit:
-      name: limit
-      in: query
-      description: Maximum number of items to return per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        default: 100
-        maximum: 100
+          description: Error code
+        message:
+          type: string
+          description: Error
+    SandboxLog:
+      description: Log entry with timestamp and line
+      required:
+      - timestamp
+      - line
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        line:
+          type: string
+          description: Log line content
   responses:
-    '400':
-      description: Bad request
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
@@ -1032,12 +1067,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    sandboxID:
+      name: sandboxID
+      in: path
+      required: true
+      schema:
+        type: string
+    paginationLimit:
+      name: limit
+      in: query
+      description: Maximum number of items to return per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 100
+        maximum: 100
+    paginationNextToken:
+      name: nextToken
+      in: query
+      description: Cursor to start the list from
+      required: false
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

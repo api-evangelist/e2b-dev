@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: auth
+- name: Auth
 paths:
   /teams:
     get:
       description: List all teams
       tags:
-      - auth
+      - Auth
       security:
       - AccessTokenAuth: []
       - Supabase1TokenAuth: []
@@ -29,11 +29,15 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get teams
+      x-summary-source: derived
+      operationId: getTeams
+      x-operation-id-source: derived
   /teams/{teamID}/metrics:
     get:
       description: Get metrics for the team
       tags:
-      - auth
+      - Auth
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -71,11 +75,15 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get teams by team id metrics
+      x-summary-source: derived
+      operationId: getTeamsByTeamIDMetrics
+      x-operation-id-source: derived
   /teams/{teamID}/metrics/max:
     get:
       description: Get the maximum metrics for the team in the given interval
       tags:
-      - auth
+      - Auth
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -120,8 +128,43 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get teams by team id metrics max
+      x-summary-source: derived
+      operationId: getTeamsByTeamIDMetricsMax
+      x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    Team:
+      required:
+      - teamID
+      - name
+      - apiKey
+      - isDefault
+      properties:
+        teamID:
+          type: string
+          description: Identifier of the team
+        name:
+          type: string
+          description: Name of the team
+        apiKey:
+          type: string
+          description: API key for the team
+        isDefault:
+          type: boolean
+          description: Whether the team is the default team
     MaxTeamMetric:
       description: Team metric with timestamp
       required:
@@ -166,40 +209,16 @@ components:
           type: number
           format: float
           description: Number of sandboxes started per second
-    Team:
-      required:
-      - teamID
-      - name
-      - apiKey
-      - isDefault
-      properties:
-        teamID:
-          type: string
-          description: Identifier of the team
-        name:
-          type: string
-          description: Name of the team
-        apiKey:
-          type: string
-          description: API key for the team
-        isDefault:
-          type: boolean
-          description: Whether the team is the default team
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
+  parameters:
+    teamID:
+      name: teamID
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    '400':
-      description: Bad request
+    '500':
+      description: Server error
       content:
         application/json:
           schema:
@@ -210,25 +229,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     '403':
       description: Forbidden
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    teamID:
-      name: teamID
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

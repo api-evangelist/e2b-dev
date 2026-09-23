@@ -2,19 +2,21 @@ openapi: 3.2.0
 info:
   title: E2B Sandbox Events Webhooks API
   version: 0.1.0
-  description: "Documented REST surface for E2B sandbox lifecycle events and webhook\nsubscriptions. Modeled directly from the public documentation at\nhttps://e2b.dev/docs/sandbox/lifecycle-events-webhooks and\nhttps://e2b.dev/docs/sandbox/lifecycle-events-api.\n\nThis spec covers two surfaces:\n  1. Polling REST events at /events/sandboxes (team-wide) and\n     /events/sandboxes/{sandboxID} (single sandbox).\n  2. Webhook subscription management at /events/webhooks, plus the\n     signed POST payload that E2B delivers to subscribed URLs.\n\nWebhook deliveries include the headers e2b-webhook-id,\ne2b-delivery-id, e2b-signature-version, and e2b-signature. The\nsignature is a base64-encoded SHA-256 of the concatenation of the\nsubscription secret and the raw payload body, with trailing \"=\"\npadding stripped.\n"
+  description: 'Documented REST surface for E2B sandbox lifecycle events and webhook
+
+    subscriptions.'
 servers:
 - url: https://api.e2b.app
 security:
 - ApiKeyAuth: []
 tags:
-- name: webhooks
+- name: Webhooks
 paths:
   /events/webhooks:
     get:
       summary: List webhook subscriptions
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           description: Registered webhooks
@@ -24,10 +26,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Webhook'
+      operationId: getEventsWebhooks
+      x-operation-id-source: derived
     post:
       summary: Register a webhook subscription
       tags:
-      - webhooks
+      - Webhooks
       requestBody:
         required: true
         content:
@@ -41,11 +45,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Webhook'
+      operationId: postEventsWebhooks
+      x-operation-id-source: derived
   /events/webhooks/{webhookID}:
     get:
       summary: Get a webhook subscription
       tags:
-      - webhooks
+      - Webhooks
       parameters:
       - $ref: '#/components/parameters/webhookID'
       responses:
@@ -55,10 +61,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Webhook'
+      operationId: getEventsWebhooksByWebhookID
+      x-operation-id-source: derived
     patch:
       summary: Update a webhook subscription
       tags:
-      - webhooks
+      - Webhooks
       parameters:
       - $ref: '#/components/parameters/webhookID'
       requestBody:
@@ -74,39 +82,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Webhook'
+      operationId: patchEventsWebhooksByWebhookID
+      x-operation-id-source: derived
     delete:
       summary: Delete a webhook subscription
       tags:
-      - webhooks
+      - Webhooks
       parameters:
       - $ref: '#/components/parameters/webhookID'
       responses:
         '200':
           description: Webhook deleted
+      operationId: deleteEventsWebhooksByWebhookID
+      x-operation-id-source: derived
 components:
   schemas:
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
-    WebhookUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        enabled:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
     WebhookCreateRequest:
       type: object
       required:
@@ -129,6 +119,28 @@ components:
         signatureSecret:
           type: string
           description: Shared secret used to sign delivery payloads.
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
     Webhook:
       type: object
       required:

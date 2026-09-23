@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://api.e2b.app
 tags:
-- name: snapshots
+- name: Snapshots
 paths:
   /snapshots:
     get:
       description: List all snapshots for the team
       tags:
-      - snapshots
+      - Snapshots
       security:
       - ApiKeyAuth: []
       - Supabase1TokenAuth: []
@@ -38,8 +38,24 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+      summary: Get snapshots
+      x-summary-source: derived
+      operationId: getSnapshots
+      x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
     SnapshotInfo:
       type: object
       required:
@@ -54,26 +70,20 @@ components:
           items:
             type: string
           description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
+  responses:
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    paginationNextToken:
-      name: nextToken
-      in: query
-      description: Cursor to start the list from
-      required: false
-      schema:
-        type: string
     paginationLimit:
       name: limit
       in: query
@@ -85,19 +95,13 @@ components:
         minimum: 1
         default: 100
         maximum: 100
-  responses:
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    paginationNextToken:
+      name: nextToken
+      in: query
+      description: Cursor to start the list from
+      required: false
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
