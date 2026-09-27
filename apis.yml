@@ -51,7 +51,7 @@ apis:
     keyboard, screenshot, and window-management primitives. Built for computer-use agents pairing vision-capable
     models like Claude and GPT with a real graphical desktop they can drive end to end.
 - aid: e2b-dev:e2b-dev-access-tokens-api
-  name: E2B access-tokens API
+  name: E2B Access Tokens API
   description: The access-tokens API from E2B — 2 operation(s) for access-tokens.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -87,7 +87,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-admin-api
-  name: E2B admin API
+  name: E2B Admin API
   description: The admin API from E2B — 4 operation(s) for admin.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -123,7 +123,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-api-keys-api
-  name: E2B api-keys API
+  name: E2B API Keys API
   description: The api-keys API from E2B — 2 operation(s) for api-keys.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -159,7 +159,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-auth-api
-  name: E2B auth API
+  name: E2B Auth API
   description: The auth API from E2B — 3 operation(s) for auth.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -195,7 +195,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-events-api
-  name: E2B events API
+  name: E2B Events API
   description: The events API from E2B — 2 operation(s) for events.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -265,7 +265,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-sandboxes-api
-  name: E2B sandboxes API
+  name: E2B Sandboxes API
   description: The sandboxes API from E2B — 13 operation(s) for sandboxes.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -301,7 +301,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-snapshots-api
-  name: E2B snapshots API
+  name: E2B Snapshots API
   description: The snapshots API from E2B — 1 operation(s) for snapshots.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -337,7 +337,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-tags-api
-  name: E2B tags API
+  name: E2B Tags API
   description: The tags API from E2B — 2 operation(s) for tags.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -373,7 +373,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-templates-api
-  name: E2B templates API
+  name: E2B Templates API
   description: The templates API from E2B — 11 operation(s) for templates.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -409,7 +409,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-volumes-api
-  name: E2B volumes API
+  name: E2B Volumes API
   description: The volumes API from E2B — 5 operation(s) for volumes.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -445,7 +445,7 @@ apis:
   - type: Documentation
     url: https://e2b.dev/docs/api-key
 - aid: e2b-dev:e2b-dev-webhooks-api
-  name: E2B webhooks API
+  name: E2B Webhooks API
   description: The webhooks API from E2B — 2 operation(s) for webhooks.
   humanURL: https://e2b.dev/docs
   baseURL: https://api.e2b.app
@@ -504,7 +504,7 @@ tags:
 - Desktop Sandbox
 - Templates
 - MCP
-- Open-Source
+- Open Source
 tags_raw:
 - AI
 - Agents
@@ -518,19 +518,25 @@ tags_raw:
 - Templates
 - MCP
 - Open Source
+- Open-Source
 kind: contract
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: open-core
+  license: Apache-2.0
+  license_evidence:
+    repo: e2b-dev/e2b
+    spdx: Apache-2.0
+    stars: 13963
+  open_source: true
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: medium
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium

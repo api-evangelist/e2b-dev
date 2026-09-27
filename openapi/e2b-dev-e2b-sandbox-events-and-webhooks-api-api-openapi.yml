@@ -82,6 +82,16 @@ components:
           type: integer
           description: New timeout in seconds for sandbox.lifecycle.updated.
       additionalProperties: true
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
     SandboxEvent:
       type: object
       required:
@@ -137,16 +147,6 @@ components:
         execution_time:
           type: integer
           description: Execution duration in milliseconds.
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

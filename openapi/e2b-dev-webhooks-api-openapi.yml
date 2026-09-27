@@ -96,7 +96,24 @@ paths:
       operationId: deleteEventsWebhooksByWebhookID
       x-operation-id-source: derived
 components:
+  parameters:
+    webhookID:
+      name: webhookID
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
     WebhookCreateRequest:
       type: object
       required:
@@ -119,28 +136,6 @@ components:
         signatureSecret:
           type: string
           description: Shared secret used to sign delivery payloads.
-    WebhookUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        enabled:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
     Webhook:
       type: object
       required:
@@ -168,13 +163,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxLifecycleEventType'
-  parameters:
-    webhookID:
-      name: webhookID
-      in: path
-      required: true
-      schema:
-        type: string
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

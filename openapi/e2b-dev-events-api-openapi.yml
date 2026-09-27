@@ -95,6 +95,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SandboxEventData:
+      type: object
+      description: 'Event-specific payload. May be null on events that have no
+
+        additional context. For sandbox.lifecycle.updated the payload
+
+        may include set_timeout. For sandbox.lifecycle.killed and
+
+        sandbox.lifecycle.paused the payload includes execution
+
+        details.
+
+        '
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
     SandboxEvent:
       type: object
       required:
@@ -132,30 +156,13 @@ components:
           type: string
         sandbox_team_id:
           type: string
-    SandboxEventData:
+    SandboxEventsResponse:
       type: object
-      description: 'Event-specific payload. May be null on events that have no
-
-        additional context. For sandbox.lifecycle.updated the payload
-
-        may include set_timeout. For sandbox.lifecycle.killed and
-
-        sandbox.lifecycle.paused the payload includes execution
-
-        details.
-
-        '
       properties:
-        sandbox_metadata:
-          type: object
-          additionalProperties:
-            type: string
-        execution:
-          $ref: '#/components/schemas/SandboxExecution'
-        set_timeout:
-          type: integer
-          description: New timeout in seconds for sandbox.lifecycle.updated.
-      additionalProperties: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxEvent'
     SandboxLifecycleEventType:
       type: string
       description: Documented sandbox lifecycle event types.
@@ -166,13 +173,6 @@ components:
       - sandbox.lifecycle.paused
       - sandbox.lifecycle.resumed
       - sandbox.lifecycle.checkpointed
-    SandboxEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxEvent'
     SandboxExecution:
       type: object
       description: 'Execution metrics included on terminal events such as

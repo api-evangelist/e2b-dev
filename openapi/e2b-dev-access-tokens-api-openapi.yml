@@ -59,13 +59,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    NewAccessToken:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the access token
     CreatedAccessToken:
       required:
       - id
@@ -90,6 +83,25 @@ components:
           type: string
           format: date-time
           description: Timestamp of access token creation
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    NewAccessToken:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the access token
     IdentifierMaskingDetails:
       required:
       - prefix
@@ -109,21 +121,9 @@ components:
         maskedValueSuffix:
           type: string
           description: Suffix used in masked version of the token or key
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
   responses:
-    '500':
-      description: Server error
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
@@ -134,8 +134,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
+    '500':
+      description: Server error
       content:
         application/json:
           schema:

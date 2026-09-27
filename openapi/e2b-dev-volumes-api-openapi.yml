@@ -364,7 +364,78 @@ paths:
       operationId: putVolumecontentByVolumeIDFile
       x-operation-id-source: derived
 components:
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    volumeID:
+      name: volumeID
+      in: path
+      required: true
+      schema:
+        type: string
+    path:
+      name: path
+      in: query
+      required: true
+      schema:
+        type: string
   schemas:
+    NewVolume:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the volume
+          pattern: ^[a-zA-Z0-9_-]+$
+      required:
+      - name
+    Volume:
+      type: object
+      properties:
+        volumeID:
+          type: string
+          description: ID of the volume
+        name:
+          type: string
+          description: Name of the volume
+      required:
+      - volumeID
+      - name
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
     VolumeAndToken:
       type: object
       properties:
@@ -381,54 +452,10 @@ components:
       - volumeID
       - name
       - token
-    NewVolume:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the volume
-          pattern: ^[a-zA-Z0-9_-]+$
-      required:
-      - name
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
-    Volume:
-      type: object
-      properties:
-        volumeID:
-          type: string
-          description: ID of the volume
-        name:
-          type: string
-          description: Name of the volume
-      required:
-      - volumeID
-      - name
     VolumeDirectoryListing:
       type: array
       items:
         $ref: '#/components/schemas/VolumeEntryStat'
-    Error_2:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
     VolumeEntryStat:
       type: object
       properties:
@@ -477,44 +504,17 @@ components:
       - atime
       - mtime
       - ctime
-  parameters:
-    volumeID:
-      name: volumeID
-      in: path
-      required: true
-      schema:
-        type: string
-    path:
-      name: path
-      in: query
-      required: true
-      schema:
-        type: string
-  responses:
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error_2:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

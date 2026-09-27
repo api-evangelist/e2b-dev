@@ -133,6 +133,31 @@ paths:
       operationId: getTeamsByTeamIDMetricsMax
       x-operation-id-source: derived
 components:
+  responses:
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       required:
@@ -146,25 +171,6 @@ components:
         message:
           type: string
           description: Error
-    Team:
-      required:
-      - teamID
-      - name
-      - apiKey
-      - isDefault
-      properties:
-        teamID:
-          type: string
-          description: Identifier of the team
-        name:
-          type: string
-          description: Name of the team
-        apiKey:
-          type: string
-          description: API key for the team
-        isDefault:
-          type: boolean
-          description: Whether the team is the default team
     MaxTeamMetric:
       description: Team metric with timestamp
       required:
@@ -209,6 +215,25 @@ components:
           type: number
           format: float
           description: Number of sandboxes started per second
+    Team:
+      required:
+      - teamID
+      - name
+      - apiKey
+      - isDefault
+      properties:
+        teamID:
+          type: string
+          description: Identifier of the team
+        name:
+          type: string
+          description: Name of the team
+        apiKey:
+          type: string
+          description: API key for the team
+        isDefault:
+          type: boolean
+          description: Whether the team is the default team
   parameters:
     teamID:
       name: teamID
@@ -216,31 +241,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

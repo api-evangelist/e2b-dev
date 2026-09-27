@@ -43,46 +43,6 @@ paths:
       operationId: getSnapshots
       x-operation-id-source: derived
 components:
-  schemas:
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
-    SnapshotInfo:
-      type: object
-      required:
-      - snapshotID
-      - names
-      properties:
-        snapshotID:
-          type: string
-          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
-        names:
-          type: array
-          items:
-            type: string
-          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
-  responses:
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     paginationLimit:
       name: limit
@@ -102,6 +62,46 @@ components:
       required: false
       schema:
         type: string
+  responses:
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    SnapshotInfo:
+      type: object
+      required:
+      - snapshotID
+      - names
+      properties:
+        snapshotID:
+          type: string
+          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
+        names:
+          type: array
+          items:
+            type: string
+          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
