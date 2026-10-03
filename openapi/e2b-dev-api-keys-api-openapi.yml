@@ -112,7 +112,40 @@ paths:
       operationId: deleteApiKeysByApiKeyID
       x-operation-id-source: derived
 components:
+  parameters:
+    apiKeyID:
+      name: apiKeyID
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
+    UpdateTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New name for the API key
+    IdentifierMaskingDetails:
+      required:
+      - prefix
+      - valueLength
+      - maskedValuePrefix
+      - maskedValueSuffix
+      properties:
+        prefix:
+          type: string
+          description: Prefix that identifies the token or key type
+        valueLength:
+          type: integer
+          description: Length of the token or key
+        maskedValuePrefix:
+          type: string
+          description: Prefix used in masked version of the token or key
+        maskedValueSuffix:
+          type: string
+          description: Suffix used in masked version of the token or key
     TeamUser:
       required:
       - id
@@ -125,6 +158,35 @@ components:
         email:
           type: string
           description: Email of the user
+    TeamAPIKey:
+      required:
+      - id
+      - name
+      - mask
+      - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the API key
+        name:
+          type: string
+          description: Name of the API key
+        mask:
+          $ref: '#/components/schemas/IdentifierMaskingDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of API key creation
+        createdBy:
+          allOf:
+          - $ref: '#/components/schemas/TeamUser'
+        lastUsed:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Last time this API key was used
     CreatedTeamAPIKey:
       required:
       - id
@@ -177,70 +239,9 @@ components:
         message:
           type: string
           description: Error
-    UpdateTeamAPIKey:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: New name for the API key
-    TeamAPIKey:
-      required:
-      - id
-      - name
-      - mask
-      - createdAt
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identifier of the API key
-        name:
-          type: string
-          description: Name of the API key
-        mask:
-          $ref: '#/components/schemas/IdentifierMaskingDetails'
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp of API key creation
-        createdBy:
-          allOf:
-          - $ref: '#/components/schemas/TeamUser'
-        lastUsed:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Last time this API key was used
-    IdentifierMaskingDetails:
-      required:
-      - prefix
-      - valueLength
-      - maskedValuePrefix
-      - maskedValueSuffix
-      properties:
-        prefix:
-          type: string
-          description: Prefix that identifies the token or key type
-        valueLength:
-          type: integer
-          description: Length of the token or key
-        maskedValuePrefix:
-          type: string
-          description: Prefix used in masked version of the token or key
-        maskedValueSuffix:
-          type: string
-          description: Suffix used in masked version of the token or key
   responses:
     '404':
       description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
       content:
         application/json:
           schema:
@@ -251,13 +252,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    apiKeyID:
-      name: apiKeyID
-      in: path
-      required: true
-      schema:
-        type: string
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -365,14 +365,14 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    '404':
-      description: Not found
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
@@ -383,8 +383,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '400':
-      description: Bad request
+    '401':
+      description: Authentication error
       content:
         application/json:
           schema:
@@ -403,6 +403,22 @@ components:
       schema:
         type: string
   schemas:
+    VolumeAndToken:
+      type: object
+      properties:
+        volumeID:
+          type: string
+          description: ID of the volume
+        name:
+          type: string
+          description: Name of the volume
+        token:
+          type: string
+          description: Auth token to use for interacting with volume content
+      required:
+      - volumeID
+      - name
+      - token
     NewVolume:
       type: object
       properties:
@@ -436,22 +452,6 @@ components:
         message:
           type: string
           description: Error
-    VolumeAndToken:
-      type: object
-      properties:
-        volumeID:
-          type: string
-          description: ID of the volume
-        name:
-          type: string
-          description: Name of the volume
-        token:
-          type: string
-          description: Auth token to use for interacting with volume content
-      required:
-      - volumeID
-      - name
-      - token
     VolumeDirectoryListing:
       type: array
       items:

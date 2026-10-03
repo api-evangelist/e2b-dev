@@ -104,33 +104,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DeleteTemplateTagsRequest:
-      required:
-      - name
-      - tags
-      properties:
-        name:
-          type: string
-          description: Name of the template
-        tags:
-          description: Tags to delete
-          type: array
-          items:
-            type: string
-    AssignedTemplateTags:
-      required:
-      - tags
-      - buildID
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-          description: Assigned tags of the template
-        buildID:
-          type: string
-          format: uuid
-          description: Identifier of the build associated with these tags
     TemplateTag:
       required:
       - tag
@@ -148,6 +121,19 @@ components:
           type: string
           format: date-time
           description: Time when the tag was assigned
+    DeleteTemplateTagsRequest:
+      required:
+      - name
+      - tags
+      properties:
+        name:
+          type: string
+          description: Name of the template
+        tags:
+          description: Tags to delete
+          type: array
+          items:
+            type: string
     AssignTemplateTagsRequest:
       required:
       - target
@@ -161,6 +147,20 @@ components:
           type: array
           items:
             type: string
+    AssignedTemplateTags:
+      required:
+      - tags
+      - buildID
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          description: Assigned tags of the template
+        buildID:
+          type: string
+          format: uuid
+          description: Identifier of the build associated with these tags
     Error:
       required:
       - code
@@ -173,34 +173,15 @@ components:
         message:
           type: string
           description: Error
-  parameters:
-    templateID:
-      name: templateID
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '400':
       description: Bad request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
@@ -211,6 +192,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    templateID:
+      name: templateID
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -96,13 +96,6 @@ paths:
       operationId: deleteEventsWebhooksByWebhookID
       x-operation-id-source: derived
 components:
-  parameters:
-    webhookID:
-      name: webhookID
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
     SandboxLifecycleEventType:
       type: string
@@ -136,6 +129,18 @@ components:
         signatureSecret:
           type: string
           description: Shared secret used to sign delivery payloads.
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
     Webhook:
       type: object
       required:
@@ -163,18 +168,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxLifecycleEventType'
-    WebhookUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        enabled:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
+  parameters:
+    webhookID:
+      name: webhookID
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

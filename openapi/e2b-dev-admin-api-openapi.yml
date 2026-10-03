@@ -162,6 +162,17 @@ components:
       schema:
         type: string
   schemas:
+    AdminSandboxKillResult:
+      required:
+      - killedCount
+      - failedCount
+      properties:
+        killedCount:
+          type: integer
+          description: Number of sandboxes successfully killed
+        failedCount:
+          type: integer
+          description: Number of sandboxes that failed to kill
     NodeStatus:
       type: string
       description: Status of the node
@@ -175,6 +186,58 @@ components:
       - NodeStatusDraining
       - NodeStatusConnecting
       - NodeStatusUnhealthy
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    MachineInfo:
+      required:
+      - cpuFamily
+      - cpuModel
+      - cpuModelName
+      - cpuArchitecture
+      properties:
+        cpuFamily:
+          type: string
+          description: CPU family of the node
+        cpuModel:
+          type: string
+          description: CPU model of the node
+        cpuModelName:
+          type: string
+          description: CPU model name of the node
+        cpuArchitecture:
+          type: string
+          description: CPU architecture of the node
+    NodeStatusChange:
+      required:
+      - status
+      properties:
+        clusterID:
+          type: string
+          format: uuid
+          description: Identifier of the cluster
+        status:
+          $ref: '#/components/schemas/NodeStatus'
+    AdminBuildCancelResult:
+      required:
+      - cancelledCount
+      - failedCount
+      properties:
+        cancelledCount:
+          type: integer
+          description: Number of builds successfully cancelled
+        failedCount:
+          type: integer
+          description: Number of builds that failed to cancel
     Node:
       required:
       - id
@@ -227,17 +290,6 @@ components:
           type: integer
           format: int
           description: Number of starting Sandboxes
-    AdminSandboxKillResult:
-      required:
-      - killedCount
-      - failedCount
-      properties:
-        killedCount:
-          type: integer
-          description: Number of sandboxes successfully killed
-        failedCount:
-          type: integer
-          description: Number of sandboxes that failed to kill
     DiskMetrics:
       required:
       - mountPoint
@@ -263,16 +315,6 @@ components:
           type: integer
           format: uint64
           description: Total space in bytes
-    NodeStatusChange:
-      required:
-      - status
-      properties:
-        clusterID:
-          type: string
-          format: uuid
-          description: Identifier of the cluster
-        status:
-          $ref: '#/components/schemas/NodeStatus'
     NodeMetrics:
       description: Node metrics
       required:
@@ -366,48 +408,6 @@ components:
           type: integer
           format: uint64
           description: Number of sandbox create fails
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
-    MachineInfo:
-      required:
-      - cpuFamily
-      - cpuModel
-      - cpuModelName
-      - cpuArchitecture
-      properties:
-        cpuFamily:
-          type: string
-          description: CPU family of the node
-        cpuModel:
-          type: string
-          description: CPU model of the node
-        cpuModelName:
-          type: string
-          description: CPU model name of the node
-        cpuArchitecture:
-          type: string
-          description: CPU architecture of the node
-    AdminBuildCancelResult:
-      required:
-      - cancelledCount
-      - failedCount
-      properties:
-        cancelledCount:
-          type: integer
-          description: Number of builds successfully cancelled
-        failedCount:
-          type: integer
-          description: Number of builds that failed to cancel
   responses:
     '404':
       description: Not found
@@ -415,14 +415,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
+    '500':
+      description: Server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
+    '401':
+      description: Authentication error
       content:
         application/json:
           schema:

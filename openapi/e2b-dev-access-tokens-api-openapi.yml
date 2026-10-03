@@ -59,6 +59,32 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    NewAccessToken:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the access token
+    IdentifierMaskingDetails:
+      required:
+      - prefix
+      - valueLength
+      - maskedValuePrefix
+      - maskedValueSuffix
+      properties:
+        prefix:
+          type: string
+          description: Prefix that identifies the token or key type
+        valueLength:
+          type: integer
+          description: Length of the token or key
+        maskedValuePrefix:
+          type: string
+          description: Prefix used in masked version of the token or key
+        maskedValueSuffix:
+          type: string
+          description: Suffix used in masked version of the token or key
     CreatedAccessToken:
       required:
       - id
@@ -95,32 +121,6 @@ components:
         message:
           type: string
           description: Error
-    NewAccessToken:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the access token
-    IdentifierMaskingDetails:
-      required:
-      - prefix
-      - valueLength
-      - maskedValuePrefix
-      - maskedValueSuffix
-      properties:
-        prefix:
-          type: string
-          description: Prefix that identifies the token or key type
-        valueLength:
-          type: integer
-          description: Length of the token or key
-        maskedValuePrefix:
-          type: string
-          description: Prefix used in masked version of the token or key
-        maskedValueSuffix:
-          type: string
-          description: Suffix used in masked version of the token or key
   responses:
     '404':
       description: Not found
@@ -128,14 +128,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
+    '500':
+      description: Server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
+    '401':
+      description: Authentication error
       content:
         application/json:
           schema:

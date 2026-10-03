@@ -95,6 +95,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
     SandboxEventData:
       type: object
       description: 'Event-specific payload. May be null on events that have no
@@ -156,23 +166,6 @@ components:
           type: string
         sandbox_team_id:
           type: string
-    SandboxEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxEvent'
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
     SandboxExecution:
       type: object
       description: 'Execution metrics included on terminal events such as
@@ -191,6 +184,13 @@ components:
         execution_time:
           type: integer
           description: Execution duration in milliseconds.
+    SandboxEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxEvent'
   parameters:
     sandboxID:
       name: sandboxID
