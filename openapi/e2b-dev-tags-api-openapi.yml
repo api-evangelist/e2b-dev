@@ -104,6 +104,19 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DeleteTemplateTagsRequest:
+      required:
+      - name
+      - tags
+      properties:
+        name:
+          type: string
+          description: Name of the template
+        tags:
+          description: Tags to delete
+          type: array
+          items:
+            type: string
     TemplateTag:
       required:
       - tag
@@ -121,32 +134,18 @@ components:
           type: string
           format: date-time
           description: Time when the tag was assigned
-    DeleteTemplateTagsRequest:
+    Error:
       required:
-      - name
-      - tags
+      - code
+      - message
       properties:
-        name:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
           type: string
-          description: Name of the template
-        tags:
-          description: Tags to delete
-          type: array
-          items:
-            type: string
-    AssignTemplateTagsRequest:
-      required:
-      - target
-      - tags
-      properties:
-        target:
-          type: string
-          description: Target template in "name:tag" format
-        tags:
-          description: Tags to assign to the template
-          type: array
-          items:
-            type: string
+          description: Error
     AssignedTemplateTags:
       required:
       - tags
@@ -161,33 +160,22 @@ components:
           type: string
           format: uuid
           description: Identifier of the build associated with these tags
-    Error:
+    AssignTemplateTagsRequest:
       required:
-      - code
-      - message
+      - target
+      - tags
       properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
+        target:
           type: string
-          description: Error
+          description: Target template in "name:tag" format
+        tags:
+          description: Tags to assign to the template
+          type: array
+          items:
+            type: string
   responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '404':
       description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
       content:
         application/json:
           schema:
@@ -200,6 +188,18 @@ components:
             $ref: '#/components/schemas/Error'
     '401':
       description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:

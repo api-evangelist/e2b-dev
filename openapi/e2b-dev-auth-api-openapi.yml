@@ -141,25 +141,18 @@ components:
       schema:
         type: string
   schemas:
-    Team:
+    Error:
       required:
-      - teamID
-      - name
-      - apiKey
-      - isDefault
+      - code
+      - message
       properties:
-        teamID:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
           type: string
-          description: Identifier of the team
-        name:
-          type: string
-          description: Name of the team
-        apiKey:
-          type: string
-          description: API key for the team
-        isDefault:
-          type: boolean
-          description: Whether the team is the default team
+          description: Error
     MaxTeamMetric:
       description: Team metric with timestamp
       required:
@@ -179,6 +172,25 @@ components:
         value:
           type: number
           description: The maximum value of the requested metric in the given interval
+    Team:
+      required:
+      - teamID
+      - name
+      - apiKey
+      - isDefault
+      properties:
+        teamID:
+          type: string
+          description: Identifier of the team
+        name:
+          type: string
+          description: Name of the team
+        apiKey:
+          type: string
+          description: API key for the team
+        isDefault:
+          type: boolean
+          description: Whether the team is the default team
     TeamMetric:
       description: Team metric with timestamp
       required:
@@ -204,21 +216,15 @@ components:
           type: number
           format: float
           description: Number of sandboxes started per second
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
   responses:
-    '400':
-      description: Bad request
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
       content:
         application/json:
           schema:
@@ -229,14 +235,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:

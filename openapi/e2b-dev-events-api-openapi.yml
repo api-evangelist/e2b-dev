@@ -95,6 +95,31 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SandboxExecution:
+      type: object
+      description: 'Execution metrics included on terminal events such as
+
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+
+        '
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
+    SandboxEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxEvent'
     SandboxLifecycleEventType:
       type: string
       description: Documented sandbox lifecycle event types.
@@ -166,31 +191,6 @@ components:
           type: string
         sandbox_team_id:
           type: string
-    SandboxExecution:
-      type: object
-      description: 'Execution metrics included on terminal events such as
-
-        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
-
-        '
-      properties:
-        started_at:
-          type: string
-          format: date-time
-        vcpu_count:
-          type: integer
-        memory_mb:
-          type: integer
-        execution_time:
-          type: integer
-          description: Execution duration in milliseconds.
-    SandboxEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxEvent'
   parameters:
     sandboxID:
       name: sandboxID

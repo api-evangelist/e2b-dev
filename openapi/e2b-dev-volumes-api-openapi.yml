@@ -365,20 +365,8 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '404':
       description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Server error
       content:
         application/json:
           schema:
@@ -389,20 +377,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    volumeID:
-      name: volumeID
-      in: path
-      required: true
-      schema:
-        type: string
-    path:
-      name: path
-      in: query
-      required: true
-      schema:
-        type: string
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
     VolumeAndToken:
       type: object
       properties:
@@ -440,22 +439,17 @@ components:
       required:
       - volumeID
       - name
-    Error:
+    Error_2:
       required:
       - code
       - message
       properties:
         code:
-          type: integer
-          format: int32
+          type: string
           description: Error code
         message:
           type: string
-          description: Error
-    VolumeDirectoryListing:
-      type: array
-      items:
-        $ref: '#/components/schemas/VolumeEntryStat'
+          description: Error message
     VolumeEntryStat:
       type: object
       properties:
@@ -504,17 +498,23 @@ components:
       - atime
       - mtime
       - ctime
-    Error_2:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
+    VolumeDirectoryListing:
+      type: array
+      items:
+        $ref: '#/components/schemas/VolumeEntryStat'
+  parameters:
+    volumeID:
+      name: volumeID
+      in: path
+      required: true
+      schema:
+        type: string
+    path:
+      name: path
+      in: query
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

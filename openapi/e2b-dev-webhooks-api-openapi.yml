@@ -107,40 +107,6 @@ components:
       - sandbox.lifecycle.paused
       - sandbox.lifecycle.resumed
       - sandbox.lifecycle.checkpointed
-    WebhookCreateRequest:
-      type: object
-      required:
-      - name
-      - url
-      - events
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-        enabled:
-          type: boolean
-          default: true
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
-        signatureSecret:
-          type: string
-          description: Shared secret used to sign delivery payloads.
-    WebhookUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        enabled:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
     Webhook:
       type: object
       required:
@@ -168,6 +134,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxLifecycleEventType'
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+    WebhookCreateRequest:
+      type: object
+      required:
+      - name
+      - url
+      - events
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+          default: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLifecycleEventType'
+        signatureSecret:
+          type: string
+          description: Shared secret used to sign delivery payloads.
   parameters:
     webhookID:
       name: webhookID

@@ -58,30 +58,6 @@ webhooks:
       - E2B Sandbox Events And Webhooks API
 components:
   schemas:
-    SandboxEventData:
-      type: object
-      description: 'Event-specific payload. May be null on events that have no
-
-        additional context. For sandbox.lifecycle.updated the payload
-
-        may include set_timeout. For sandbox.lifecycle.killed and
-
-        sandbox.lifecycle.paused the payload includes execution
-
-        details.
-
-        '
-      properties:
-        sandbox_metadata:
-          type: object
-          additionalProperties:
-            type: string
-        execution:
-          $ref: '#/components/schemas/SandboxExecution'
-        set_timeout:
-          type: integer
-          description: New timeout in seconds for sandbox.lifecycle.updated.
-      additionalProperties: true
     SandboxLifecycleEventType:
       type: string
       description: Documented sandbox lifecycle event types.
@@ -110,6 +86,30 @@ components:
         execution_time:
           type: integer
           description: Execution duration in milliseconds.
+    SandboxEventData:
+      type: object
+      description: 'Event-specific payload. May be null on events that have no
+
+        additional context. For sandbox.lifecycle.updated the payload
+
+        may include set_timeout. For sandbox.lifecycle.killed and
+
+        sandbox.lifecycle.paused the payload includes execution
+
+        details.
+
+        '
+      properties:
+        sandbox_metadata:
+          type: object
+          additionalProperties:
+            type: string
+        execution:
+          $ref: '#/components/schemas/SandboxExecution'
+        set_timeout:
+          type: integer
+          description: New timeout in seconds for sandbox.lifecycle.updated.
+      additionalProperties: true
     SandboxEvent:
       type: object
       required:
