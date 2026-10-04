@@ -555,6 +555,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/e2b-dev.png
 access: 3rd-Party
 common:
+- type: CapabilityMap
+  url: capabilities/e2b-dev-capability-edges.yml
+  name: E2B Business Capability Map
 - type: Website
   url: https://www.e2b.dev/
 - type: PostmanWorkspace
