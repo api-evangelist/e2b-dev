@@ -555,6 +555,10 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/e2b-dev.png
 access: 3rd-Party
 common:
+- url: https://e2b.dev/resources
+  type: Blog
+- url: https://e2b.dev/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/e2b-dev-capability-edges.yml
   name: E2B Business Capability Map
@@ -715,7 +719,7 @@ common:
   - https://github.com/e2b-dev/E2B/blob/main/spec/openapi.yml
   updated: '2026-05-25'
 created: '2026-05-25'
-modified: '2026-09-16'
+modified: '2026-10-06'
 position: Consuming
 description: E2B (e2b-dev) provides secure, isolated cloud sandboxes for AI agents and AI-generated code,
   built on a forked Firecracker microVM runtime. The platform ships a REST Sandbox API, JavaScript and
