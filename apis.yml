@@ -555,6 +555,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/e2b-dev.png
 access: 3rd-Party
 common:
+- type: Pricing
+  url: https://e2b.dev/pricing
 - url: https://e2b.dev/resources
   type: Blog
 - url: https://e2b.dev/rss.xml
