@@ -7,14 +7,17 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.e2b.dev
   final_host: e2b.dev
-  ownership: inherited
+  ownership: own
   owner: e2b-dev
   shares_host_with: null
-  inherited_from: e2b.dev
+  inherited_from: null
+  alias_of: e2b.dev
   verdict: scored
-  score: null
+  score: 33
+  band: 6
+  band_label: dominant
   host_score: 33
-  density: null
+  density: 18.79
   words: 1756
   tiers:
     agentic: 19
