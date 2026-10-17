@@ -578,148 +578,31 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SandboxAutoResumeEnabled:
-      type: boolean
-      description: Auto-resume enabled flag for paused sandboxes. Default false.
-      default: false
-    LogLevel:
-      type: string
-      description: State of the sandbox
-      enum:
-      - debug
-      - info
-      - warn
-      - error
-    SandboxMetadata:
-      additionalProperties:
-        type: string
-        description: Metadata of the sandbox
-    ResumedSandbox:
+    ConnectSandbox:
+      type: object
+      required:
+      - timeout
       properties:
         timeout:
+          description: Timeout in seconds from the current time after which the sandbox should expire
           type: integer
           format: int32
           minimum: 0
-          default: 15
-          description: Time to live for the sandbox in seconds.
-        autoPause:
-          type: boolean
-          deprecated: true
-          description: Automatically pauses the sandbox after the timeout
-    SandboxLogEntry:
-      required:
-      - timestamp
-      - level
-      - message
-      - fields
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the log entry
-        message:
-          type: string
-          description: Log message content
-        level:
-          $ref: '#/components/schemas/LogLevel'
-        fields:
-          type: object
-          additionalProperties:
-            type: string
-    Sandbox:
-      required:
-      - templateID
-      - sandboxID
-      - clientID
-      - envdVersion
-      properties:
-        templateID:
-          type: string
-          description: Identifier of the template from which is the sandbox created
-        sandboxID:
-          type: string
-          description: Identifier of the sandbox
-        alias:
-          type: string
-          description: Alias of the template
-        clientID:
-          type: string
-          deprecated: true
-          description: Identifier of the client
-        envdVersion:
-          $ref: '#/components/schemas/EnvdVersion'
-        envdAccessToken:
-          type: string
-          description: Access token used for envd communication
-        trafficAccessToken:
-          type:
-          - string
-          - 'null'
-          description: Token required for accessing sandbox via proxy.
-        domain:
-          type:
-          - string
-          - 'null'
-          description: Base domain where the sandbox traffic is accessible
     EnvdVersion:
       type: string
       description: Version of the envd running in the sandbox
-    SandboxLogsV2Response:
-      required:
-      - logs
-      properties:
-        logs:
-          default: []
-          description: Sandbox logs structured
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLogEntry'
-    SandboxNetworkConfig:
+    SandboxLifecycle:
       type: object
+      description: Sandbox lifecycle policy returned by sandbox info.
+      required:
+      - autoResume
+      - onTimeout
       properties:
-        allowPublicTraffic:
+        autoResume:
           type: boolean
-          default: true
-          description: Specify if the sandbox URLs should be accessible only with authentication.
-        allowOut:
-          type: array
-          description: List of allowed CIDR blocks or IP addresses for egress traffic. Allowed addresses always take precedence over blocked addresses.
-          items:
-            type: string
-        denyOut:
-          type: array
-          description: List of denied CIDR blocks or IP addresses for egress traffic
-          items:
-            type: string
-        maskRequestHost:
-          type: string
-          description: Specify host mask which will be used for all sandbox requests
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
-    SnapshotInfo:
-      type: object
-      required:
-      - snapshotID
-      - names
-      properties:
-        snapshotID:
-          type: string
-          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
-        names:
-          type: array
-          items:
-            type: string
-          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
+          description: Whether the sandbox can auto-resume.
+        onTimeout:
+          $ref: '#/components/schemas/SandboxOnTimeout'
     SandboxesWithMetrics:
       required:
       - sandboxes
@@ -733,6 +616,24 @@ components:
       enum:
       - kill
       - pause
+    SandboxLogsV2Response:
+      required:
+      - logs
+      properties:
+        logs:
+          default: []
+          description: Sandbox logs structured
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLogEntry'
+    SandboxAutoResumeConfig:
+      type: object
+      description: Auto-resume configuration for paused sandboxes.
+      required:
+      - enabled
+      properties:
+        enabled:
+          $ref: '#/components/schemas/SandboxAutoResumeEnabled'
     SandboxVolumeMount:
       type: object
       properties:
@@ -745,19 +646,22 @@ components:
       required:
       - name
       - path
-    SandboxLog:
-      description: Log entry with timestamp and line
-      required:
-      - timestamp
-      - line
+    SandboxAutoResumeEnabled:
+      type: boolean
+      description: Auto-resume enabled flag for paused sandboxes. Default false.
+      default: false
+    ResumedSandbox:
       properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the log entry
-        line:
-          type: string
-          description: Log line content
+        timeout:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 15
+          description: Time to live for the sandbox in seconds.
+        autoPause:
+          type: boolean
+          deprecated: true
+          description: Automatically pauses the sandbox after the timeout
     SandboxDetail:
       required:
       - templateID
@@ -831,6 +735,103 @@ components:
       enum:
       - running
       - paused
+    MemoryMB:
+      type: integer
+      format: int32
+      minimum: 128
+      description: Memory for the sandbox in MiB
+    SandboxLog:
+      description: Log entry with timestamp and line
+      required:
+      - timestamp
+      - line
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        line:
+          type: string
+          description: Log line content
+    LogsDirection:
+      type: string
+      description: Direction of the logs that should be returned
+      enum:
+      - forward
+      - backward
+      x-enum-varnames:
+      - LogsDirectionForward
+      - LogsDirectionBackward
+    EnvVars:
+      additionalProperties:
+        type: string
+        description: Environment variables for the sandbox
+    DiskSizeMB:
+      type: integer
+      format: int32
+      minimum: 0
+      description: Disk size for the sandbox in MiB
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    SnapshotInfo:
+      type: object
+      required:
+      - snapshotID
+      - names
+      properties:
+        snapshotID:
+          type: string
+          description: Identifier of the snapshot template including the tag. Uses namespace/alias when a name was provided (e.g. team-slug/my-snapshot:default), otherwise falls back to the raw template ID (e.g. abc123:default).
+        names:
+          type: array
+          items:
+            type: string
+          description: Full names of the snapshot template including team namespace and tag (e.g. team-slug/my-snapshot:v2)
+    SandboxLogs:
+      required:
+      - logs
+      - logEntries
+      properties:
+        logs:
+          description: Logs of the sandbox
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLog'
+        logEntries:
+          description: Structured logs of the sandbox
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxLogEntry'
+    SandboxLogEntry:
+      required:
+      - timestamp
+      - level
+      - message
+      - fields
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the log entry
+        message:
+          type: string
+          description: Log message content
+        level:
+          $ref: '#/components/schemas/LogLevel'
+        fields:
+          type: object
+          additionalProperties:
+            type: string
     ListedSandbox:
       required:
       - templateID
@@ -886,102 +887,6 @@ components:
       format: int32
       minimum: 1
       description: CPU cores for the sandbox
-    SandboxLifecycle:
-      type: object
-      description: Sandbox lifecycle policy returned by sandbox info.
-      required:
-      - autoResume
-      - onTimeout
-      properties:
-        autoResume:
-          type: boolean
-          description: Whether the sandbox can auto-resume.
-        onTimeout:
-          $ref: '#/components/schemas/SandboxOnTimeout'
-    Mcp:
-      type:
-      - object
-      - 'null'
-      description: MCP configuration for the sandbox
-      additionalProperties: {}
-    LogsDirection:
-      type: string
-      description: Direction of the logs that should be returned
-      enum:
-      - forward
-      - backward
-      x-enum-varnames:
-      - LogsDirectionForward
-      - LogsDirectionBackward
-    NewSandbox:
-      required:
-      - templateID
-      properties:
-        templateID:
-          type: string
-          description: Identifier of the required template
-        timeout:
-          type: integer
-          format: int32
-          minimum: 0
-          default: 15
-          description: Time to live for the sandbox in seconds.
-        autoPause:
-          type: boolean
-          default: false
-          description: Automatically pauses the sandbox after the timeout
-        autoResume:
-          $ref: '#/components/schemas/SandboxAutoResumeConfig'
-        secure:
-          type: boolean
-          description: Secure all system communication with sandbox
-        allow_internet_access:
-          type: boolean
-          description: Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
-        network:
-          $ref: '#/components/schemas/SandboxNetworkConfig'
-        metadata:
-          $ref: '#/components/schemas/SandboxMetadata'
-        envVars:
-          $ref: '#/components/schemas/EnvVars'
-        mcp:
-          $ref: '#/components/schemas/Mcp'
-        volumeMounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxVolumeMount'
-    SandboxAutoResumeConfig:
-      type: object
-      description: Auto-resume configuration for paused sandboxes.
-      required:
-      - enabled
-      properties:
-        enabled:
-          $ref: '#/components/schemas/SandboxAutoResumeEnabled'
-    MemoryMB:
-      type: integer
-      format: int32
-      minimum: 128
-      description: Memory for the sandbox in MiB
-    EnvVars:
-      additionalProperties:
-        type: string
-        description: Environment variables for the sandbox
-    SandboxLogs:
-      required:
-      - logs
-      - logEntries
-      properties:
-        logs:
-          description: Logs of the sandbox
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLog'
-        logEntries:
-          description: Structured logs of the sandbox
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLogEntry'
     SandboxMetric:
       description: Metric entry with timestamp and line
       required:
@@ -1027,29 +932,148 @@ components:
           type: integer
           format: int64
           description: Total disk space in bytes
-    ConnectSandbox:
-      type: object
+    NewSandbox:
       required:
-      - timeout
+      - templateID
       properties:
+        templateID:
+          type: string
+          description: Identifier of the required template
         timeout:
-          description: Timeout in seconds from the current time after which the sandbox should expire
           type: integer
           format: int32
           minimum: 0
-    DiskSizeMB:
-      type: integer
-      format: int32
-      minimum: 0
-      description: Disk size for the sandbox in MiB
-  parameters:
-    paginationNextToken:
-      name: nextToken
-      in: query
-      description: Cursor to start the list from
-      required: false
-      schema:
+          default: 15
+          description: Time to live for the sandbox in seconds.
+        autoPause:
+          type: boolean
+          default: false
+          description: Automatically pauses the sandbox after the timeout
+        autoResume:
+          $ref: '#/components/schemas/SandboxAutoResumeConfig'
+        secure:
+          type: boolean
+          description: Secure all system communication with sandbox
+        allow_internet_access:
+          type: boolean
+          description: Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+        network:
+          $ref: '#/components/schemas/SandboxNetworkConfig'
+        metadata:
+          $ref: '#/components/schemas/SandboxMetadata'
+        envVars:
+          $ref: '#/components/schemas/EnvVars'
+        mcp:
+          $ref: '#/components/schemas/Mcp'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SandboxVolumeMount'
+    SandboxNetworkConfig:
+      type: object
+      properties:
+        allowPublicTraffic:
+          type: boolean
+          default: true
+          description: Specify if the sandbox URLs should be accessible only with authentication.
+        allowOut:
+          type: array
+          description: List of allowed CIDR blocks or IP addresses for egress traffic. Allowed addresses always take precedence over blocked addresses.
+          items:
+            type: string
+        denyOut:
+          type: array
+          description: List of denied CIDR blocks or IP addresses for egress traffic
+          items:
+            type: string
+        maskRequestHost:
+          type: string
+          description: Specify host mask which will be used for all sandbox requests
+    Sandbox:
+      required:
+      - templateID
+      - sandboxID
+      - clientID
+      - envdVersion
+      properties:
+        templateID:
+          type: string
+          description: Identifier of the template from which is the sandbox created
+        sandboxID:
+          type: string
+          description: Identifier of the sandbox
+        alias:
+          type: string
+          description: Alias of the template
+        clientID:
+          type: string
+          deprecated: true
+          description: Identifier of the client
+        envdVersion:
+          $ref: '#/components/schemas/EnvdVersion'
+        envdAccessToken:
+          type: string
+          description: Access token used for envd communication
+        trafficAccessToken:
+          type:
+          - string
+          - 'null'
+          description: Token required for accessing sandbox via proxy.
+        domain:
+          type:
+          - string
+          - 'null'
+          description: Base domain where the sandbox traffic is accessible
+    Mcp:
+      type:
+      - object
+      - 'null'
+      description: MCP configuration for the sandbox
+      additionalProperties: {}
+    SandboxMetadata:
+      additionalProperties:
         type: string
+        description: Metadata of the sandbox
+    LogLevel:
+      type: string
+      description: State of the sandbox
+      enum:
+      - debug
+      - info
+      - warn
+      - error
+  responses:
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Authentication error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
     sandboxID:
       name: sandboxID
       in: path
@@ -1067,37 +1091,13 @@ components:
         minimum: 1
         default: 100
         maximum: 100
-  responses:
-    '500':
-      description: Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '409':
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    paginationNextToken:
+      name: nextToken
+      in: query
+      description: Cursor to start the list from
+      required: false
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

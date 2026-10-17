@@ -113,44 +113,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    NewTeamAPIKey:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the API key
-    UpdateTeamAPIKey:
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: New name for the API key
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: Error code
-        message:
-          type: string
-          description: Error
-    TeamUser:
-      required:
-      - id
-      - email
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identifier of the user
-        email:
-          type: string
-          description: Email of the user
     IdentifierMaskingDetails:
       required:
       - prefix
@@ -203,6 +165,44 @@ components:
           - 'null'
           format: date-time
           description: Last time this API key was used
+    TeamUser:
+      required:
+      - id
+      - email
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the user
+        email:
+          type: string
+          description: Email of the user
+    UpdateTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New name for the API key
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error
+    NewTeamAPIKey:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the API key
     TeamAPIKey:
       required:
       - id
@@ -233,14 +233,14 @@ components:
           format: date-time
           description: Last time this API key was used
   responses:
-    '404':
-      description: Not found
+    '401':
+      description: Authentication error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Authentication error
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
