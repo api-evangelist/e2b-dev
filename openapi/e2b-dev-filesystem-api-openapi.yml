@@ -1,0 +1,2207 @@
+openapi: 3.2.0
+info:
+  title: E2B Filesystem API
+  version: 0.1.0
+  description: Complete E2B developer API. Platform endpoints are served on api.e2b.app. Sandbox endpoints (envd) are served on the shared sandbox host (sandbox.e2b.app); target a specific sandbox with the E2b-Sandbox-Id and E2b-Sandbox-Port headers.
+servers:
+- url: https://api.e2b.app
+  description: E2B Platform API
+security: []
+tags:
+- name: Filesystem
+paths:
+  /files:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    get:
+      summary: Download a file
+      tags:
+      - Filesystem
+      security:
+      - SandboxAccessTokenAuth: []
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - $ref: '#/components/parameters/FilePath'
+      - $ref: '#/components/parameters/User'
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/SignatureExpiration'
+      - name: Range
+        in: header
+        description: Byte range to download.
+        schema:
+          type: string
+        example: bytes=2-5
+      - name: If-Modified-Since
+        in: header
+        description: Return 304 if the file has not changed since this HTTP date.
+        schema:
+          type: string
+        example: Tue, 01 Jan 2030 00:00:00 GMT
+      - name: Accept-Encoding
+        in: header
+        description: Supported transfer encodings include gzip and identity. Range and conditional requests require acceptable identity encoding.
+        schema:
+          type: string
+        example: identity
+      responses:
+        '200':
+          description: Entire file downloaded successfully. The Content-Type depends on the file. A gzip response uses the file extension's media type, or application/octet-stream as fallback.
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+          headers:
+            Accept-Ranges:
+              schema:
+                type: string
+                example: bytes
+            Last-Modified:
+              schema:
+                type: string
+              description: File modification time as an HTTP date.
+            Content-Length:
+              schema:
+                type: integer
+              description: Response length when known.
+        '206':
+          description: Partial file content for a satisfiable Range request. Content-Type depends on the file, or is multipart/byteranges for multiple ranges.
+          headers:
+            Accept-Ranges:
+              schema:
+                type: string
+                example: bytes
+            Last-Modified:
+              schema:
+                type: string
+              description: File modification time as an HTTP date.
+            Content-Length:
+              schema:
+                type: integer
+              description: Response length when known.
+            Content-Range:
+              description: Range returned for a single-range response.
+              schema:
+                type: string
+                example: bytes 2-5/10
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+        '304':
+          description: The file has not changed according to the conditional request. No response body.
+          headers:
+            Last-Modified:
+              schema:
+                type: string
+              description: File modification time as an HTTP date.
+        '400':
+          description: Invalid path The sandbox proxy rejects missing or invalid routing information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: path '/home/user/docs' is a directory
+                code: 400
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '401':
+          description: Invalid user Sandbox access-token or signature authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                upstream:
+                  value:
+                    message: 'error looking up user ''nonexistent'': user: unknown user nonexistent'
+                    code: 401
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: missing signature query parameter
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: path '/home/user/missing.txt' does not exist
+                code: 404
+        '406':
+          description: Requested encoding is not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                unsupportedEncoding:
+                  value:
+                    code: 406
+                    message: 'error parsing Accept-Encoding: no acceptable encoding found, supported: [gzip]'
+                rangeRequiresIdentity:
+                  value:
+                    code: 406
+                    message: identity encoding not acceptable for Range or conditional request
+        '416':
+          description: The requested byte range is invalid or does not overlap the file. This is a plain-text error from the file server.
+          headers:
+            Content-Range:
+              description: File length for an unsatisfiable range.
+              schema:
+                type: string
+                example: bytes */10
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                rangeDoesNotOverlap:
+                  value: 'invalid range: failed to overlap
+
+                    '
+        '500':
+          description: Internal server error The sandbox proxy encountered an unexpected routing error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: 'error opening file ''/home/user/file.txt'': permission denied'
+                code: 500
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+      operationId: downloadFile
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/api/download.go#L19-L184
+    post:
+      summary: Upload a file and ensure the parent directories exist.
+      description: 'Any request header of the form `X-Metadata-: ` is persisted
+
+        as a user-defined extended attribute on the uploaded file. The
+
+        `X-Metadata-` prefix is stripped and the remaining header name is
+
+        lowercased to form the metadata key; the resulting map is returned on
+
+        `EntryInfo` lookups (e.g. `Stat`, `ListDir`).
+
+
+        Each upload replaces the file''s metadata with the keys provided in
+
+        that request: keys previously stored but absent from the new request
+
+        are removed, and an upload that sends no `X-Metadata-*` header clears
+
+        all existing metadata.
+
+
+        Both keys and values must be printable US-ASCII (bytes `0x20`-`0x7E`)
+
+        and are rejected with HTTP 400 otherwise. Each key is capped at 246
+
+        bytes (the Linux VFS xattr-name limit minus the namespace prefix), and
+
+        the combined size of all metadata on a file (keys plus values, with the
+
+        namespace prefix counted per key) is capped at 4096 bytes to stay within
+
+        the filesystem''s per-inode xattr budget. Multiple files in a single
+
+        multipart upload receive the same metadata. If the same
+
+        `X-Metadata-` header is sent more than once, only the first
+
+        value is used.'
+      tags:
+      - Filesystem
+      security:
+      - SandboxAccessTokenAuth: []
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - $ref: '#/components/parameters/FilePath'
+      - $ref: '#/components/parameters/User'
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/SignatureExpiration'
+      requestBody:
+        $ref: '#/components/requestBodies/File'
+      responses:
+        '200':
+          description: The file was uploaded successfully. The response contains serialized JSON. Current envd also serves these bytes as text/plain, so parse the text as JSON to read the upload entries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntryInfo'
+              example:
+              - path: /home/user/hello.txt
+                name: hello.txt
+                type: file
+            text/plain:
+              schema:
+                type: string
+              x-decoded-schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntryInfo'
+              examples:
+                uploadedFile:
+                  summary: JSON text describing the uploaded file
+                  value: '[{"name":"example.txt","path":"/tmp/example.txt","type":"file"}]'
+        '400':
+          description: Invalid path The sandbox proxy rejects missing or invalid routing information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: path '/home/user/docs' is a directory
+                code: 400
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '401':
+          description: Invalid user Sandbox access-token or signature authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                upstream:
+                  value:
+                    message: 'error looking up user ''nonexistent'': user: unknown user nonexistent'
+                    code: 401
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: missing signature query parameter
+        '500':
+          description: Internal server error The sandbox proxy encountered an unexpected routing error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: 'error opening file ''/home/user/file.txt'': permission denied'
+                code: 500
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        '507':
+          description: Not enough disk space
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: not enough disk space available
+                code: 507
+      operationId: uploadFile
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/api/upload.go#L345-L358
+  /filesystem.Filesystem/CreateWatcher:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: CreateWatcher
+      description: Non-streaming versions of WatchDir
+      operationId: filesystem.Filesystem.CreateWatcher
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.CreateWatcherRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.CreateWatcherResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: 'path /tmp/missing not found: stat /tmp/missing: no such file or directory'
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error statting path /etc/hostname/child: stat /etc/hostname/child: not a directory'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/watch_sync.go#L150
+  /filesystem.Filesystem/GetWatcherEvents:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: GetWatcherEvents
+      operationId: filesystem.Filesystem.GetWatcherEvents
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.GetWatcherEventsRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.GetWatcherEventsResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: watcher with id does-not-exist not found
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: The watcher's error channel closed unexpectedly
+                  value:
+                    code: internal
+                    message: watcher error channel closed
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/watch_sync.go#L201
+  /filesystem.Filesystem/ListDir:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: ListDir
+      operationId: filesystem.Filesystem.ListDir
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.ListDirRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.ListDirResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument. Connect RPC error: failed_precondition.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'path is not a directory: /etc/hostname'
+                failed_precondition:
+                  summary: Example failed_precondition response
+                  value:
+                    code: failed_precondition
+                    message: cyclic symlink or chain >255 links at "/tmp/loop"
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: 'path not found: lstat /tmp/missing: no such file or directory'
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error resolving symlink: not a directory'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/dir.go#L17
+  /filesystem.Filesystem/MakeDir:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: MakeDir
+      operationId: filesystem.Filesystem.MakeDir
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.MakeDirRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.MakeDirResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'path already exists but it is not a directory: /etc/hostname'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: The new directory disappeared before its entry information was read
+                  value:
+                    code: not_found
+                    message: 'file not found: lstat /tmp/example: no such file or directory'
+        '409':
+          description: 'Connect RPC error: already_exists.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                already_exists:
+                  summary: Example already_exists response
+                  value:
+                    code: already_exists
+                    message: 'directory already exists: /tmp'
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error getting file info: stat /etc/hostname/child: not a directory'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/dir.go#L56
+  /filesystem.Filesystem/Move:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: Move
+      operationId: filesystem.Filesystem.Move
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.MoveRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.MoveResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: 'source file not found: rename /tmp/missing /tmp/destination: no such file or directory'
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error renaming: rename /home/user /home/user: file exists'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/move.go#L15
+  /filesystem.Filesystem/Remove:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: Remove
+      operationId: filesystem.Filesystem.Remove
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.RemoveRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.RemoveResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error removing file or directory: unlinkat /etc/hostname/child: not a directory'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/remove.go#L14
+  /filesystem.Filesystem/RemoveWatcher:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: RemoveWatcher
+      operationId: filesystem.Filesystem.RemoveWatcher
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.RemoveWatcherRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.RemoveWatcherResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: watcher with id does-not-exist not found
+        '500':
+          description: The sandbox proxy encountered an unexpected routing error.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/watch_sync.go#L232
+  /filesystem.Filesystem/Stat:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: Stat
+      operationId: filesystem.Filesystem.Stat
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filesystem.StatRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filesystem.StatResponse'
+        '400':
+          description: 'The sandbox proxy rejects missing or invalid routing information. Connect RPC error: invalid_argument.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                invalid_argument:
+                  summary: Example invalid_argument response
+                  value:
+                    code: invalid_argument
+                    message: 'Connect-Protocol-Version must be "1": got "invalid"'
+        '401':
+          description: 'Sandbox access-token or signature authentication failed. Connect RPC error: unauthenticated.'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EnvdHTTPError'
+                - $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+                unauthenticated:
+                  summary: Example unauthenticated response
+                  value:
+                    code: unauthenticated
+                    message: 'invalid username: ''nonexistent'''
+        '404':
+          description: 'Connect RPC error: not_found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                not_found:
+                  summary: Example not_found response
+                  value:
+                    code: not_found
+                    message: 'file not found: lstat /tmp/missing: no such file or directory'
+        '500':
+          description: 'The sandbox proxy encountered an unexpected routing error. Connect RPC error: internal.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectRPCError'
+              examples:
+                internal:
+                  summary: Example internal response
+                  value:
+                    code: internal
+                    message: 'error getting file info: lstat /etc/hostname/child: not a directory'
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      x-response-contract-source: https://github.com/e2b-dev/infra/blob/0c21aa2277b59a1d040761ed3fbbb29a78775470/packages/envd/internal/services/filesystem/stat.go#L12
+  /filesystem.Filesystem/WatchDir:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    post:
+      tags:
+      - Filesystem
+      summary: WatchDir
+      description: Server-streaming RPC. Use the Connect protocol with streaming support.
+      operationId: filesystem.Filesystem.WatchDir
+      requestBody:
+        content:
+          application/connect+json:
+            schema:
+              type: string
+              format: binary
+            x-connect-message-schema:
+              $ref: '#/components/schemas/filesystem.WatchDirRequest'
+        required: true
+        description: Send Connect-framed bytes with Content-Type application/connect+json. Each uncompressed request frame begins with flags byte 0, then the JSON payload length as four big-endian bytes, then the UTF-8 JSON payload. The decoded payload follows `#/components/schemas/filesystem.WatchDirRequest` (x-connect-message-schema). Sending a bare JSON document does not encode a valid Connect request frame.
+      responses:
+        '200':
+          description: 'Stream of WatchDirResponse events Decoded terminal error example (the wire also includes the five-byte frame prefix): `{"error":{"code":"not_found","message":"path /tmp/missing not found: stat /tmp/missing: no such file or directory"}}`. Connect-framed bytes, not an ordinary JSON document. Each frame has a one-byte flags field and a four-byte big-endian payload length. The decoded data payload follows x-connect-message-schema. The final frame has flags=2 and follows x-connect-end-stream-schema. RPC failures appear in its error object while the HTTP status remains 200. Authentication or routing failures before the stream can use the separate HTTP responses below.'
+          content:
+            application/connect+json:
+              schema:
+                type: string
+                format: binary
+              x-connect-message-schema:
+                $ref: '#/components/schemas/filesystem.WatchDirResponse'
+              x-connect-end-stream-schema:
+                $ref: '#/components/schemas/ConnectEndStreamResponse'
+              x-connect-decoded-examples:
+                completed:
+                  flags: 2
+                  payload: {}
+                failed:
+                  flags: 2
+                  payload:
+                    error:
+                      code: not_found
+                      message: 'path /tmp/missing not found: stat /tmp/missing: no such file or directory'
+        '400':
+          description: The sandbox proxy rejects missing or invalid routing information.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '401':
+          description: Sandbox access-token or signature authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvdHTTPError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+        '500':
+          description: The sandbox proxy encountered an unexpected routing error.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+      security:
+      - SandboxAccessTokenAuth: []
+      - SandboxAccessTokenAuth: []
+        SandboxUserAuth: []
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - '1'
+        example: '1'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      x-response-contract-source: https://github.com/connectrpc/connect-go/blob/v1.18.1/protocol_connect.go#L1203-L1308
+      x-codeSamples:
+      - lang: python
+        label: Python (Connect framing)
+        source: "import json\nimport os\nimport struct\nimport urllib.request\n\n# Set E2B_SANDBOX_ID and E2B_ENVD_ACCESS_TOKEN from a secured sandbox's\n# create/connect response. This token is not your project API key.\nmessages = [{\"path\": \"/home/user\", \"recursive\": False}]\nbody = b\"\"\nfor message in messages:\n    payload = json.dumps(message).encode(\"utf-8\")\n    body += struct.pack(\">BI\", 0, len(payload)) + payload\n\nrequest = urllib.request.Request(\n    \"https://sandbox.e2b.app/filesystem.Filesystem/WatchDir\",\n    data=body,\n    headers={\n        \"Content-Type\": \"application/connect+json\",\n        \"Connect-Protocol-Version\": \"1\",\n        \"Connect-Timeout-Ms\": \"5000\",\n        \"E2b-Sandbox-Id\": os.environ[\"E2B_SANDBOX_ID\"],\n        \"E2b-Sandbox-Port\": \"49983\",\n        \"X-Access-Token\": os.environ[\"E2B_ENVD_ACCESS_TOKEN\"],\n    },\n    method=\"POST\",\n)\nwith urllib.request.urlopen(request, timeout=10) as response:\n    data = response.read()\n\n# HTTP 200 can still contain a terminal error. Decode each envelope.\noffset = 0\nwhile offset < len(data):\n    if len(data) - offset < 5:\n        raise ValueError(\"Truncated Connect envelope\")\n    flags, length = struct.unpack_from(\">BI\", data, offset)\n    offset += 5\n    if length > len(data) - offset:\n        raise ValueError(\"Truncated Connect message\")\n    message = json.loads(data[offset:offset + length])\n    offset += length\n    if flags & 2:\n        if message.get(\"error\"):\n            raise RuntimeError(message[\"error\"])\n        break\n    print(message)\n\n# The five-second example deadline ends the watch with deadline_exceeded.\n"
+components:
+  parameters:
+    Signature:
+      name: signature
+      in: query
+      required: false
+      description: Signature used for file access permission verification.
+      schema:
+        type: string
+    SignatureExpiration:
+      name: signature_expiration
+      in: query
+      required: false
+      description: Unix timestamp (seconds) after which the signature expires. Only used with the signature parameter.
+      schema:
+        type: integer
+    User:
+      name: username
+      in: query
+      required: false
+      description: User for setting file ownership and resolving relative paths. Defaults to the sandbox's default user.
+      schema:
+        type: string
+    FilePath:
+      name: path
+      in: query
+      required: false
+      description: Path to the file, URL encoded. Can be relative to the user's home directory (e.g. "file.txt" resolves to ~/file.txt).
+      schema:
+        type: string
+  schemas:
+    filesystem.RemoveWatcherResponse:
+      type: object
+      title: RemoveWatcherResponse
+      additionalProperties: false
+    filesystem.ListDirResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/filesystem.EntryInfo'
+          title: entries
+      title: ListDirResponse
+      additionalProperties: false
+    filesystem.MakeDirRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+      title: MakeDirRequest
+      additionalProperties: false
+    filesystem.RemoveWatcherRequest:
+      type: object
+      properties:
+        watcherId:
+          type: string
+          title: watcher_id
+      title: RemoveWatcherRequest
+      additionalProperties: false
+    filesystem.ListDirRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        depth:
+          type: integer
+          title: depth
+      title: ListDirRequest
+      additionalProperties: false
+    filesystem.MoveResponse:
+      type: object
+      properties:
+        entry:
+          title: entry
+          $ref: '#/components/schemas/filesystem.EntryInfo'
+      title: MoveResponse
+      additionalProperties: false
+    filesystem.WatchDirResponse.StartEvent:
+      type: object
+      title: StartEvent
+      additionalProperties: false
+    filesystem.MakeDirResponse:
+      type: object
+      properties:
+        entry:
+          title: entry
+          $ref: '#/components/schemas/filesystem.EntryInfo'
+      title: MakeDirResponse
+      additionalProperties: false
+    ConnectEndStreamResponse:
+      type: object
+      description: Decoded JSON payload of the final Connect frame (flags byte 2). An absent error indicates successful completion.
+      properties:
+        error:
+          $ref: '#/components/schemas/ConnectRPCError'
+        metadata:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    connect.error:
+      type: object
+      properties:
+        code:
+          type: string
+          examples:
+          - not_found
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+        message:
+          type: string
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/connect.error_details.Any'
+          description: A list of messages that carry the error details. There is no limit on the number of messages.
+      title: Connect Error
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+    connect-timeout-header:
+      type: number
+      title: Connect-Timeout-Ms
+      description: Define the timeout, in ms
+    SandboxRoutingError:
+      type: object
+      required:
+      - sandboxId
+      - message
+      - code
+      properties:
+        sandboxId:
+          type: string
+        message:
+          type: string
+        code:
+          type: integer
+    connect.error_details.Any:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'A URL that acts as a globally unique identifier for the type of the serialized message. For example: `type.googleapis.com/google.rpc.ErrorInfo`. This is used to determine the schema of the data in the `value` field and is the discriminator for the `debug` field.'
+        value:
+          type: string
+          format: binary
+          description: The Protobuf message, serialized as bytes and base64-encoded. The specific message type is identified by the `type` field.
+        debug:
+          oneOf:
+          - type: object
+            title: Any
+            additionalProperties: true
+            description: Detailed error information.
+          discriminator:
+            propertyName: type
+          title: Debug
+          description: Deserialized error detail payload. The 'type' field indicates the schema. This field is for easier debugging and should not be relied upon for application logic.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message, with an additional debug field for ConnectRPC error details.
+    filesystem.CreateWatcherResponse:
+      type: object
+      properties:
+        watcherId:
+          type: string
+          title: watcher_id
+      title: CreateWatcherResponse
+      additionalProperties: false
+    filesystem.StatResponse:
+      type: object
+      properties:
+        entry:
+          title: entry
+          $ref: '#/components/schemas/filesystem.EntryInfo'
+      title: StatResponse
+      additionalProperties: false
+    google.protobuf.Timestamp:
+      type: string
+      examples:
+      - '2023-01-15T01:30:15.01Z'
+      - '2024-12-25T12:00:00Z'
+      format: date-time
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+    filesystem.WatchDirResponse.KeepAlive:
+      type: object
+      title: KeepAlive
+      additionalProperties: false
+    filesystem.WatchDirResponse:
+      type: object
+      oneOf:
+      - properties:
+          filesystem:
+            title: filesystem
+            $ref: '#/components/schemas/filesystem.FilesystemEvent'
+        title: filesystem
+        required:
+        - filesystem
+      - properties:
+          keepalive:
+            title: keepalive
+            $ref: '#/components/schemas/filesystem.WatchDirResponse.KeepAlive'
+        title: keepalive
+        required:
+        - keepalive
+      - properties:
+          start:
+            title: start
+            $ref: '#/components/schemas/filesystem.WatchDirResponse.StartEvent'
+        title: start
+        required:
+        - start
+      title: WatchDirResponse
+      unevaluatedProperties: false
+    filesystem.FilesystemEvent:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        type:
+          title: type
+          $ref: '#/components/schemas/filesystem.EventType'
+        entry:
+          oneOf:
+          - $ref: '#/components/schemas/filesystem.EntryInfo'
+          - type: 'null'
+          title: entry
+          description: "Info of the entry that triggered the event. Only populated when include_entry\n was requested and the entry could be stat-ed (e.g. not set for remove/rename-away\n events, where the entry no longer exists at this path)."
+      title: FilesystemEvent
+      additionalProperties: false
+    filesystem.GetWatcherEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/filesystem.FilesystemEvent'
+          title: events
+      title: GetWatcherEventsResponse
+      additionalProperties: false
+    filesystem.StatRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+      title: StatRequest
+      additionalProperties: false
+    EntryInfo:
+      required:
+      - path
+      - name
+      - type
+      properties:
+        path:
+          type: string
+          description: Path to the file
+        name:
+          type: string
+          description: Name of the file
+        type:
+          type: string
+          description: Type of the file
+          enum:
+          - file
+          - directory
+        metadata:
+          type: object
+          description: User-defined metadata stored as extended attributes on the file.
+          additionalProperties:
+            type: string
+      type: object
+    ConnectRPCError:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Connect error code, such as not_found or invalid_argument.
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              value:
+                type: string
+                format: byte
+              debug: {}
+      description: Connect JSON error. The code is a string, unlike envd's numeric HTTP errors.
+    filesystem.WatchDirRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        recursive:
+          type: boolean
+          title: recursive
+        includeEntry:
+          type: boolean
+          title: include_entry
+          description: If true, each FilesystemEvent includes the EntryInfo of the affected entry, when available.
+        allowNetworkMounts:
+          type: boolean
+          title: allow_network_mounts
+          description: "If true, allows watching paths on network filesystem mounts (NFS, CIFS, SMB, FUSE).\n Events on network mounts may be unreliable or not delivered at all."
+      title: WatchDirRequest
+      additionalProperties: false
+    filesystem.MoveRequest:
+      type: object
+      properties:
+        source:
+          type: string
+          title: source
+        destination:
+          type: string
+          title: destination
+      title: MoveRequest
+      additionalProperties: false
+    filesystem.RemoveRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+      title: RemoveRequest
+      additionalProperties: false
+    EnvdHTTPError:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      description: HTTP error from envd, with a numeric status code. Distinct from a Connect RPC error.
+    filesystem.EventType:
+      type: string
+      title: EventType
+      enum:
+      - EVENT_TYPE_UNSPECIFIED
+      - EVENT_TYPE_CREATE
+      - EVENT_TYPE_WRITE
+      - EVENT_TYPE_REMOVE
+      - EVENT_TYPE_RENAME
+      - EVENT_TYPE_CHMOD
+    filesystem.RemoveResponse:
+      type: object
+      title: RemoveResponse
+      additionalProperties: false
+    filesystem.FileType:
+      type: string
+      title: FileType
+      enum:
+      - FILE_TYPE_UNSPECIFIED
+      - FILE_TYPE_FILE
+      - FILE_TYPE_DIRECTORY
+      - FILE_TYPE_SYMLINK
+    filesystem.CreateWatcherRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        recursive:
+          type: boolean
+          title: recursive
+        includeEntry:
+          type: boolean
+          title: include_entry
+          description: If true, each FilesystemEvent includes the EntryInfo of the affected entry, when available.
+        allowNetworkMounts:
+          type: boolean
+          title: allow_network_mounts
+          description: "If true, allows watching paths on network filesystem mounts (NFS, CIFS, SMB, FUSE).\n Events on network mounts may be unreliable or not delivered at all."
+      title: CreateWatcherRequest
+      additionalProperties: false
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        error_code:
+          type: string
+          description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+        message:
+          type: string
+          description: Error
+      type: object
+    filesystem.EntryInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        type:
+          title: type
+          $ref: '#/components/schemas/filesystem.FileType'
+        path:
+          type: string
+          title: path
+        size:
+          type:
+          - integer
+          - string
+          title: size
+          format: int64
+          description: File size in bytes. Encoded as string for values exceeding JSON number precision (int64).
+        mode:
+          type: integer
+          title: mode
+        permissions:
+          type: string
+          title: permissions
+        owner:
+          type: string
+          title: owner
+        group:
+          type: string
+          title: group
+        modifiedTime:
+          title: modified_time
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        symlinkTarget:
+          type:
+          - string
+          - 'null'
+          title: symlink_target
+          description: If the entry is a symlink, this field contains the target of the symlink.
+        metadata:
+          type: object
+          title: metadata
+          additionalProperties:
+            type: string
+            title: value
+          description: "User-defined metadata stored as extended attributes (xattrs) on the file.\n Keys live under the `user.e2b.` xattr namespace; the prefix is stripped here.\n Plain `user.*` xattrs written by other tooling are not reflected."
+        isSymlink:
+          type: boolean
+          title: is_symlink
+          description: True when the entry itself is a symlink; type then describes the symlink's target.
+      title: EntryInfo
+      additionalProperties: false
+    filesystem.GetWatcherEventsRequest:
+      type: object
+      properties:
+        watcherId:
+          type: string
+          title: watcher_id
+      title: GetWatcherEventsRequest
+      additionalProperties: false
+  requestBodies:
+    File:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
+            description: Raw file content. The 'path' query parameter is required when using this content type.
+  securitySchemes:
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    SandboxAccessTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Access-Token
+      description: 'Sandbox access token (`envdAccessToken`) for authenticating requests to a running sandbox. Returned by: [POST /sandboxes](/api-reference/sandboxes/create-sandbox) (on create), [POST /sandboxes/{sandboxID}/connect](/api-reference/sandboxes/connect-to-sandbox) (on connect), [POST /sandboxes/{sandboxID}/resume](/api-reference/sandboxes/resume-sandbox) (on resume), and [GET /sandboxes/{sandboxID}](/api-reference/sandboxes/get-sandbox) (for running or paused sandboxes).'
+    SandboxUserAuth:
+      type: http
+      scheme: basic
+      description: Optional system user for the operation. Sets file ownership and resolves relative paths. Pass the desired username with no password. Defaults to the sandbox's default user when omitted.

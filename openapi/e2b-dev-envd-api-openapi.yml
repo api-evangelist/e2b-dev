@@ -1,0 +1,358 @@
+openapi: 3.2.0
+info:
+  title: E2B Envd API
+  version: 0.1.0
+  description: Complete E2B developer API. Platform endpoints are served on api.e2b.app. Sandbox endpoints (envd) are served on the shared sandbox host (sandbox.e2b.app); target a specific sandbox with the E2b-Sandbox-Id and E2b-Sandbox-Port headers.
+servers:
+- url: https://api.e2b.app
+  description: E2B Platform API
+security: []
+tags:
+- name: Envd
+paths:
+  /health:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    get:
+      summary: Check the health of the service
+      responses:
+        '204':
+          description: The service is healthy
+        '400':
+          description: The sandbox proxy rejects missing or invalid routing information.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '500':
+          description: The sandbox proxy encountered an unexpected routing error.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      operationId: getHealth
+      security: []
+      tags:
+      - Envd
+  /metrics:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    get:
+      summary: Service stats
+      security:
+      - SandboxAccessTokenAuth: []
+      responses:
+        '200':
+          description: The resource usage metrics of the service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metrics'
+        '400':
+          description: The sandbox proxy rejects missing or invalid routing information.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '401':
+          description: Sandbox access-token or signature authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvdHTTPError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+        '500':
+          description: The sandbox proxy encountered an unexpected routing error. Metrics collection can also fail with an empty body.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+          x-empty-body-allowed: true
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      operationId: getMetrics
+      tags:
+      - Envd
+  /envs:
+    servers:
+    - url: https://sandbox.e2b.app
+      description: Sandbox API (envd) - routes using sandbox ID and port headers
+    get:
+      summary: Environment variables
+      security:
+      - SandboxAccessTokenAuth: []
+      responses:
+        '200':
+          description: Environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvVars'
+        '400':
+          description: The sandbox proxy rejects missing or invalid routing information.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                missingRoutingHeader:
+                  summary: The sandbox proxy rejects missing or invalid routing information.
+                  value: 'missing header
+
+                    '
+        '401':
+          description: Sandbox access-token or signature authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvdHTTPError'
+              examples:
+                sandboxAuthentication:
+                  summary: Missing or invalid sandbox credentials
+                  value:
+                    code: 401
+                    message: unauthorized access, please provide a valid access token or method signing if supported
+        '500':
+          description: The sandbox proxy encountered an unexpected routing error.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                routingFailure:
+                  summary: The sandbox proxy encountered an unexpected routing error.
+                  value: 'Unexpected error when routing request: invalid sandbox port
+
+                    '
+        '502':
+          description: The sandbox proxy could not find the sandbox. Browser navigation may receive an HTML error page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxRoutingError'
+              examples:
+                sandboxNotFound:
+                  value:
+                    sandboxId: sandbox-id
+                    message: The sandbox was not found
+                    code: 502
+            text/html:
+              schema:
+                type: string
+      parameters:
+      - name: E2b-Sandbox-Id
+        in: header
+        required: true
+        description: Identifier of the target sandbox. Routes the request to that sandbox's envd over the shared sandbox host.
+        schema:
+          type: string
+      - name: E2b-Sandbox-Port
+        in: header
+        required: true
+        description: Port envd listens on inside the sandbox (default 49983).
+        schema:
+          type: integer
+          default: 49983
+        example: 49983
+      operationId: getEnvVars
+      tags:
+      - Envd
+components:
+  schemas:
+    EnvVars:
+      additionalProperties:
+        type: string
+        description: Environment variables for the sandbox
+      type: object
+    EnvdHTTPError:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      description: HTTP error from envd, with a numeric status code. Distinct from a Connect RPC error.
+    SandboxRoutingError:
+      type: object
+      required:
+      - sandboxId
+      - message
+      - code
+      properties:
+        sandboxId:
+          type: string
+        message:
+          type: string
+        code:
+          type: integer
+    Metrics:
+      type: object
+      description: Resource usage metrics
+      properties:
+        ts:
+          type: integer
+          format: int64
+          description: Unix timestamp in UTC for current sandbox time
+        cpu_count:
+          type: integer
+          description: Number of CPU cores
+        cpu_used_pct:
+          type: number
+          format: float
+          description: CPU usage percentage
+        mem_total:
+          type: integer
+          description: Total virtual memory in bytes
+          format: int64
+        mem_used:
+          type: integer
+          description: Used virtual memory in bytes
+          format: int64
+        mem_cache:
+          type: integer
+          description: Cached memory (page cache) in bytes
+        disk_used:
+          type: integer
+          description: Used disk space in bytes
+          format: int64
+        disk_total:
+          type: integer
+          description: Total disk space in bytes
+          format: int64
+        oom_kills:
+          type: array
+          description: The latest 32 out-of-memory kills since the guest booted, oldest first. Reading does not consume them. Empty when there are none. Omitted when not known (while envd is still reading the kernel log, when it can't be read or envd stopped reading it, and outside Firecracker).
+          x-go-type-skip-optional-pointer: false
+          items:
+            $ref: '#/components/schemas/OOMKill'
+        mem_used_mib:
+          type: integer
+          description: Used virtual memory in MiB
+          format: int64
+        mem_total_mib:
+          type: integer
+          description: Total virtual memory in MiB
+          format: int64
+    OOMKill:
+      type: object
+      description: A process the guest kernel killed for running out of memory
+      required:
+      - seq
+      - process
+      properties:
+        seq:
+          type: integer
+          format: int64
+          description: Kernel log sequence number of the kill record. It only grows, across pauses and envd restarts.
+        process:
+          type: string
+          description: Name of the killed process, or Unknown if the record doesn't show it
+  securitySchemes:
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    SandboxAccessTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Access-Token
+      description: 'Sandbox access token (`envdAccessToken`) for authenticating requests to a running sandbox. Returned by: [POST /sandboxes](/api-reference/sandboxes/create-sandbox) (on create), [POST /sandboxes/{sandboxID}/connect](/api-reference/sandboxes/connect-to-sandbox) (on connect), [POST /sandboxes/{sandboxID}/resume](/api-reference/sandboxes/resume-sandbox) (on resume), and [GET /sandboxes/{sandboxID}](/api-reference/sandboxes/get-sandbox) (for running or paused sandboxes).'
+    SandboxUserAuth:
+      type: http
+      scheme: basic
+      description: Optional system user for the operation. Sets file ownership and resolves relative paths. Pass the desired username with no password. Defaults to the sandbox's default user when omitted.

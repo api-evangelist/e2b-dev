@@ -1,196 +1,567 @@
 openapi: 3.2.0
 info:
-  title: E2B Sandbox and Webhooks Events API
+  title: E2B Events API
   version: 0.1.0
-  description: 'Documented REST surface for E2B sandbox lifecycle events and webhook
-
-    subscriptions.'
+  description: Complete E2B developer API. Platform endpoints are served on api.e2b.app. Sandbox endpoints (envd) are served on the shared sandbox host (sandbox.e2b.app); target a specific sandbox with the E2b-Sandbox-Id and E2b-Sandbox-Port headers.
 servers:
 - url: https://api.e2b.app
-security:
-- ApiKeyAuth: []
+  description: E2B Platform API
+security: []
 tags:
 - name: Events
 paths:
-  /events/sandboxes:
-    get:
-      summary: List team sandbox lifecycle events
-      description: 'Returns sandbox lifecycle events across the entire team. Supports
-
-        pagination via offset/limit and filtering by event type.'
-      tags:
-      - Events
-      parameters:
-      - in: query
-        name: offset
-        schema:
-          type: integer
-          default: 0
-      - in: query
-        name: limit
-        schema:
-          type: integer
-          default: 10
-          maximum: 100
-      - in: query
-        name: orderAsc
-        schema:
-          type: boolean
-      - in: query
-        name: types
-        description: Filter by event type. Repeatable.
-        schema:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
-        style: form
-        explode: true
-      responses:
-        '200':
-          description: Team sandbox events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SandboxEventsResponse'
-      operationId: getEventsSandboxes
-      x-operation-id-source: derived
   /events/sandboxes/{sandboxID}:
+    servers:
+    - url: https://api.e2b.app
+      description: E2B Platform API
     get:
-      summary: List events for a single sandbox
+      description: Get sandbox events
       tags:
       - Events
+      security:
+      - ApiKeyAuth: []
       parameters:
       - $ref: '#/components/parameters/sandboxID'
-      - in: query
-        name: offset
+      - name: offset
+        in: query
+        required: false
         schema:
           type: integer
+          format: int32
+          minimum: 0
           default: 0
-      - in: query
-        name: limit
+      - name: limit
+        in: query
+        required: false
         schema:
           type: integer
-          default: 10
+          format: int32
+          minimum: 1
           maximum: 100
-      - in: query
-        name: orderAsc
+          default: 10
+      - name: orderAsc
+        in: query
+        required: false
         schema:
           type: boolean
-      - in: query
-        name: types
+          default: false
+      - name: types
+        in: query
+        required: false
+        style: form
+        explode: true
         schema:
           type: array
           items:
-            $ref: '#/components/schemas/SandboxLifecycleEventType'
-        style: form
-        explode: true
+            type: string
+        description: Filter events to the provided event types
       responses:
         '200':
-          description: Sandbox events
+          description: Successfully returned the sandbox events
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SandboxEventsResponse'
-      operationId: getEventsSandboxesBySandboxID
-      x-operation-id-source: derived
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxEvent'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 400
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                invalidLimit:
+                  summary: The limit query parameter is below 1
+                  value:
+                    code: 400
+                    message: 'validation error: error in openapi3filter.RequestError: parameter "limit" in query has an error: number must be at least 1'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 401
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                missingAuthentication:
+                  summary: No supported authentication header was supplied
+                  value:
+                    code: 401
+                    message: authorization header is missing
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 403
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                teamBanned:
+                  summary: The team is banned at authentication
+                  value:
+                    code: 403
+                    message: team is banned
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 404
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                resourceNotFound:
+                  summary: The backend cannot find the requested resource
+                  value:
+                    code: 404
+                    message: Sandbox events not found
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 500
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendError:
+                  summary: The backend failed
+                  value:
+                    code: 500
+                    message: Error when querying sandbox events
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 503
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendUnavailable:
+                  summary: The backend is not configured
+                  value:
+                    code: 503
+                    message: Sandbox events are not available
+        '504':
+          description: Backend timeout
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 504
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendDeadlineExceeded:
+                  summary: The backend deadline was exceeded
+                  value:
+                    code: 504
+                    message: Error when querying sandbox events
+      operationId: getEventsSandbox
+      summary: List sandbox events
+  /events/sandboxes:
+    servers:
+    - url: https://api.e2b.app
+      description: E2B Platform API
+    get:
+      description: Get all sandbox events for the team associated with the API key
+      tags:
+      - Events
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          default: 10
+      - name: orderAsc
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: types
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter events to the provided event types
+      responses:
+        '200':
+          description: Successfully returned the sandbox events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxEvent'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 400
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                invalidEventType:
+                  summary: An unrecognized event type was supplied
+                  value:
+                    code: 400
+                    message: 'Invalid event type: bogus.event'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 401
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                missingAuthentication:
+                  summary: No supported authentication header was supplied
+                  value:
+                    code: 401
+                    message: authorization header is missing
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 403
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                teamBanned:
+                  summary: The team is banned at authentication
+                  value:
+                    code: 403
+                    message: team is banned
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 404
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                resourceNotFound:
+                  summary: The backend cannot find the requested resource
+                  value:
+                    code: 404
+                    message: Sandbox events not found
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 500
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendError:
+                  summary: The backend failed
+                  value:
+                    code: 500
+                    message: Error when querying sandbox events
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 503
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendUnavailable:
+                  summary: The backend is not configured
+                  value:
+                    code: 503
+                    message: Sandbox events are not available
+        '504':
+          description: Backend timeout
+          content:
+            application/json:
+              schema:
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: Error code
+                    example: 504
+                  error_code:
+                    type: string
+                    description: 'Machine-readable semantic error code. Not a closed set; initial values: sandbox_capacity_unavailable, sandbox_placement_timeout, sandbox_no_compatible_node, sandbox_create_failed (a node could not create the sandbox this time; retry), sandbox_create_refused (a node refused the sandbox for a reason no retry changes, such as a vcpu count out of bounds in the stored build; a server error, since no request field reaches that check), internal_server_error, secret_limit_reached, idempotency_request_mismatch, idempotency_in_progress, idempotency_outcome_unknown.'
+                  message:
+                    type: string
+                    description: Error
+                type: object
+              examples:
+                backendDeadlineExceeded:
+                  summary: The backend deadline was exceeded
+                  value:
+                    code: 504
+                    message: Error when querying sandbox events
+      operationId: listEventsSandboxes
+      summary: List events
 components:
   schemas:
-    SandboxEventData:
-      type: object
-      description: 'Event-specific payload. May be null on events that have no
-
-        additional context. For sandbox.lifecycle.updated the payload
-
-        may include set_timeout. For sandbox.lifecycle.killed and
-
-        sandbox.lifecycle.paused the payload includes execution
-
-        details.
-
-        '
-      properties:
-        sandbox_metadata:
-          type: object
-          additionalProperties:
-            type: string
-        execution:
-          $ref: '#/components/schemas/SandboxExecution'
-        set_timeout:
-          type: integer
-          description: New timeout in seconds for sandbox.lifecycle.updated.
-      additionalProperties: true
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
     SandboxEvent:
-      type: object
+      description: Sandbox event
       required:
       - id
       - version
       - type
       - timestamp
-      - sandbox_id
-      - sandbox_team_id
+      - sandboxId
+      - sandboxExecutionId
+      - sandboxTemplateId
+      - sandboxBuildId
+      - sandboxTeamId
       properties:
         id:
           type: string
+          format: uuid
+          description: Event unique identifier
         version:
           type: string
-          example: v2
+          description: Event structure version
         type:
-          $ref: '#/components/schemas/SandboxLifecycleEventType'
+          type: string
+          description: Event name
+        eventCategory:
+          type: string
+          deprecated: true
+          description: Category of the event (e.g., 'lifecycle', 'process', etc.)
+        eventLabel:
+          type: string
+          deprecated: true
+          description: Label for the specific event type (e.g., 'sandbox_started', 'process_oom', etc.)
+        eventData:
+          type:
+          - object
+          - 'null'
+          description: Optional JSON data associated with the event
         timestamp:
           type: string
           format: date-time
-        event_category:
+          description: Timestamp of the event
+        sandboxId:
           type: string
-          example: lifecycle
-        event_label:
+          format: string
+          description: Unique identifier for the sandbox
+        sandboxExecutionId:
           type: string
-        event_data:
-          $ref: '#/components/schemas/SandboxEventData'
-        sandbox_id:
+          format: string
+          description: Unique identifier for the sandbox execution
+        sandboxTemplateId:
           type: string
-        sandbox_execution_id:
+          format: string
+          description: Unique identifier for the sandbox template
+        sandboxBuildId:
           type: string
-        sandbox_template_id:
+          format: string
+          description: Unique identifier for the sandbox build
+        sandboxTeamId:
           type: string
-        sandbox_build_id:
-          type: string
-        sandbox_team_id:
-          type: string
-    SandboxExecution:
+          format: uuid
+          description: Team identifier associated with the sandbox
       type: object
-      description: 'Execution metrics included on terminal events such as
-
-        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
-
-        '
-      properties:
-        started_at:
-          type: string
-          format: date-time
-        vcpu_count:
-          type: integer
-        memory_mb:
-          type: integer
-        execution_time:
-          type: integer
-          description: Execution duration in milliseconds.
-    SandboxEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SandboxEvent'
   parameters:
     sandboxID:
       name: sandboxID
@@ -199,7 +570,19 @@ components:
       schema:
         type: string
   securitySchemes:
+    AccessTokenAuth:
+      type: http
+      scheme: bearer
     ApiKeyAuth:
       type: apiKey
       in: header
       name: X-API-Key
+    SandboxAccessTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Access-Token
+      description: 'Sandbox access token (`envdAccessToken`) for authenticating requests to a running sandbox. Returned by: [POST /sandboxes](/api-reference/sandboxes/create-sandbox) (on create), [POST /sandboxes/{sandboxID}/connect](/api-reference/sandboxes/connect-to-sandbox) (on connect), [POST /sandboxes/{sandboxID}/resume](/api-reference/sandboxes/resume-sandbox) (on resume), and [GET /sandboxes/{sandboxID}](/api-reference/sandboxes/get-sandbox) (for running or paused sandboxes).'
+    SandboxUserAuth:
+      type: http
+      scheme: basic
+      description: Optional system user for the operation. Sets file ownership and resolves relative paths. Pass the desired username with no password. Defaults to the sandbox's default user when omitted.

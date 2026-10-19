@@ -1,0 +1,12 @@
+{
+ "url": "https://e2b.dev/openapi.json",
+ "final": "https://e2b.dev/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 631074,
+ "sha256": "b1d4c941be9d2d8919ddfb4da4025a90c40b1159468621bf3f6daced5e357ffb",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

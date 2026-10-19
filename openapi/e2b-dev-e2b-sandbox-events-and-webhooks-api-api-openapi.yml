@@ -95,34 +95,6 @@ components:
           type: string
         sandbox_team_id:
           type: string
-    SandboxExecution:
-      type: object
-      description: 'Execution metrics included on terminal events such as
-
-        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
-
-        '
-      properties:
-        started_at:
-          type: string
-          format: date-time
-        vcpu_count:
-          type: integer
-        memory_mb:
-          type: integer
-        execution_time:
-          type: integer
-          description: Execution duration in milliseconds.
-    SandboxLifecycleEventType:
-      type: string
-      description: Documented sandbox lifecycle event types.
-      enum:
-      - sandbox.lifecycle.created
-      - sandbox.lifecycle.updated
-      - sandbox.lifecycle.killed
-      - sandbox.lifecycle.paused
-      - sandbox.lifecycle.resumed
-      - sandbox.lifecycle.checkpointed
     SandboxEventData:
       type: object
       description: 'Event-specific payload. May be null on events that have no
@@ -147,6 +119,34 @@ components:
           type: integer
           description: New timeout in seconds for sandbox.lifecycle.updated.
       additionalProperties: true
+    SandboxLifecycleEventType:
+      type: string
+      description: Documented sandbox lifecycle event types.
+      enum:
+      - sandbox.lifecycle.created
+      - sandbox.lifecycle.updated
+      - sandbox.lifecycle.killed
+      - sandbox.lifecycle.paused
+      - sandbox.lifecycle.resumed
+      - sandbox.lifecycle.checkpointed
+    SandboxExecution:
+      type: object
+      description: 'Execution metrics included on terminal events such as
+
+        sandbox.lifecycle.killed and sandbox.lifecycle.paused.
+
+        '
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        vcpu_count:
+          type: integer
+        memory_mb:
+          type: integer
+        execution_time:
+          type: integer
+          description: Execution duration in milliseconds.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
