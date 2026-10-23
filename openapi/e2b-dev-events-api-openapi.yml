@@ -586,3 +586,9 @@ components:
       type: http
       scheme: basic
       description: Optional system user for the operation. Sets file ownership and resolves relative paths. Pass the desired username with no password. Defaults to the sandbox's default user when omitted.
+x-provenance:
+  method: harvested
+  publisher: E2B
+  source: https://e2b.dev/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
